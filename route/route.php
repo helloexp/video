@@ -15,6 +15,9 @@ Route::get('think', function () {
 
 Route::get('hello/:name', 'index/hello');
 
-return [
+// 路由定义
+// 404 路由设置, 域名/404
+Route::rule('404', 'index/index/_404');
 
+return [
 ];

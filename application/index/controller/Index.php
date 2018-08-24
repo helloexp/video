@@ -20,4 +20,10 @@ class Index extends Validate
     {
         return $this->fetch();
     }
+
+    // 404
+    public function _404()
+    {
+        return $this->fetch();
+    }
 }
