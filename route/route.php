@@ -16,8 +16,11 @@ Route::get('think', function () {
 Route::get('hello/:name', 'index/hello');
 
 // 路由定义
-// 404 路由设置, 域名/404
+// 404 路由设置, /404
 Route::rule('404', 'index/index/_404');
+
+// 播放器 /play
+// Route::rule('play/:id', 'index/index/play');
 
 return [
 ];
