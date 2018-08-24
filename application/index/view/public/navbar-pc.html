@@ -1,0 +1,69 @@
+<header>
+    <!--Navber-->
+    <section id="navBar">
+        <nav class="sticky-container" data-sticky-container>
+            <div class="sticky topnav" data-sticky data-top-anchor="navBar" data-btm-anchor="footer-bottom:bottom" data-margin-top="0" data-margin-bottom="0" style="width: 100%; background: #fff;" data-sticky-on="large">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="title-bar" data-responsive-toggle="beNav" data-hide-for="large">
+                            <button class="menu-icon" type="button" data-toggle="offCanvas-responsive"></button>
+                            <div class="title-bar-title"><img src="/images/logo-small.png" alt="logo"></div>
+                        </div>
+
+                        <div class="top-bar show-for-large" id="beNav" style="width: 100%;">
+                            <div class="top-bar-left">
+                                <ul class="menu">
+                                    <li class="menu-text">
+                                        <a href="{:url('category')}"><img src="/images/logo.png" alt="logo"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="top-bar-right search-btn">
+                                <ul class="menu">
+                                    <li class="search">
+                                        <i class="fa fa-search"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="top-bar-right">
+                                <ul class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown">
+                                    <li class="has-submenu active">
+                                        <a href="{:url('index')}">首页</a>
+                                    </li>
+                                    <li class="has-submenu" data-dropdown-menu="example1">
+                                        <a href="{:url('category')}">分类1</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('category')}">分类2</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('category')}">分类3</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('category')}">分类4</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('category')}">分类5</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('category')}">分类6</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="search-bar" class="clearfix search-bar-light">
+                    <form method="post">
+                        <div class="search-input float-left">
+                            <input type="search" name="search" placeholder="请输入视频类型">
+                        </div>
+                        <div class="search-btn float-right text-right">
+                            <button class="button" name="search" type="submit">全站搜索</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </section>
+</header>
