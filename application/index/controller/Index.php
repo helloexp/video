@@ -1,10 +1,10 @@
 <?php
 namespace app\index\controller;
 
-class Index
+class Index extends Validate
 {
     public function index()
     {
-        echo 'hello index!';
+        return $this->fetch();
     }
 }
