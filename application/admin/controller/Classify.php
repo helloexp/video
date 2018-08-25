@@ -41,4 +41,33 @@ class Classify extends Validate
     {
         return $this->fetch();
     }
+
+    //视频分类修改
+    public function update()
+    {
+        $data = Request::post();
+
+        $data['update_time'] = time();
+        $map['id'] = $data['id'];
+
+        $list = Type::where($map)
+            ->update($data);
+
+        $result['code'] = $list ? $result['code'] = 1 : $result['code'] = 0;
+        return json($result);
+    }
+    
+    //视频分类删除
+    public function delete()
+    {
+        $data = Request::post();
+        
+        $map['id'] = $data['id'];
+
+        $list = Type::where($map)->useSoftDelete();
+
+        $result['code'] = $list ? $result['code'] = 1 : $result['code'] = 0;
+
+        return json($result);
+    }
 }

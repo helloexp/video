@@ -15,7 +15,7 @@ class Home extends Validate
         return json($result);
     }
 
-    //首页查询
+    //首页搜索
     public function seach()
     {
         $data = Request::get();
