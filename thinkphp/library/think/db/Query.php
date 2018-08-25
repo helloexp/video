@@ -1192,13 +1192,13 @@ class Query
      * @param  bool  $collection  是否返回数据集对象
      * @return $this
      */
-    public function fetchCollection($collection = true)
+    public function collection($collection = true)
     {
         $this->options['collection'] = $collection;
 
         return $this;
     }
-
+    
     /**
      * 指定AND查询条件
      * @access public
