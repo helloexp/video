@@ -7,6 +7,7 @@
 namespace app\admin\controller;
 
 use app\common\model\Type;
+use app\common\model\Admin;
 use think\facade\Request;
 
 class Classify extends Validate
@@ -53,7 +54,9 @@ class Classify extends Validate
         $list = Type::where($map)
             ->update($data);
 
-        $result['code'] = $list ? $result['code'] = 1 : $result['code'] = 0;
+        $result = $list
+            ?$result = ['code' => 1,'msg' => '更新成功']
+            :$result =['code' => 0 ,'msg' => '更新失败'];
         return json($result);
     }
     
@@ -61,12 +64,12 @@ class Classify extends Validate
     public function delete()
     {
         $data = Request::post();
-        
         $map['id'] = $data['id'];
 
-        $list = Type::where($map)->useSoftDelete();
-
-        $result['code'] = $list ? $result['code'] = 1 : $result['code'] = 0;
+        $list = Type::destroy($map);
+        $result = $list
+            ?$result = ['code' => 1,'msg' => '删除成功']
+            :$result =['code' => 0 ,'msg' => '删除失败'];
 
         return json($result);
     }
