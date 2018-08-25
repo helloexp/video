@@ -32,14 +32,4 @@ return [
     'taglib_begin' => '{',
     // 标签库标签结束标记
     'taglib_end'   => '}',
-
-    //模板输出
-    'tpl_replace_string'  =>  [
-        '__PUBLIC__'    => \Config::get()['app']['app_host'] . '/public',
-        '__STATIC__'    => \Config::get()['app']['app_host'] . '/public/static',
-        '__JS__'        => \Config::get()['app']['app_host'] . '/public/static/js',
-        '__CSS__'       => \Config::get()['app']['app_host'] . '/public/static/css',
-        '__IMAGES__'    => \Config::get()['app']['app_host'] . '/public/static/images',
-        '__PLUG-IN__'   => \Config::get()['app']['app_host'] . '/public/static/plug-in',
-    ]
 ];
