@@ -7,6 +7,7 @@
 namespace app\admin\controller;
 
 use app\common\model\Type;
+use app\common\model\Admin;
 use think\facade\Request;
 
 class Classify extends Validate
@@ -40,5 +41,36 @@ class Classify extends Validate
     public function add()
     {
         return $this->fetch();
+    }
+
+    //视频分类修改
+    public function update()
+    {
+        $data = Request::post();
+
+        $data['update_time'] = time();
+        $map['id'] = $data['id'];
+
+        $list = Type::where($map)
+            ->update($data);
+
+        $result = $list
+            ?$result = ['code' => 1,'msg' => '更新成功']
+            :$result =['code' => 0 ,'msg' => '更新失败'];
+        return json($result);
+    }
+    
+    //视频分类删除
+    public function delete()
+    {
+        $data = Request::post();
+        $map['id'] = $data['id'];
+
+        $list = Type::destroy($map);
+        $result = $list
+            ?$result = ['code' => 1,'msg' => '删除成功']
+            :$result =['code' => 0 ,'msg' => '删除失败'];
+
+        return json($result);
     }
 }
