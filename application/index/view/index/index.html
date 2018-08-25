@@ -1,6 +1,10 @@
 {extend name="public:base" /}
 
 {block name="content"}
+<style>
+    .column:last-child:not(:first-child), .columns:last-child:not(:first-child) { float: left; }
+</style>
+
 <!-- layerslider h:500px 轮播 -->
 <section id="slider">
     <div id="full-slider-wrapper">
@@ -23,6 +27,7 @@
 <!--end slider-->
 
 <!-- 推荐 -->
+<div id="home">
 <section id="premium">
     <div class="row">
         <div class="heading clearfix">
@@ -38,72 +43,12 @@
         </div>
     </div>
     <div id="owl-demo" class="owl-carousel carousel" data-car-length="4" data-items="4" data-loop="true" data-nav="false" data-autoplay="true" data-autoplay-timeout="3000" data-dots="false" data-auto-width="false" data-responsive-small="1" data-responsive-medium="2" data-responsive-xlarge="5">
-        <div class="item">
+        <div class="item" v-for="item in premium">
             <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
+                <img v-bind:src="item.img" v-bind:alt="item.title">
                 <figcaption>
-                    <h5>影片标题</h5>
-                    <p>影片介绍</p>
-                </figcaption>
-            </figure>
-            <a href="single-video-v1.html" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
-            </a>
-        </div>
-        <div class="item">
-            <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
-                <figcaption>
-                    <h5>影片标题</h5>
-                    <p>这是一个影片的介绍</p>
-                </figcaption>
-            </figure>
-            <a href="single-video-v1.html" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
-            </a>
-        </div>
-        <div class="item">
-            <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
-                <figcaption>
-                    <h5>影片标题</h5>
-                    <p>这是一个影片的介绍</p>
-                </figcaption>
-            </figure>
-            <a href="single-video-v1.html" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
-            </a>
-        </div>
-        <div class="item">
-            <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
-                <figcaption>
-                    <h5>影片标题</h5>
-                    <p>这是一个电影的介绍</p>
-                </figcaption>
-            </figure>
-            <a href="single-video-v1.html" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
-            </a>
-        </div>
-        <div class="item">
-            <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
-                <figcaption>
-                    <h5>电影标题</h5>
-                    <p>这是一个影片的介绍</p>
-                </figcaption>
-            </figure>
-            <a href="single-video-v1.html" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
-            </a>
-        </div>
-        <div class="item">
-            <figure class="premium-img">
-                <img src="http://placehold.it/400x300" alt="carousel">
-                <figcaption>
-                    <h5>电影标题</h5>
-                    <p>Movies Trailer</p>
+                    <h5>{{ item.title }}</h5>
+                    <p>{{ item.desc }}</p>
                 </figcaption>
             </figure>
             <a href="single-video-v1.html" class="hover-posts">
@@ -136,7 +81,7 @@
     <div class="row secBg">
         <div class="large-12 columns">
             <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>1,862</span></p>
+                <p class="pull-left">全部视频 : <span>{{ videototal }}</span></p>
                 <div class="grid-system pull-right show-for-large">
                     <a class="secondary-button current grid-default" href="#"><i class="fa fa-th"></i></a>
                     <a class="secondary-button grid-medium" href="#"><i class="fa fa-th-large"></i></a>
@@ -144,352 +89,45 @@
                 </div>
             </div>
             <div class="tabs-content" data-tabs-content="newVideos">
+                <!-- 全部视频 -->
                 <div class="tabs-panel is-active" id="new-all">
                     <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
+                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos">
                             <div class="post thumb-border">
                                 <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
+                                    <img v-bind:src="item.img" v-bind:alt="item.title">
                                     <a href="single-video-v2.html" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
+                                        <!-- 高清 -->
+                                        <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
                                             <h6>高清</h6>
                                         </div>
+                                        <!-- 高清end -->
                                         <div class="thumb-stats pull-left">
                                             <i class="fa fa-heart"></i>
-                                            <span>506</span>
+                                            <span>{{ item.fabulous }}</span>
                                         </div>
                                         <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
+                                            <span>{{ item.time }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
+                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
+                                            <span>{{ item.create_time }}</span>
                                         </p>
                                         <p class="pull-left">
                                             <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
+                                            <span>{{ item.watch_count }}</span>
                                         </p>
                                     </div>
                                     <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">上传者</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>2018/8/24</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default end">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        {{ item.desc }}
                                     </div>
                                     <div class="post-button">
                                         <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
@@ -499,12 +137,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- 全部视频end -->
+
+                <!-- 高清 -->
                 <div class="tabs-panel" id="new-hd">
                     <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
+                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos" v-if="item.is_hd == 1">
                             <div class="post thumb-border">
                                 <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
+                                    <img v-bind:src="item.img" alt="item.title">
                                     <a href="single-video-v2.html" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
@@ -514,213 +155,27 @@
                                         </div>
                                         <div class="thumb-stats pull-left">
                                             <i class="fa fa-heart"></i>
-                                            <span>506</span>
+                                            <span>{{ item.fabulous }}</span>
                                         </div>
                                         <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
+                                            <span>{{ item.time }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
+                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
+                                            <span>{{ item.time }}</span>
                                         </p>
                                         <p class="pull-left">
                                             <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
+                                            <span>{{ item.watch_count }}</span>
                                         </p>
                                     </div>
                                     <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item large-3 medium-6 columns group-item-grid-default end">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        {{ item.desc }}
                                     </div>
                                     <div class="post-button">
                                         <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
@@ -730,18 +185,19 @@
                         </div>
                     </div>
                 </div>
+                <!-- 高清end -->
             </div>
         </div>
     </div>
-</section>
-<section class="content">
-    <!-- End newest video -->
+
     <!-- ad Section -->
     <div class="googleAdv">
         <a href="#"><img src="/images/goodleadv.png" alt="googel ads"></a>
-    </div><!-- End ad Section -->
-
-    <!-- popular Videos -->
+    </div>
+    <!-- End ad Section -->
+</section>
+<section class="content">
+    <!-- 热门 Videos -->
     <div class="main-heading">
         <div class="row secBg padding-14">
             <div class="medium-8 small-8 columns">
@@ -758,10 +214,11 @@
             </div>
         </div>
     </div>
+
     <div class="row secBg">
         <div class="large-12 columns">
             <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>1,862</span></p>
+                <p class="pull-left">全部视频 : <span>{{ videototal }}</span></p>
                 <div class="grid-system pull-right show-for-large">
                     <a class="secondary-button current grid-default" href="#"><i class="fa fa-th"></i></a>
                     <a class="secondary-button grid-medium" href="#"><i class="fa fa-th-large"></i></a>
@@ -769,352 +226,43 @@
                 </div>
             </div>
             <div class="tabs-content" data-tabs-content="popularVideos">
+                <!-- 全部 -->
                 <div class="tabs-panel is-active" id="popular-all">
                     <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
+                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot">
                             <div class="post thumb-border">
                                 <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
+                                    <img v-bind:src="item.img" alt="item.title">
                                     <a href="single-video-v2.html" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
+                                        <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
                                             <h6>高清</h6>
                                         </div>
                                         <div class="thumb-stats pull-left">
                                             <i class="fa fa-heart"></i>
-                                            <span>506</span>
+                                            <span>{{ item.fabulous }}</span>
                                         </div>
                                         <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
+                                            <span>{{ item.time }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
+                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
+                                            <span>{{ item.create_time }}</span>
                                         </p>
                                         <p class="pull-left">
                                             <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
+                                            <span>{{ item.watch_count }}</span>
                                         </p>
                                     </div>
                                     <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default end">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        {{ item.desc }}
                                     </div>
                                     <div class="post-button">
                                         <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
@@ -1124,12 +272,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- 全部end -->
+
+                <!-- 高清 -->
                 <div class="tabs-panel" id="popular-hd">
                     <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
+                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot" v-if="item.is_hd == 1">
                             <div class="post thumb-border">
                                 <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
+                                    <img v-bind:src="item.img" alt="item.title">
                                     <a href="single-video-v2.html" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
@@ -1139,214 +290,27 @@
                                         </div>
                                         <div class="thumb-stats pull-left">
                                             <i class="fa fa-heart"></i>
-                                            <span>506</span>
+                                            <span>{{ item.fabulous }}</span>
                                         </div>
                                         <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
+                                            <span>{{ item.time }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
+                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
+                                            <span>{{ item.create_time }}</span>
                                         </p>
                                         <p class="pull-left">
                                             <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
+                                            <span>{{ item.watch_count }}</span>
                                         </p>
                                     </div>
                                     <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item large-3 medium-6 columns group-item-grid-default">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                    </div>
-                                    <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item large-3 medium-6 columns group-item-grid-default end">
-                            <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img src="http://placehold.it/370x220" alt="new video">
-                                    <a href="single-video-v2.html" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>506</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>05:56</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-des">
-                                    <h6><a href="single-video-v2.html">这是影片的标题</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-user"></i>
-                                            <span><a href="#">admin</a></span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>5 January 16</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>1,862K</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        {{ item.desc }}
                                     </div>
                                     <div class="post-button">
                                         <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
@@ -1356,13 +320,94 @@
                         </div>
                     </div>
                 </div>
+                <!-- 高清end -->
             </div>
         </div>
     </div>
     <!-- ad Section -->
     <div class="googleAdv">
         <a href="#"><img src="/images/goodleadv.png" alt="googel ads"></a>
-    </div><!-- End ad Section -->
+    </div>
+    <!-- End ad Section -->
 </section>
+</div>
 <!-- End main content -->
+
+<!-- js -->
+<script>
+    var homevm = new Vue({
+        el: '#home',
+        data: {
+            // 特别推荐
+            premium: [],
+
+            // 视频总数
+            videototal: '1,895',
+
+            // 最新视频
+            newvideos: [],
+
+            // 热门影视
+            hot: []
+        },
+        created: function() {
+            this.premiumfn()
+            this.newvideosfn()
+            this.hotfn()
+        },
+        methods: {
+            // 特别推荐
+            premiumfn: function() {
+                var u = '{:url("home/recommend")}',
+                    _this = this
+
+                $.get(u, function(res) {
+                    var newres = []
+
+                    for (var i in res) {
+                        // 设置标题不能超过8位
+                        var t = res[i].title.length > 8 
+                            ? res[i].title.substring(0, 5) + '...'
+                            : res[i].title,
+                        // 设置描述不能超过10位
+                            desc = res[i].desc.length > 12
+                            ? res[i].desc.substring(0, 10) + '...'
+                            : res[i].desc
+
+                        var temp = {
+                            'title': t,
+                            'desc': desc,
+                            'img': res[i].img,
+                            'id': res[i].id,
+                            'video_id': res[i].video_id
+                        }
+
+                        newres.push(temp)
+                    }
+
+                    Vue.set(homevm, 'premium', newres)
+                })
+            },
+
+            // 最新视频
+            newvideosfn: function() {
+                var u = '{:url("home/newVideo")}'
+
+                $.get(u, function(res) {
+                    Vue.set(homevm, 'newvideos', res.data)
+                    Vue.set(homevm, 'videototal', res.count)
+                })
+            },
+
+            // 热门影视
+            hotfn: function() {
+                var u = '{:url("home/hotVideo")}'
+
+                $.get(u, function(res) {
+                    Vue.set(homevm, 'hot', res.data)
+                })
+            }
+        }
+    })
+</script>
 {/block}

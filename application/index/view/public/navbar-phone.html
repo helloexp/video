@@ -6,31 +6,16 @@
     </div>
     <ul class="vertical menu off-menu" data-responsive-menu="drilldown">
         <li class="has-submenu">
-            <a href="#">主页</a>
+            <a href="{:url('index')}">主页</a>
         </li>
-        <li class="has-submenu" data-dropdown-menu="example1">
-            <a href="#">Videos</a>
-        </li>
-        <li>
-            <a href="categories.html">category</a>
-        </li>
-        <li>
-            <a href="blog.html">blog</a>
-        </li>
-        <li>
-            <a href="#">features</a>
-        </li>
-        <li>
-            <a href="about-us.html">about</a>
-        </li>
-        <li>
-            <a href="contact-us.html">contact</a>
+        <li class="has-submenu" v-for="item in nav">
+            <a v-bind:href="item.url">{{ item.type }}</a>
         </li>
     </ul>
     <div class="responsive-search">
         <form method="post">
             <div class="input-group">
-                <input class="input-group-field" type="text" placeholder="search Here">
+                <input class="input-group-field" type="text" placeholder="请输入要搜索的视频名称">
                 <div class="input-group-button">
                     <button type="submit" name="search"><i class="fa fa-search"></i></button>
                 </div>
@@ -38,3 +23,32 @@
         </form>
     </div>
 </div>
+
+<script>
+    var phonevm = new Vue({
+        el: "#offCanvas-responsive",
+        data: {
+            // 导航条
+            nav: []
+        },
+        beforeCreate: function() {
+            var u = '{:url("home/classify")}'
+
+            $.get(u, function(res) {
+                var newres = [];
+
+                for (var i in res) {
+                    var temp = {
+                        url: "/category?id="+ res[i].id +"&type="+ res[i].type,
+                        type: res[i].type
+                    };
+
+                    newres.push(temp)
+                }
+
+                // 设置导航
+                Vue.set(phonevm, 'nav', newres)
+            })
+        }
+    });
+</script>

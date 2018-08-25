@@ -13,6 +13,7 @@ class Home extends Validate
     {
         $result = Type::field('create_time, update_time, deleted_time', true)
             ->select();
+
         return json($result);
     }
 
@@ -49,7 +50,6 @@ class Home extends Validate
     //热门电影
     public function hotVideo()
     {
-        $result['count'] = Video::count();
         $result['data'] =Video::taskout()
             ->order('watch_count','desc')
             ->limit(8)

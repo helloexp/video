@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-08-25 12:16:03
+Date: 2018-08-25 22:14:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,11 +47,19 @@ CREATE TABLE `vd_recommend` (
   `update_time` int(32) DEFAULT NULL,
   `deleted_time` int(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐表';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='推荐表';
 
 -- ----------------------------
 -- Records of vd_recommend
 -- ----------------------------
+INSERT INTO `vd_recommend` VALUES ('1', '1', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('2', '2', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('3', '3', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('4', '4', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('5', '5', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('6', '6', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('7', '7', '1535167724', null, null);
+INSERT INTO `vd_recommend` VALUES ('8', '8', '1535167724', null, null);
 
 -- ----------------------------
 -- Table structure for vd_related
@@ -104,10 +112,10 @@ CREATE TABLE `vd_type` (
 -- ----------------------------
 -- Records of vd_type
 -- ----------------------------
-INSERT INTO `vd_type` VALUES ('1', '欧美', '1', '1535167724', null, null);
-INSERT INTO `vd_type` VALUES ('2', '日韩', '2', '1535167724', null, null);
-INSERT INTO `vd_type` VALUES ('3', '国产', '3', '1535167724', null, null);
-INSERT INTO `vd_type` VALUES ('4', '三级', '4', '1535167724', null, null);
+INSERT INTO `vd_type` VALUES ('1', '欧美', '1', '1535167724', '1535167724', '1535167724');
+INSERT INTO `vd_type` VALUES ('2', '日韩', '2', '1535167724', '1535167724', null);
+INSERT INTO `vd_type` VALUES ('3', '国产', '3', '1535167724', '1535167724', null);
+INSERT INTO `vd_type` VALUES ('4', '三级', '4', '1535167724', '1535167724', null);
 INSERT INTO `vd_type` VALUES ('5', '动漫', '5', '1535167724', null, null);
 INSERT INTO `vd_type` VALUES ('6', '偷拍', '6', '1535167724', null, null);
 
@@ -116,10 +124,10 @@ INSERT INTO `vd_type` VALUES ('6', '偷拍', '6', '1535167724', null, null);
 -- ----------------------------
 DROP TABLE IF EXISTS `vd_video`;
 CREATE TABLE `vd_video` (
-  `id` int(8) NOT NULL,
-  `url` varchar(255) NOT NULL COMMENT '视频地址',
-  `img` varchar(255) DEFAULT NULL COMMENT '封面地址',
-  `time` int(32) DEFAULT NULL COMMENT '视频播放时间',
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `url` text NOT NULL COMMENT '视频地址',
+  `img` text COMMENT '封面地址',
+  `time` varchar(32) DEFAULT NULL COMMENT '视频播放时间',
   `title` varchar(255) DEFAULT NULL COMMENT '视频标题',
   `desc` text COMMENT '视频描述',
   `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '视频类型（根据类型表来定）',
@@ -131,8 +139,18 @@ CREATE TABLE `vd_video` (
   `update_time` int(32) DEFAULT NULL COMMENT '更新时间',
   `deleted_time` int(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='视频表';
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='视频表';
 
 -- ----------------------------
 -- Records of vd_video
 -- ----------------------------
+INSERT INTO `vd_video` VALUES ('1', 'http://jx.618g.com/?url=http://vd3.bdstatic.com/mda-ihj3wc4bt4bxncx5/mda-ihj3wc4bt4bxncx5.mp4', 'http://www.dilidili.wang/uploads/allimg/180820/290_0131378051.jpg', '24:00', '进击的巨人进击的巨人进击的巨人', '进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人进击的巨人', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('2', 'http://vd3.bdstatic.com/mda-ihq22gagk8hegphj/mda-ihq22gagk8hegphj.mp4', 'http://www.dilidili.wang/uploads/allimg/180825/290_1007436031.jpg', '24:58', '碧蓝之海', '碧蓝之海', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('3', 'http://player.youku.com/player.php/sid/XMzc4NjMxNTQ5Ng==/v.swf', 'http://www.dilidili.wang/uploads/allimg/180825/290_0117208801.jpg', '24:00', '我的英雄学院', '我的英雄学院', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('4', 'http://99hd.net/iframe/ckplayer6.7/ckplayer/ckplayer.swf', 'http://www.dilidili.wang/uploads/allimg/180825/290_1703357511.jpg', '24:52', '博人传', '博人传进击的巨人', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('5', 'blob:https://www.youtube.com/4f61f700-6e69-4761-9b46-a9d90998005a', 'https://i.ytimg.com/vi_webp/YE7VzlLtp-4/maxresdefault.webp', '24:21', '这是一个标题', '这是一段描述', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('6', 'https://gz189cloud2.oos-gz.ctyunapi.cn/295fb2cf-5722-48f9-baed-bead8c7c6209?x-amz-UFID=8139732211447451&x-amz-FSIZE=1903552074&Expires=1535202895&x-amz-UID=519993859&response-content-disposition=attachment%3Bfilename%3D%22%C3%A5%C2%A4%C2%8D%C3%A4%C2%BB%C2%87%C3%A8%C2%80%C2%85%C3%A8%C2%81%C2%94%C3%A7%C2%9B%C2%9F3%22&AWSAccessKeyId=6667aad7f6576995b9ae&x-amz-CLOUDTYPEIN=PERSON&Signature=7KozkGCdky6CQXTP4koMPHqoxZk%3D', 'http://www.dilidili.wang/uploads/allimg/180824/290_2038302201.jpg', '78:45', '复仇者联盟', '复仇者联盟3进击的巨人', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('7', 'https://gz189cloud2.oos-gz.ctyunapi.cn/295fb2cf-5722-48f9-baed-bead8c7c6209?x-amz-UFID=8139732211447451&x-amz-FSIZE=1903552074&Expires=1535202895&x-amz-UID=519993859&response-content-disposition=attachment%3Bfilename%3D%22%C3%A5%C2%A4%C2%8D%C3%A4%C2%BB%C2%87%C3%A8%C2%80%C2%85%C3%A8%C2%81%C2%94%C3%A7%C2%9B%C2%9F3%22&AWSAccessKeyId=6667aad7f6576995b9ae&x-amz-CLOUDTYPEIN=PERSON&Signature=7KozkGCdky6CQXTP4koMPHqoxZk%3D', 'http://www.dilidili.wang/uploads/allimg/180824/290_2039183861.jpg', '87:11', '复仇者联盟', '复仇者联盟进击的巨人', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('8', 'https://gz189cloud2.oos-gz.ctyunapi.cn/295fb2cf-5722-48f9-baed-bead8c7c6209?x-amz-UFID=8139732211447451&x-amz-FSIZE=1903552074&Expires=1535202895&x-amz-UID=519993859&response-content-disposition=attachment%3Bfilename%3D%22%C3%A5%C2%A4%C2%8D%C3%A4%C2%BB%C2%87%C3%A8%C2%80%C2%85%C3%A8%C2%81%C2%94%C3%A7%C2%9B%C2%9F3%22&AWSAccessKeyId=6667aad7f6576995b9ae&x-amz-CLOUDTYPEIN=PERSON&Signature=7KozkGCdky6CQXTP4koMPHqoxZk%3D', 'http://www.dilidili.wang/uploads/allimg/180825/290_1715199001.jpg', '87:12', '复仇者联盟', '复仇者联盟进击的巨人进击的巨人进击的巨人进击的巨人', '1', '0', '0', '0', '1', '1535202193', null, null);
+INSERT INTO `vd_video` VALUES ('9', 'https://gz189cloud2.oos-gz.ctyunapi.cn/295fb2cf-5722-48f9-baed-bead8c7c6209?x-amz-UFID=8139732211447451&x-amz-FSIZE=1903552074&Expires=1535202895&x-amz-UID=519993859&response-content-disposition=attachment%3Bfilename%3D%22%C3%A5%C2%A4%C2%8D%C3%A4%C2%BB%C2%87%C3%A8%C2%80%C2%85%C3%A8%C2%81%C2%94%C3%A7%C2%9B%C2%9F3%22&AWSAccessKeyId=6667aad7f6576995b9ae&x-amz-CLOUDTYPEIN=PERSON&Signature=7KozkGCdky6CQXTP4koMPHqoxZk%3D', 'http://www.dilidili.wang/uploads/allimg/180820/290_0131378051.jpg', '87:10', '复仇者联盟', '复仇者联盟进击的巨人进击的巨人进击的巨人进击的巨人', '1', '0', '0', '0', '1', '1535202190', null, null);
+INSERT INTO `vd_video` VALUES ('10', 'https://gz189cloud2.oos-gz.ctyunapi.cn/295fb2cf-5722-48f9-baed-bead8c7c6209?x-amz-UFID=8139732211447451&x-amz-FSIZE=1903552074&Expires=1535202895&x-amz-UID=519993859&response-content-disposition=attachment%3Bfilename%3D%22%C3%A5%C2%A4%C2%8D%C3%A4%C2%BB%C2%87%C3%A8%C2%80%C2%85%C3%A8%C2%81%C2%94%C3%A7%C2%9B%C2%9F3%22&AWSAccessKeyId=6667aad7f6576995b9ae&x-amz-CLOUDTYPEIN=PERSON&Signature=7KozkGCdky6CQXTP4koMPHqoxZk%3D', 'http://www.dilidili.wang/uploads/allimg/180825/290_1703357511.jpg', '87:41', '复仇者联盟', '复仇者联盟进击的巨人进击的巨人进击的巨人进击的巨人', '1', '0', '0', '0', '1', '1535201193', null, null);

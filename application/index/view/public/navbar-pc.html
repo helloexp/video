@@ -14,7 +14,7 @@
                             <div class="top-bar-left">
                                 <ul class="menu">
                                     <li class="menu-text">
-                                        <a href="{:url('category')}"><img src="/images/logo.png" alt="logo"></a>
+                                        <a href="{:url('index')}"><img src="/images/logo.png" alt="logo"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -27,29 +27,11 @@
                             </div>
                             <div class="top-bar-right">
                                 <ul class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown">
-                                    <!-- <li class="has-submenu active">
+                                    <li class="has-submenu active">
                                         <a href="{:url('index')}">主页</a>
                                     </li>
-                                    <li class="has-submenu" data-dropdown-menu="example1">
-                                        <a href="{:url('category')}">分类1</a>
-                                    </li>
-                                    <li>
-                                        <a href="{:url('category')}">分类2</a>
-                                    </li>
-                                    <li>
-                                        <a href="{:url('category')}">分类3</a>
-                                    </li>
-                                    <li>
-                                        <a href="{:url('category')}">分类4</a>
-                                    </li>
-                                    <li>
-                                        <a href="{:url('category')}">分类5</a>
-                                    </li>
-                                    <li>
-                                        <a href="{:url('category')}">分类6</a>
-                                    </li> -->
                                     <li class="has-submenu" v-for="item in nav">
-                                        <a v-bind:href="item.url">{{ item.name }}</a>
+                                        <a v-bind:href="item.url">{{ item.type }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -59,7 +41,7 @@
                 <div id="search-bar" class="clearfix search-bar-light">
                     <form method="post">
                         <div class="search-input float-left">
-                            <input type="search" name="search" placeholder="请输入视频类型">
+                            <input type="search" name="search" placeholder="请输入要搜索的视频名称">
                         </div>
                         <div class="search-btn float-right text-right">
                             <button class="button" name="search" type="submit">全站搜索</button>
@@ -72,17 +54,29 @@
 </header>
 
 <script>
-    var vm = new Vue({
+    var pcvm = new Vue({
         el: "#navBar",
         data: {
             // 导航条
             nav: []
         },
-        created: function() {
+        beforeCreate: function() {
             var u = '{:url("home/classify")}'
 
             $.get(u, function(res) {
-                console.log(res)
+                var newres = [];
+
+                for (var i in res) {
+                    var temp = {
+                        url: "/category?id="+ res[i].id +"&type="+ res[i].type,
+                        type: res[i].type
+                    };
+
+                    newres.push(temp)
+                }
+
+                // 设置导航
+                Vue.set(pcvm, 'nav', newres)
             })
         }
     });

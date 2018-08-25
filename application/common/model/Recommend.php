@@ -23,6 +23,6 @@ class Recommend extends Model
     {
         return self::alias('vr')
             ->join(['vd_video'=>'v'],'vr.video_id = v.id')
-            ->field('vr.id,vr.video_id,v.url,v.img,v.title,v.desc');
+            ->field('vr.id, vr.video_id, v.img, v.title, v.desc');
     }
 }

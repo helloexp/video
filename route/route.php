@@ -22,5 +22,8 @@ Route::rule('404', 'index/index/_404');
 // 播放器 /play
 // Route::rule('play/:id', 'index/index/play');
 
+// 分类路由 /category
+Route::rule('category', 'index/index/category');
+
 return [
 ];

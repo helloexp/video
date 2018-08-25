@@ -18,6 +18,6 @@ class Video extends Model
 
     //过滤字段
     static public function taskout(){
-        return self::field('updat_time,deleted_time',true);
+        return self::field('update_time, deleted_time, url, step_on, type',true);
     }
 }
