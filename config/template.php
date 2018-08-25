@@ -34,6 +34,7 @@ return [
     'taglib_end'   => '}',
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //模板输出
     'tpl_replace_string'  =>  [
         '__PUBLIC__'    => \Config::get()['app']['app_host'] . '/public',
@@ -43,6 +44,9 @@ return [
         '__IMAGES__'    => \Config::get()['app']['app_host'] . '/public/static/images',
         '__PLUG-IN__'   => \Config::get()['app']['app_host'] . '/public/static/plug-in',
     ]
+=======
+    // 模板输出替换
+>>>>>>> bf05bcdba90e1c1a827adfd19b240423c3ac84b8
 =======
     // 模板输出替换
 >>>>>>> bf05bcdba90e1c1a827adfd19b240423c3ac84b8
