@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <title>{block name="title"}视频网站{/block}</title>
+    {include file="public:head" /}
+</head>
+<body>
+<div class="off-canvas-wrapper">
+    <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <!-- header手机导航 -->
+        {include file="public:navbar-phone" /}
+
+        <div class="off-canvas-content" data-off-canvas-content>
+            <!-- pc端导航 -->
+            {include file="public:navbar-pc" /}
+            <!-- End Header -->
+
+            {block name="content"}{/block}
+
+            <!-- footer -->
+            {include file="public:footer" /}
+            <!-- footer-end -->
+
+        </div><!--end off canvas content-->
+    </div><!--end off canvas wrapper inner-->
+</div><!--end off canvas wrapper-->
+<!-- script files -->
+
+<!-- 加载js -->
+<script src="/public/static/index/bower_components/jquery/dist/jquery.js"></script>
+<script src="/public/static/index/bower_components/what-input/what-input.js"></script>
+<script src="/public/static/index/bower_components/foundation-sites/dist/foundation.js"></script>
+<script src="/public/static/index/js/jquery.showmore.src.js" type="text/javascript"></script>
+<script src="/public/static/index/js/app.js"></script>
+<script src="/public/static/index/layerslider/js/greensock.js" type="text/javascript"></script>
+<!-- LayerSlider script files -->
+<script src="/public/static/index/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
+<script src="/public/static/index/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
+<script src="/public/static/index/js/owl.carousel.min.js"></script>
+<script src="/public/static/index/js/inewsticker.js" type="text/javascript"></script>
+<script src="/public/static/index/js/jquery.kyco.easyshare.js" type="text/javascript"></script>
+
+</body>
+</html>

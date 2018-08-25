@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{block name="title"}视频网站{/block}</title>
+    {include file="public:head" /}
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        {include file="public:top,public:menu,public:tag" /}
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe src="console.html" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.config({
+<<<<<<< HEAD
+        base: '__STATIC__/admin/'
+=======
+        base: './public/static/admin/'
+>>>>>>> bf05bcdba90e1c1a827adfd19b240423c3ac84b8
+    }).extend({
+        index: './lib/index'
+    }).use('index');
+</script>
+</body>
+</html>

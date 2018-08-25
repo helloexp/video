@@ -1,0 +1,37 @@
+{extend name="public:base" /}
+
+{block name="content"}
+<!--breadcrumbs-->
+<section id="breadcrumb" class="breadMargin">
+    <div class="row">
+        <div class="large-12 columns">
+            <nav aria-label="You are here:" role="navigation">
+                <ul class="breadcrumbs">
+                    <li><a href="#">主页</a></li>
+                    <li>
+                        <span class="show-for-sr">Current: </span> 页面找不到
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+<!--end breadcrumbs-->
+
+<section class="error-page">
+    <div class="row secBg">
+        <div class="large-8 large-centered columns">
+            <div class="error-page-content text-center">
+                <div class="error-img text-center">
+                    <img src="/images/404-error.png" alt="404 page">
+                    <div class="spark">
+                        <img class="flash" src="/images/spark.png" alt="spark">
+                    </div>
+                </div>
+                <h1>页面找不到了~~</h1>
+                <a href="{:url('index')}" class="button">返回主页</a>
+            </div>
+        </div>
+    </div>
+</section>
+{/block}

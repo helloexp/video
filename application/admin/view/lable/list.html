@@ -1,0 +1,23 @@
+{include file="public:head" /}
+
+<style>
+    .navbar {margin-left: 15px; line-height: 50px; padding: 0 10px;}
+    .navbar>input {width: 20%; display: inline;}
+    .navbar>button {height: 34px; transform: translateY(-2px);}
+    .layui-elem-quote {font-size: 15px;}
+    .layui-form-label {padding: 9px 10px;}
+
+    .changepass {padding: 20px; }
+    .savepass {float: right; margin-top: 20px;}
+</style>
+<body>
+<div class="x-body">
+    <blockquote class="layui-elem-quote layui-text" style="margin: 10px;">标签添加</blockquote>
+    <nav class="navbar navbar-default" >
+        <input type="text" name="phone"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        <button typr="button" class="btn btn-default" id="searchBtn">搜索</button>
+    </nav>
+    <table id="UserList" lay-filter="UserList"></table>
+</div>
+</body>
+
