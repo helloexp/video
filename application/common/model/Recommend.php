@@ -9,9 +9,13 @@
 namespace app\common\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Recommend extends Model
 {
+    use SoftDelete;
+    protected $deleteTime = 'deleted_time';
+
     /*
      * 过滤字段
      */

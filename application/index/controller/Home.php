@@ -11,7 +11,8 @@ class Home extends Validate
     //首页分类
     public function classify()
     {
-        $result = Type::fieldTime()->select();
+        $result = Type::field('create_time, update_time, deleted_time', true)
+            ->select();
         return json($result);
     }
 

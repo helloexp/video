@@ -9,9 +9,13 @@
 namespace app\common\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Video extends Model
 {
+    use SoftDelete;
+    protected $deleteTime = 'deleted_time';
+
     //过滤字段
     static public function taskout(){
         return self::field('updat_time,deleted_time',true);
