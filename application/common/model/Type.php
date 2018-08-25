@@ -9,9 +9,14 @@
 namespace app\common\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Type extends Model
 {
+    // 软删除
+    use SoftDelete;
+    protected $deleteTime = 'deleted_time';
+
     // 模型初始化
     protected static function init()
     {

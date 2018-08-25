@@ -27,7 +27,7 @@
                             </div>
                             <div class="top-bar-right">
                                 <ul class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown">
-                                    <li class="has-submenu active">
+                                    <!-- <li class="has-submenu active">
                                         <a href="{:url('index')}">主页</a>
                                     </li>
                                     <li class="has-submenu" data-dropdown-menu="example1">
@@ -47,6 +47,9 @@
                                     </li>
                                     <li>
                                         <a href="{:url('category')}">分类6</a>
+                                    </li> -->
+                                    <li class="has-submenu" v-for="item in nav">
+                                        <a v-bind:href="item.url">{{ item.name }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -67,3 +70,20 @@
         </nav>
     </section>
 </header>
+
+<script>
+    var vm = new Vue({
+        el: "#navBar",
+        data: {
+            // 导航条
+            nav: []
+        },
+        created: function() {
+            var u = '{:url("home/classify")}'
+
+            $.get(u, function(res) {
+                console.log(res)
+            })
+        }
+    });
+</script>
