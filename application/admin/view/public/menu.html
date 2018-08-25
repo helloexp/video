@@ -12,118 +12,69 @@
                     <cite>主页</cite>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd data-name="console" class="layui-this">
-                        <a lay-href="home/console.html">控制台</a>
-                    </dd>
+                    <dd><a lay-href="{:url('classify/index')}">控制台</a></dd>
+                    <dd><a lay-href="{:url('classify/add')}">数据信息</a></dd>
                 </dl>
-            </li>
-
-            <li data-name="component" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="组件" lay-direction="2">
-                    <i class="layui-icon layui-icon-component"></i>
-                    <cite>视频标签</cite>
-                </a>
-
-                <dl class="layui-nav-child">
-                    <dd><a lay-href="admin/lable/list.html">标签列表</a></dd>
-                    <dd><a lay-href="admin/lable/add.html">标签添加</a></dd>
-                </dl>
-
             </li>
 
             <li data-name="template" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="模板" lay-direction="2">
+                <a href="javascript:;" lay-tips="视频分类" lay-direction="2">
                     <i class="layui-icon layui-icon-template"></i>
                     <cite>视频分类</cite>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a lay-href="template/tips/404.html">分类列表</a></dd>
-                    <dd><a lay-href="template/tips/error.html">分类添加</a></dd>
-                </dl>
-            </li>
-
-            <li data-name="app" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="应用" lay-direction="2">
-                    <i class="layui-icon layui-icon-app"></i>
-                    <cite>广告管理</cite>
-                </a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a lay-href="app/message/index.html">广告列表</a>
-                    </dd>
-                    <dd>
-                        <a lay-href="app/msd/index.html">广告添加</a>
-                    </dd>
+                    <dd><a lay-href="{:url('classify/index')}">分类列表</a></dd>
+                    <dd><a lay-href="{:url('classify/add')}">分类添加</a></dd>
                 </dl>
             </li>
 
             <li data-name="senior" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="高级" lay-direction="2">
-                    <i class="layui-icon layui-icon-senior"></i>
+                <a href="javascript:;" lay-tips="视频管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-video"></i>
                     <cite>视频管理</cite>
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a layadmin-event="im">视频列表</a>
+                        <a lay-href="{:url('video/index')}">视频列表</a>
                     </dd>
                     <dd>
-                        <a lay-href="app/message/index.html">视频添加</a>
+                        <a lay-href="{:url('video/upload')}">视频上传</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="{:url('video/recommend')}">特别推荐</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="{:url('video/relevant')}">相关视频</a>
                     </dd>
                 </dl>
             </li>
 
             <li data-name="app" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="应用" lay-direction="2">
-                    <i class="layui-icon layui-icon-app"></i>
+                <a href="javascript:;" lay-tips="友情链接" lay-direction="2">
+                    <i class="layui-icon layui-icon-senior"></i>
                     <cite>友情链接</cite>
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a lay-href="app/message/index.html">链接列表</a>
+                        <a lay-href="{:url('link/index')}">链接列表</a>
                     </dd>
                     <dd>
-                        <a lay-href="app/msd/index.html">链接添加</a>
+                        <a lay-href="{:url('link/add')}">链接添加</a>
                     </dd>
                 </dl>
             </li>
 
-            <li data-name="user" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="用户" lay-direction="2">
-                    <i class="layui-icon layui-icon-user"></i>
-                    <cite>用户管理</cite>
-                </a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a href="javascript:;" onclick="layer.tips('即将开放', this);">网站用户</a>
-                    </dd>
-                    <dd>
-                        <a href="javascript:;" onclick="layer.tips('即将开放', this);">后台管理员</a>
-                    </dd>
-                    <dd>
-                        <a href="javascript:;" onclick="layer.tips('即将开放', this);">角色管理</a>
-                    </dd>
-                </dl>
-            </li>
-
-            <li data-name="set" class="layui-nav-item">
-                <a href="javascript:;" lay-tips="设置" lay-direction="2">
+            <li data-name="app" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="网站设置" lay-direction="2">
                     <i class="layui-icon layui-icon-set"></i>
-                    <cite>设置管理</cite>
+                    <cite>网站设置</cite>
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="javascript:;">系统设置</a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                            <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
-                        </dl>
+                        <a href="javascript:;" onclick="layer.tips('尚未开放', this);">基础设置</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">我的设置</a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                        </dl>
+                        <a href="javascript:;" onclick="layer.tips('尚未开放', this);">域名设置</a>
                     </dd>
                 </dl>
             </li>

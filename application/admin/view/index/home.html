@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>控制台</title>
+
+	{include file="public:head" /}
+
+	{load href="/public/static/plug-in/chart/highcharts.js" /}
+	{load href="/public/static/plug-in/chart/exporting.js" /}
+	
+	<style>
+		.layuiadmin-big-font { font-size: 2em; padding: 10px 0; }
+		.layui-card-header .layuiadmin-badge { position: absolute; top: 11px; right: 15px; }
+	</style>
+</head>
+<body>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<!-- 访问量统计 -->
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+			            访问量
+			        	<span class="layui-badge layui-bg-blue layuiadmin-badge">日</span>
+			        </div>
+			        <div class="layui-card-body layuiadmin-card-list">
+			            <p class="layuiadmin-big-font">9,999,666</p>
+		            </div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+			            访问量
+			        	<span class="layui-badge layuiadmin-badge">月</span>
+			        </div>
+			        <div class="layui-card-body layuiadmin-card-list">
+			            <p class="layuiadmin-big-font">9,999,666</p>
+		            </div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+			            访问量
+			        	<span class="layui-badge layui-bg-cyan layuiadmin-badge">年</span>
+			        </div>
+			        <div class="layui-card-body layuiadmin-card-list">
+			            <p class="layuiadmin-big-font">9,999,666</p>
+		            </div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+			            访问量
+			        	<span class="layui-badge layui-bg-black layuiadmin-badge">总</span>
+			        </div>
+			        <div class="layui-card-body layuiadmin-card-list">
+			            <p class="layuiadmin-big-font">9,999,666</p>
+		            </div>
+				</div>
+			</div>
+
+			<!-- 访问量曲线图统计 -->
+			<div class="layui-col-sm12">
+				<div class="layui-card">
+					<div class="layui-card-header">访问量统计</div>
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<div id="chart" class="border"><svg height=225></svg></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 图表 -->
+	<script>
+		$(function() {
+			$('#chart').highcharts({
+				charts: {},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					categories: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', ]
+				},
+				tooltips: {
+					formatter: function() {
+						var s;
+						if (this.point.name) { // the pie chart                   
+		                    s = ''+                                               
+		                        this.point.name +': '+ this.y +' fruits';         
+		                } else {                                                  
+		                    s = ''+                                               
+		                        this.x  +': '+ this.y;                            
+		                }                                                         
+		                return s;  
+					}
+				},
+				labels: {
+					items: [{
+						html: '2018年访问量统计',
+						style: {
+							left: '40px',
+							top: '10px',
+							color: 'black'
+						}
+					}]
+				},
+				series: [{
+					type: 'spline',                                               
+		            name: '访问量',                                              
+		            data: [3, 2.67, 3, 6.33, 3.33, 12, 45, 45, 12, 41, 12, 10],                               
+		            marker: {                                                     
+		            	lineWidth: 2,                                               
+		            	lineColor: Highcharts.getOptions().colors[3],               
+		            	fillColor: 'white'                                          
+		            }   
+				}]
+			})
+		})
+	</script>
+	<!-- 图表结束 -->
+</body>
+</html>
