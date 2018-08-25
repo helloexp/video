@@ -11,8 +11,8 @@ use think\facade\Request;
 
 class Classify extends Validate
 {
-    // 首页
-    public function index()
+    // 视频分类
+    public function video()
     {
         // 如果是ajax请求
         if (Request::isAjax()) {
@@ -22,6 +22,7 @@ class Classify extends Validate
                 ->order('sort', 'asc')
                 ->select();
 
+            // 结果
             $result = [
                 'code' => 0,
                 'msg' => '',
