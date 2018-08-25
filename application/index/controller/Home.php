@@ -1,11 +1,9 @@
 <?php
 namespace app\index\Controller;
 
-use think\controller;
-use think\Db;
-use app\index\model\Video;
-use app\index\model\Type;
-use app\index\model\Recommend;
+use app\common\model\Video;
+use app\common\model\Type;
+use app\common\model\Recommend;
 use think\facade\Request;
 
 class Home extends Validate
@@ -13,7 +11,7 @@ class Home extends Validate
     //首页分类
     public function classify()
     {
-        $result = Type::taskout()->select();
+        $result = Type::fieldTime()->select();
         return json($result);
     }
 
@@ -21,9 +19,8 @@ class Home extends Validate
     public function seach()
     {
         $data = Request::get();
-        $data['title'] = '1';
-        $result = Video::
-            where('title','like','%'.$data['title'].'%')
+        $result = Video::taskout()
+            ->where('title','like','%'.$data['title'].'%')
             ->select();
 
         return json($result);
@@ -32,11 +29,7 @@ class Home extends Validate
     //特别推荐
     public function recommend()
     {
-        $result = Db::table('vd_recommend')
-            ->alias('a')
-            ->join(['vd_video'=>'v'],'a.video_id = v.id')
-            ->field('a.id,a.video_id,v.url,v.img,v.title,v.desc')
-            ->select();
+        $result = Recommend::linkVideo()->select();
         return json($result);
     }
 
@@ -44,9 +37,9 @@ class Home extends Validate
     public function newVideo()
     {
         $result['count'] = Video::count();
-        $result['data'] = Video::order('create_time','desc')
+        $result['data'] = Video::taskout()
+            ->order('create_time','desc')
             ->limit(8)
-            ->field('type,update_time,deleted_time',true)
             ->select();
 
         return json($result);
@@ -55,23 +48,22 @@ class Home extends Validate
     //热门电影
     public function hotVideo()
     {
-        $result['count'] = Db::table('vd_video')->count();
-        $result['data'] = Db::table('vd_video')
+        $result['count'] = Video::count();
+        $result['data'] =Video::taskout()
             ->order('watch_count','desc')
             ->limit(8)
-            ->field('type,update_time,deleted_time',true)
             ->select();
         return json($result);
     }
 
-    //分类电影查询
+    //分类电影
     public function type()
     {
         $data = Request::get();
-        $data['id'] = '1';
         $map['vt.id'] = $data['id'];
-        $result['data'] = Type::linkeVideo()->where($map)->select();
+        $result['data'] = Type::linkVideo()
+            ->where($map)
+            ->select();
         return json($result);
     }
 }
-?>

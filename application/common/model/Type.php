@@ -22,4 +22,13 @@ class Type extends Model
     {
         return self::field('deleted_time',true);
     }
+
+    /*
+     * 链接视频
+     */
+    static public function linkVideo()
+    {
+        return self::alias('vt')
+            ->join('vd_video v','vt.id = v.type');
+    }
 }
