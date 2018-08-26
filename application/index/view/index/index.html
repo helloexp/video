@@ -51,7 +51,7 @@
                     <p>{{ item.desc }}</p>
                 </figcaption>
             </figure>
-            <a href="single-video-v1.html" class="hover-posts">
+            <a v-bind:href="item.id" class="hover-posts">
                 <span><i class="fa fa-play"></i>播放视频</span>
             </a>
         </div>
@@ -96,7 +96,7 @@
                             <div class="post thumb-border">
                                 <div class="post-thumb">
                                     <img v-bind:src="item.img" v-bind:alt="item.title">
-                                    <a href="single-video-v2.html" class="hover-posts">
+                                    <a v-bind:href="item.id" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
+                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
@@ -130,7 +130,7 @@
                                         {{ item.desc }}
                                     </div>
                                     <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
+                                        <a v-bind:href="item.id"  class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                             <div class="post thumb-border">
                                 <div class="post-thumb">
                                     <img v-bind:src="item.img" alt="item.title">
-                                    <a href="single-video-v2.html" class="hover-posts">
+                                    <a v-bind:href="item.id"  class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
@@ -163,7 +163,7 @@
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
+                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
@@ -178,7 +178,7 @@
                                         {{ item.desc }}
                                     </div>
                                     <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
+                                        <a v-bind:href="item.id" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                             <div class="post thumb-border">
                                 <div class="post-thumb">
                                     <img v-bind:src="item.img" alt="item.title">
-                                    <a href="single-video-v2.html" class="hover-posts">
+                                    <a v-bind:href="item.id" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
@@ -250,7 +250,7 @@
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
+                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
@@ -265,7 +265,7 @@
                                         {{ item.desc }}
                                     </div>
                                     <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
+                                        <a v-bind:href="item.id" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +281,7 @@
                             <div class="post thumb-border">
                                 <div class="post-thumb">
                                     <img v-bind:src="item.img" alt="item.title">
-                                    <a href="single-video-v2.html" class="hover-posts">
+                                    <a v-bind:href="item.id" class="hover-posts">
                                         <span><i class="fa fa-play"></i>播放视频</span>
                                     </a>
                                     <div class="video-stats clearfix">
@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                                 <div class="post-des">
-                                    <h6><a href="single-video-v2.html">{{ item.title }}</a></h6>
+                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
                                         <p class="pull-left">
                                             <i class="fa fa-clock-o"></i>
@@ -313,7 +313,7 @@
                                         {{ item.desc }}
                                     </div>
                                     <div class="post-button">
-                                        <a href="single-video-v2.html" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
+                                        <a v-bind:href="item.id" class="secondary-button"><i class="fa fa-play-circle"></i>播放视频</a>
                                     </div>
                                 </div>
                             </div>
@@ -378,7 +378,7 @@
                             'title': t,
                             'desc': desc,
                             'img': res[i].img,
-                            'id': res[i].id,
+                            'id': '/play?id=' + res[i].id,
                             'video_id': res[i].video_id
                         }
 
@@ -391,9 +391,12 @@
 
             // 最新视频
             newvideosfn: function() {
-                var u = '{:url("home/newVideo")}'
+                var u = '{:url("home/newVideo")}',
+                    t = this
 
                 $.get(u, function(res) {
+                    res = t.playurl(res)
+
                     Vue.set(homevm, 'newvideos', res.data)
                     Vue.set(homevm, 'videototal', res.count)
                 })
@@ -401,11 +404,23 @@
 
             // 热门影视
             hotfn: function() {
-                var u = '{:url("home/hotVideo")}'
+                var u = '{:url("home/hotVideo")}',
+                    t = this
 
                 $.get(u, function(res) {
+                    res = t.playurl(res)
+
                     Vue.set(homevm, 'hot', res.data)
                 })
+            },
+
+            // 添加视频播放id
+            playurl: function(res) {
+                for (var i=0; i<res.data.length; i++) {
+                    res.data[i].id = '/play?id=' + res.data[i].id
+                }
+
+                return res
             }
         }
     })
