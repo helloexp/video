@@ -4,6 +4,7 @@ namespace app\index\Controller;
 use app\common\model\Video;
 use app\common\model\Type;
 use app\common\model\Recommend;
+use app\common\model\Related;
 use think\facade\Request;
 
 class Home extends Validate
@@ -12,6 +13,7 @@ class Home extends Validate
     public function classify()
     {
         $result = Type::field('create_time, update_time, deleted_time', true)
+            ->order('sort','asc')
             ->select();
 
         return json($result);
@@ -72,6 +74,40 @@ class Home extends Validate
             ->order('create_time', 'desc')
             ->select();
 
+        return json($result);
+    }
+
+    //电影详情
+    public function detailVideo()
+    {
+        $data = Request::post();
+
+        $map['id'] = $data['id'];
+        $res = Video::taskout()->where($map)->select();
+        
+        $result = [
+            'code' => 1,
+            'msg' => '数据请求成功',
+            'data' => $res
+        ];
+        return json($result);
+    }
+
+    //相关视频
+    public function relevant()
+    {
+        $res = Related::alias('vre')
+            ->join('vd_video v','vre.video_id = v.id')
+            ->field('vre.id,v.img,v.time,v.title,v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.is_hd')
+            ->order('vre.create_time','desc')
+            ->select();
+
+        $result = [
+            'code' => 1,
+            'msg' => '数据请求成功',
+            'count' => Related::count(),
+            'data' => $res
+        ];
         return json($result);
     }
 }
