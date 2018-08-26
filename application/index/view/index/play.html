@@ -1,6 +1,13 @@
 {extend name="public:base" /}
 
 {block name="content"}
+<style>
+    /* 手机屏幕 */
+    @media screen and (max-width: 900px) { 
+        .secondary-button:hover { background: #f6f6f6; color: #8e8e8e; border-color: #ececec;  }  
+    } 
+</style>
+
 <!--breadcrumbs-->
 <section id="breadcrumb">
     <div class="row">
@@ -61,8 +68,8 @@
                             </div>
                             <div class="social-share">
                                 <div class="post-like-btn clearfix">
-                                    <a href="#" class="secondary-button"><i class="fa fa-thumbs-o-up"></i></a>
-                                    <a href="#" class="secondary-button"><i class="fa fa-thumbs-o-down"></i></a>
+                                    <span class="secondary-button" onclick="comment(1)"><i class="fa fa-thumbs-o-up"></i></span>
+                                    <span class="secondary-button" onclick="comment(2)"><i class="fa fa-thumbs-o-down"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +164,9 @@
 <!-- content-end -->
 
 <script>
+    // 点赞标记
+    var commentFlag = false;
+
     // 视频播放
     $(function() {
         var u = '{:url("home/detailVideo")}',
@@ -187,6 +197,30 @@
         })
     })
     // 视频播放结束
+    
+    // 点赞和踩
+    var comment = function(mode) {
+        // mode为1是点赞，mode为2是踩
+        if (commentFlag) return ;
+
+        var u = '{:url("home/comment")}',
+            d = { id: '{$data["id"]}' }
+
+        $($('.social-share .secondary-button')[mode-1]).css({
+            'background': '#e96969',
+            'color': '#fff',
+            'border-color': '#e96969'
+        });
+
+        commentFlag = true
+        mode == 1 ? d.fabulous = 1 : d.step_on = 1
+        $.post(u, d, function(res) {
+            if (res.code == 0) {
+                // 成功
+                console.log(res)
+            }
+        })
+    }
      
     // 相关视频
     var relevantvm = new Vue({

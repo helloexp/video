@@ -118,24 +118,17 @@ class Home extends Validate
         return json($result);
     }
 
-    //视频 点赞\踩
+    // 视频 点赞\踩
     public function comment()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isPost()) {
+            // 发 fabulous: 1 点赞, 发 step_on: 1 踩
             $data = Request::post();
-
-//            $data['fabouls'] =1;
-//            $data['step_on'] =2;
-
             $map['id'] = $data['id'];
 
-            if(isset($data['fabouls']))
-            {
+            if(isset($data['fabulous'])) {
                 $res = Video::where($map)->setInc('fabulous');
-
-                if($res)
-                {
+                if($res) {
                     $result = [
                         'code' => 0,
                         'msg' => '赞的很华丽' ,
@@ -143,11 +136,9 @@ class Home extends Validate
                     return json($result);
                 }
 
-            }else if(isset($data['step_on']))
-            {
+            } else if(isset($data['step_on'])) {
                 $res = Video::where($map)->setInc('step_on');
-                if($res)
-                {
+                if($res) {
                     $result = [
                         'code' => 0,
                         'msg' => '踩了一下' ,
@@ -156,6 +147,7 @@ class Home extends Validate
                 }
             }
         }
+
         return json($result = ['code' =>1,'msg' => '换个姿势试试']);
     }
 }
