@@ -85,9 +85,27 @@
 	var deleted = function(data) {
 		layer.confirm('确认删除该数据?', function() {
 			layer.closeAll()
-			console.log(data)
+			console.log(data);
+			$.ajax({
+				url : "{:url('delete')}",
+				type : "POST",
+				data : {
+				    'id' : data.id,
+				},
+				dataType : 'json' ,
+				success : function(res){
+				    console.log(res);
+                    if(res.code == 1){
+                        layer.msg("删除成功", {icon: 6});
+                        location.reload();
+                    }else{
+                        layer.msg("删除失败", {icon: 5});
+                    }
+				}
+			});
 		});
 	}
+	if()
 </script>
 
 <script type="text/html" id="operation">

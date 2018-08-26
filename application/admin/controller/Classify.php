@@ -40,7 +40,16 @@ class Classify extends Validate
     // 添加分类
     public function add()
     {
-        return $this->fetch();
+        $data = Request::post();
+
+        $type = new Type;
+        $info = $type->save($data);
+
+        $result = $info
+            ? $result = ['code' => 0 ,'msg' =>'添加成功']
+            : $result = ['code' => 1 ,'msg' => '添加失败'] ;
+
+        return json($result);
     }
 
     //视频分类修改
