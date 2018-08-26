@@ -117,4 +117,45 @@ class Home extends Validate
         ];
         return json($result);
     }
+
+    //视频 点赞\踩
+    public function comment()
+    {
+        if(Request::isAjax())
+        {
+            $data = Request::post();
+
+//            $data['fabouls'] =1;
+//            $data['step_on'] =2;
+
+            $map['id'] = $data['id'];
+
+            if(isset($data['fabouls']))
+            {
+                $res = Video::where($map)->setInc('fabulous');
+
+                if($res)
+                {
+                    $result = [
+                        'code' => 0,
+                        'msg' => '赞的很华丽' ,
+                    ];
+                    return json($result);
+                }
+
+            }else if(isset($data['step_on']))
+            {
+                $res = Video::where($map)->setInc('step_on');
+                if($res)
+                {
+                    $result = [
+                        'code' => 0,
+                        'msg' => '踩了一下' ,
+                    ];
+                    return json($result);
+                }
+            }
+        }
+        return json($result = ['code' =>1,'msg' => '换个姿势试试']);
+    }
 }
