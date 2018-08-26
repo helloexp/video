@@ -80,13 +80,20 @@ class Home extends Validate
     //电影详情
     public function detailVideo()
     {
-        $data = Request::post();
+        $data = Request::get();
 
-        $map['id'] = $data['id'];
-        $res = Video::taskout()->where($map)->select();
+        $map['v.id'] = $data['id'];
+        $res = Video::where($map)
+            ->alias('v')
+            ->join('vd_type t', 't.id = v.type')
+            ->field('
+            t.type, v.id, v.url, v.img, v.time, v.title, v.desc, v.fabulous, v.step_on, v.watch_count,
+            v.is_hd, v.create_time, v.type as vtype
+          ')
+            ->find();
         
         $result = [
-            'code' => 1,
+            'code' => 0,
             'msg' => '数据请求成功',
             'data' => $res
         ];
@@ -98,7 +105,7 @@ class Home extends Validate
     {
         $res = Related::alias('vre')
             ->join('vd_video v','vre.video_id = v.id')
-            ->field('vre.id,v.img,v.time,v.title,v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.is_hd')
+            ->field('vre.id,v.img,v.time,v.title,v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.is_hd, v.create_time')
             ->order('vre.create_time','desc')
             ->select();
 

@@ -24,6 +24,9 @@ class Index extends Validate
     // 视频播放
     public function play()
     {
+        $data = Request::get();
+        $this->assign('data', $data);
+
         return $this->fetch();
     }
 
