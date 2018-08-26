@@ -2,6 +2,7 @@
 
 <style>
 	.btn-container { margin-bottom: 10px; }
+    .layui-table-cell .layui-form-checkbox[lay-skin=primary] { top: 5px; }
 </style>
 
 <div class="layui-fluid">
@@ -9,7 +10,7 @@
 		<div class="layui-card-header">特别推荐</div>
 		<div class="layui-card-body">
 			<div class="btn-container">
-				<button class="layui-btn layui-btn-normal" onclick="pop()">上传视频</button>
+				<button class="layui-btn layui-btn-normal" onclick="pop()">添加推荐</button>
 				<button class="layui-btn layui-btn-danger layui-btn-normal" onclick="pop()">一键删除</button>
 			</div>
 			<table id="table" lay-filter="table"></table>
@@ -28,6 +29,7 @@
             done: function(res) {
             },
             cols: [[
+                {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: 'ID', width: 70, align: 'center'},
                 {field: 'title', title: '视频名称', width: 140, align: 'center'},
                 {field: 'time', title: '视频长度', width: 90, align: 'center'},
@@ -36,9 +38,7 @@
                 {field: 'step_on', title: '不喜欢', width: 80, align: 'center'},
                 {field: 'watch_count', title: '观看次数', width: 100, align: 'center', sort: true},
                 {field: 'create_time', title: '上传时间', width: 120, align: 'center'},
-                {field: 'update_time', title: '更新时间', width: 120, align: 'center'},
-                {field: 'is_hd', title: '是否高清', width: 90, align: 'center'},
-                {title: '操作', width: 120, align: 'center', templet: '#operation', fixed: 'right'}
+                {title: '操作', width: 80, align: 'center', templet: '#operation', fixed: 'right'}
             ]]
         });
 
@@ -55,44 +55,24 @@
 
     // 弹出层
     var pop = function(data) {
-        var title = data == null ? '分类添加' : '分类编辑'
         var html  = '<div class="layui-form">'
         html += '<div class="layui-form-item">'
-        html += '<label class="layui-form-label">类型</label>'
+        html += '<label class="layui-form-label">视频ID</label>'
         html += '<div class="layui-input-block">'
-        html += '<input type="text" name="type" required placeholder="请输入类型" class="layui-input">'
-        html += '</div>'
-        html += '</div>'
-        html += '<div class="layui-form-item">'
-        html += '<label class="layui-form-label">排序</label>'
-        html += '<div class="layui-input-block">'
-        html += '<input type="number" name="sort" required placeholder="请输入排序" class="layui-input">'
+        html += '<input type="text" name="id" placeholder="输入视频id多个按逗号隔开" class="layui-input">'
         html += '</div>'
         html += '</div>'
         html += '</div>'
 
         layer.open({
-            title: title,
+            title: "推荐输入",
             content: html,
             yes: function(res) {
                 // 判断输入框是否为空
-                if ($('[name=type]').val().length == 0
-                    || $('[name=sort]').val().length == 0) {
+                if ($('[name=id]').val().length == 0) {
 
                     layer.alert('不能存在空的输入框', { icon: 5 });
                     return ;
-                }
-
-                var d = {
-                    type: $('[name=type]').val(),
-                    sort: $('[name=sort]').val()
-                }
-                if (data == null) {
-                    var u = '{:url("add")}'
-
-                } else {
-                    var u = '{:url("update")}'
-                    d.id = data.id
                 }
 
                 layer.load(2);
@@ -147,6 +127,5 @@
 </script>
 
 <script type="text/html" id="operation">
-	<a class="layui-btn layui-btn-xs" lay-event="detail">编辑</a>
 	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="deleted">删除</a>
 </script>

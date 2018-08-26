@@ -2,23 +2,50 @@
 
 <style>
 	.btn-container { margin-bottom: 10px; }
+	.layui-table-cell .layui-form-checkbox[lay-skin=primary] { top: 5px; }
 </style>
 
 <div class="layui-fluid">
 	<div class="layui-card">
 		<div class="layui-card-header">视频列表</div>
 		<div class="layui-card-body">
-			<div class="btn-container">
-				<button class="layui-btn layui-btn-normal" onclick="pop()">上传视频</button>
-				<button class="layui-btn layui-btn-danger layui-btn-normal" onclick="pop()">一键删除</button>
+			<div class="btn-container layui-form">
+				<!-- 排序搜索 -->
+				<div class="layui-form-item">
+				    <label class="layui-form-label">排序搜索</label>
+				    <div class="layui-input-block">
+				    	<select name="search">
+					        <option value="0">按视频上传时间新到老排序</option>
+					        <option value="1">按视频喜欢多到少排序</option>
+					        <option value="2">按视频观看次数多到少排序</option>
+				    	</select>
+				    </div>
+				</div>
+
+				<!-- 类型搜索 -->
+				<div class="layui-form-item">
+				    <label class="layui-form-label">类型搜索</label>
+				    <div class="layui-input-block">
+				    	<select name="type">
+					        <option value="0">欧美</option>
+					        <option value="1">日韩</option>
+					        <option value="2">国产</option>
+				    	</select>
+				    </div>
+				</div>
+
+				<div class="btn-container">
+					<button class="layui-btn layui-btn-normal" onclick="pop()">上传视频</button>
+					<button class="layui-btn layui-btn-danger layui-btn-normal" onclick="pop()">一键删除</button>
+				</div>
+				<table id="table" lay-filter="table"></table>
 			</div>
-			<table id="table" lay-filter="table"></table>
 		</div>
 	</div>
 </div>
 
 <script>
-	layui.use('table', function() {
+	layui.use(['table', 'form'], function() {
 		var table = layui.table;
 
 		table.render({
@@ -28,6 +55,7 @@
 			done: function(res) {
 			},
 			cols: [[
+				{type: 'checkbox', fixed: 'left'},
 				{field: 'id', title: 'ID', width: 70, align: 'center'},
 				{field: 'title', title: '视频名称', width: 140, align: 'center'},
 				{field: 'time', title: '视频长度', width: 90, align: 'center'},
@@ -37,7 +65,7 @@
 				{field: 'watch_count', title: '观看次数', width: 100, align: 'center', sort: true},
 				{field: 'create_time', title: '上传时间', width: 120, align: 'center'},
 				{field: 'update_time', title: '更新时间', width: 120, align: 'center'},
-				{field: 'is_hd', title: '是否高清', width: 90, align: 'center'},
+				{title: '是否高清', width: 100, align: 'center', templet: '#isHd', fixed: 'right'},
 				{title: '操作', width: 120, align: 'center', templet: '#operation', fixed: 'right'}
 			]]
 		});
@@ -144,6 +172,10 @@
 			});
 		});
 	}
+</script>
+
+<script type="text/html" id="isHd">
+	<input type="checkbox" name="is_hd" value="{{ d.is_hd }}" title="高清" lay-filter="isHd" />
 </script>
 
 <script type="text/html" id="operation">

@@ -1,8 +1,92 @@
 {include file="public:head" /}
 
-<div class="layui-fluid">
+<div class="layui-fluid" id="video-upload">
 	<div class="layui-card">
 		<div class="layui-card-header">视频上传</div>
-		<div class="layui-card-body"></div>
+		<div class="layui-card-body">
+			<div class="layui-form">
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频标题</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="title" required  lay-verify="required" placeholder="请输入视频标题" class="layui-input">
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频时长</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="time" required  lay-verify="required" placeholder="请输入视频时长" class="layui-input">
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频类型</label>
+				    <div class="layui-input-block">
+				    	<select name="type" lay-verify="required">
+							<option value="1">欧美</option>
+							<option value="2">日韩</option>
+							<option value="3">国产</option>
+				    	</select>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">是否高清</label>
+				    <div class="layui-input-block">
+				    	<input type="checkbox" name="is_hd" lay-skin="switch" lay-text="是|否" />
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">特别推荐</label>
+				    <div class="layui-input-block">
+				    	<input type="checkbox" name="recommend" lay-skin="switch" lay-text="是|否" />
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频封面</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="img" required  lay-verify="required" placeholder="请输入封面链接或者上传封面" class="layui-input">
+				    	<button class="layui-btn" style="margin-top: 5px">封面上传</button>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频地址</label>
+				    <div class="layui-input-block">
+				    	<input type="text" name="title" required  lay-verify="required" placeholder="请输入视频地址或者上传视频" class="layui-input">
+				    	<button class="layui-btn" style="margin-top: 5px">视频上传</button>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <label class="layui-form-label">视频描述</label>
+				    <div class="layui-input-block">
+				    	<textarea name="desc" id="desc" style="display: none"></textarea>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+    				<div class="layui-input-block">
+      					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    				</div>
+  				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
+<!-- js -->
+<script>
+	// 初始化组件
+	layui.use(['form', 'layedit'], function() {
+		var form = layui.form,
+			layedit = layui.layedit
+
+			layedit.build('desc', {
+				height: 180
+			})
+	})
+</script>
