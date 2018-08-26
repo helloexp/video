@@ -100,7 +100,6 @@ class Home extends Validate
             ->join('vd_video v','vre.video_id = v.id')
             ->field('vre.id,v.img,v.time,v.title,v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.is_hd')
             ->order('vre.create_time','desc')
-            ->limit(6)
             ->select();
 
         $result = [
