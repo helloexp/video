@@ -27,10 +27,11 @@
                             </div>
                             <div class="top-bar-right">
                                 <ul class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown">
-                                    <li class="has-submenu active">
+                                    <li class="has-submenu pc-nav active">
                                         <a href="{:url('index')}">主页</a>
                                     </li>
-                                    <li class="has-submenu" v-for="item in nav">
+                                    <li class="has-submenu pc-nav" v-for="item in nav">
+                                        <span style="display: none">{{ item.id }}</span>
                                         <a v-bind:href="item.url">{{ item.type }}</a>
                                     </li>
                                 </ul>
@@ -69,7 +70,8 @@
                 for (var i in res) {
                     var temp = {
                         url: "/category?id="+ res[i].id +"&type="+ res[i].type,
-                        type: res[i].type
+                        type: res[i].type,
+                        id: res[i].id
                     };
 
                     newres.push(temp)
@@ -78,6 +80,43 @@
                 // 设置导航
                 Vue.set(pcvm, 'nav', newres)
             })
+        },
+        // 数据更新之后
+        updated: function() {
+            this.navchange()
+        },
+        methods: {
+            // 导航切换设置
+            navchange: function() {
+                var id = this.getUrlParam('id'),
+                    nav = document.getElementsByClassName('pc-nav')
+                
+                for (var i=0; i<nav.length; i++) {
+                    // 先取消当前active
+                    nav[i].setAttribute('class', 'has-submenu pc-nav')
+
+                    // 再添加当前的active
+                    if (parseInt(id) === parseInt(nav[i].children[0].innerHTML)) {
+                        nav[i].setAttribute('class', 'has-submenu pc-nav active')
+
+                    } 
+                }
+
+                // 如果id为空的话表示是主页
+                if (id == null) {
+                    nav[0].setAttribute('class', 'has-submenu pc-nav active')
+                }
+            },
+
+            // 获取url后参数
+            getUrlParam: function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&*])(&|$)", "i"),
+                    r = window.location.search.substr(1).match(reg)
+
+                    if (r != null) return unescape(r[2])
+
+                    return null 
+            }
         }
     });
 </script>

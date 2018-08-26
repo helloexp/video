@@ -20,7 +20,7 @@ Route::get('hello/:name', 'index/hello');
 Route::rule('404', 'index/index/_404');
 
 // 播放器 /play
-// Route::rule('play/:id', 'index/index/play');
+Route::rule('play', 'index/index/play');
 
 // 分类路由 /category
 Route::rule('category', 'index/index/category');
