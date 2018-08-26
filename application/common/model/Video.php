@@ -16,8 +16,9 @@ class Video extends Model
     use SoftDelete;
     protected $deleteTime = 'deleted_time';
 
-    //过滤字段
-    static public function taskout(){
+    // 过滤字段
+    static public function taskout()
+    {
         return self::field('update_time, deleted_time, url, step_on, type',true);
     }
 }

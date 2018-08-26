@@ -15,4 +15,10 @@ class Statistics extends Model
 {
     use SoftDelete;
     protected $deleteTime = 'deleted_time';
+
+    // 设置区间
+    public static function section($start, $end)
+    {
+        return self::whereTime('create_time', [$start, $end])->count();
+    }
 }

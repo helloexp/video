@@ -17,14 +17,21 @@ class Type extends Model
     use SoftDelete;
     protected $deleteTime = 'deleted_time';
 
-    // 模型初始化
-    protected static function init()
-    {
-    }
-
     // 过滤
     public static function fieldTime()
     {
         return self::field('deleted_time',true);
+    }
+
+    // 视频分类
+    public function videoType()
+    {
+        return $this->alias('t')
+            ->join('vd_video v', 't.id=v.type')
+            ->field('
+                v.id, v.time, v.title, v.fabulous, v.step_on, v.watch_count, v.is_hd, v.create_time,
+                v.update_time, t.type
+            ')
+            ->order('create_time', 'desc');
     }
 }

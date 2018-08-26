@@ -69,8 +69,40 @@
 			title: title,
 			content: html,
 			yes: function(res) {
-				layer.closeAll()
-				console.log(res)
+				// 判断输入框是否为空
+				if ($('[name=type]').val().length == 0 
+					|| $('[name=sort]').val().length == 0) {
+
+					layer.alert('不能存在空的输入框', { icon: 5 });
+					return ;
+				}
+
+				var d = {
+						type: $('[name=type]').val(),
+						sort: $('[name=sort]').val()
+					}
+				if (data == null) {
+					var u = '{:url("add")}'
+
+				} else {
+					var u = '{:url("update")}'
+					d.id = data.id
+				}
+
+				layer.load(2);
+				$.post(u, d, function(res) {
+					// 清除弹出层
+					layer.closeAll()
+					
+					if (res.code == 0) {
+						layer.msg(title+'成功', {icon: 6, time: 1500}, function() {
+							window.location.reload()
+						})
+						return ;
+					}
+
+					layer.msg(title+'失败', {icon: 5, time: 1500})
+				})
 			}
 		});
 
@@ -83,9 +115,9 @@
 
 	// 删除
 	var deleted = function(data) {
-		layer.confirm('确认删除该数据?', function() {
+		layer.confirm('确认删除该分类?', function() {
 			layer.closeAll()
-			console.log(data);
+
 			$.ajax({
 				url : "{:url('delete')}",
 				type : "POST",
@@ -94,18 +126,18 @@
 				},
 				dataType : 'json' ,
 				success : function(res){
-				    console.log(res);
                     if(res.code == 1){
-                        layer.msg("删除成功", {icon: 6});
-                        location.reload();
-                    }else{
+                        layer.msg("删除成功", {icon: 6}, function() {
+                        	location.reload()
+                        });
+                        
+                    } else{
                         layer.msg("删除失败", {icon: 5});
                     }
 				}
 			});
 		});
 	}
-	if()
 </script>
 
 <script type="text/html" id="operation">

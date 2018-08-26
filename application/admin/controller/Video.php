@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use think\Model;
+use app\common\model\Type;
 use think\facade\Request;
 
 //视频管理
@@ -10,23 +10,25 @@ class Video extends Validate
     // 视频列表
     public function index()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isAjax()) {
             $get = Request::get();
+            $type = new Type();
 
-            $data = \app\common\model\Video::taskout()
-                ->limit($get['page'],$get['limit'])
+            $data = $type
+                ->videoType()
+                ->page($get['page'], $get['limit'])
                 ->select();
 
             $result = [
                 'code' => 0,
                 'msg' => '数据请求成功',
-                'count' => \app\common\model\Video::taskout()->count(),
+                'count' => $type->count(),
                 'data' => $data,
             ];
 
             return json($result);
         }
+
         return $this->fetch();
     }
 

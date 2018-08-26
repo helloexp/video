@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>主页</title>
+	<title>控制台</title>
 
 	{include file="public:head" /}
 
@@ -18,20 +18,17 @@
 	<div class="layui-fluid">
 		<div class="layui-row layui-col-space15">
 			<!-- 访问量统计 -->
-			{foreach $data as $key => $vo}
 			<div class="layui-col-sm6 layui-col-md3">
 				<div class="layui-card">
 					<div class="layui-card-header">
 			            访问量
-			        	<span class="layui-badge {$vo.class} layuiadmin-badge">{$vo.name}</span>
+			        	<span class="layui-badge layuiadmin-badge">日</span>
 			        </div>
 			        <div class="layui-card-body layuiadmin-card-list">
-			            <p class="layuiadmin-big-font">{$vo.data}</p>
+			            <p class="layuiadmin-big-font">123123</p>
 		            </div>
 				</div>
 			</div>
-			{/foreach}
-
 			<!-- 访问量曲线图统计 -->
 			<div class="layui-col-sm12">
 				<div class="layui-card">

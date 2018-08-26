@@ -52,7 +52,7 @@ class Classify extends Validate
         return json($result);
     }
 
-    //视频分类修改
+    // 视频分类修改
     public function update()
     {
         $data = Request::post();
@@ -64,8 +64,8 @@ class Classify extends Validate
             ->update($data);
 
         $result = $list
-            ?$result = ['code' => 1,'msg' => '更新成功']
-            :$result =['code' => 0 ,'msg' => '更新失败'];
+            ?$result = ['code' => 0,'msg' => '更新成功']
+            :$result =['code' => 1,'msg' => '更新失败'];
         return json($result);
     }
     
