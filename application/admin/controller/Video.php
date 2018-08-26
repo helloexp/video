@@ -16,13 +16,14 @@ class Video extends Validate
 
             $data = $type
                 ->videoType()
+                ->where('v.deleted_time','=',NUll)
                 ->page($get['page'], $get['limit'])
                 ->select();
 
             $result = [
                 'code' => 0,
                 'msg' => '数据请求成功',
-                'count' => $type->count(),
+                'count' => $type->where('deleted_time','=',NUll)->count(),
                 'data' => $data,
             ];
 
@@ -30,6 +31,51 @@ class Video extends Validate
         }
 
         return $this->fetch();
+    }
+
+    //视频列表操作->删除
+    public function delete()
+    {
+        if(Request::isAjax())
+        {
+            $data = Request::post();
+            $map['id'] = $data['id'];
+
+            $res = \app\common\model\Video::destroy($map);
+
+            if($res)
+            {
+                $result = [
+                    'code' => 0 ,
+                    'msg' => '删除成功',
+                ];
+                return json($result);
+            }
+        }
+        return json($result =['code' => 1,'msg' =>'删除失败']);
+    }
+
+    //视频列表操作->修改
+    public function update()
+    {
+        if(Request::isAjax())
+        {
+            $data = Request::post();
+            $map['id'] = $data['id'];
+
+            $res = \app\common\model\Video::where($map)
+                ->save($data);
+
+            if($res)
+            {
+                $result = [
+                    'code' => 0 ,
+                    'msg' => '修改成功',
+                ];
+                return json($result);
+            }
+        }
+        return json($result =['code' => 1,'msg' =>'修改失败']);
     }
 
     // 视频上传
