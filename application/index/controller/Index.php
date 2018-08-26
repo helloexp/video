@@ -1,6 +1,8 @@
 <?php
 namespace app\index\controller;
 
+use think\facade\Request;
+
 class Index extends Validate
 {
     // 首页
@@ -12,6 +14,10 @@ class Index extends Validate
     // 类别
     public function category()
     {
+        $data = Request::get();
+
+        $this->assign('data', $data);
+
         return $this->fetch();
     }
 
