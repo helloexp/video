@@ -82,7 +82,7 @@ class Home extends Validate
     {
         $data = Request::post();
 
-        $map['id'] = $data['id'] = 2;
+        $map['id'] = $data['id'];
         $res = Video::taskout()->where($map)->select();
         
         $result = [
