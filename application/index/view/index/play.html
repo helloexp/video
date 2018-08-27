@@ -235,8 +235,9 @@
         created: function() {
             // 获取相关视频
             var u = '{:url("home/relevant")}'
+            d= { id: '{$data["id"]}' }
 
-            $.get(u, function(res) {
+            $.get(u, d,function(res) {
                 for (var i=0; i<res.data.length; i++) {
                     res.data[i].url = '/play?id=' + res.data[i].id
                 }
