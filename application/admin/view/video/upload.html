@@ -2,20 +2,24 @@
 
 <div class="layui-fluid" id="video-upload">
 	<div class="layui-card">
-		<div class="layui-card-header">视频上传</div>
+		<div class="layui-card-header">
+			{if empty($data['id'])}视频上传
+			{else /}视频编辑
+			{/if}
+		</div>
 		<div class="layui-card-body">
-			<div class="layui-form">
+			<div class="layui-form" lay-filter="upload">
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频标题</label>
 				    <div class="layui-input-block">
-				    	<input type="text" name="title" required  lay-verify="required" placeholder="请输入视频标题" class="layui-input">
+				    	<input type="text" name="title" required lay-verify="required" placeholder="请输入视频标题" class="layui-input" value="{$data['title']}">
 				    </div>
 				</div>
 
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频时长</label>
 				    <div class="layui-input-block">
-				    	<input type="text" name="time" required  lay-verify="required" placeholder="请输入视频时长" class="layui-input">
+				    	<input type="text" name="time" required  lay-verify="required" placeholder="请输入视频时长,输入示例(51:10)" class="layui-input" value="{$data['time']}">
 				    </div>
 				</div>
 
@@ -23,9 +27,9 @@
 				    <label class="layui-form-label">视频类型</label>
 				    <div class="layui-input-block">
 				    	<select name="type" lay-verify="required">
-							<option value="1">欧美</option>
-							<option value="2">日韩</option>
-							<option value="3">国产</option>
+							{foreach $typelist as $k => $vo}
+								<option value="{$vo.id}">{$vo.type}</option>
+							{/foreach}
 				    	</select>
 				    </div>
 				</div>
@@ -47,7 +51,7 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频封面</label>
 				    <div class="layui-input-block">
-				    	<input type="text" name="img" required  lay-verify="required" placeholder="请输入封面链接或者上传封面" class="layui-input">
+				    	<input type="text" name="img" required lay-verify="required" placeholder="请输入封面链接或者上传封面" class="layui-input" value="{$data['img']}">
 				    	<button class="layui-btn" style="margin-top: 5px">封面上传</button>
 				    </div>
 				</div>
@@ -55,7 +59,7 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频地址</label>
 				    <div class="layui-input-block">
-				    	<input type="text" name="title" required  lay-verify="required" placeholder="请输入视频地址或者上传视频" class="layui-input">
+				    	<input type="text" name="url" required lay-verify="required" placeholder="请输入视频地址或者上传视频" class="layui-input" value="{$data['url']}">
 				    	<button class="layui-btn" style="margin-top: 5px">视频上传</button>
 				    </div>
 				</div>
@@ -69,7 +73,7 @@
 
 				<div class="layui-form-item">
     				<div class="layui-input-block">
-      					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      					<button class="layui-btn" lay-submit lay-filter="upload-btn">立即提交</button>
       					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
     				</div>
   				</div>
@@ -85,8 +89,14 @@
 		var form = layui.form,
 			layedit = layui.layedit
 
-			layedit.build('desc', {
-				height: 180
-			})
+		layedit.build('desc', {
+			height: 180
+		})
+
+		// 表单初始化
+		form.val('upload', {
+			'is_hd': parseInt('{$data["is_hd"]}'),
+			'recommend': parseInt('{$data["recommend"]}')
+		})
 	})
 </script>

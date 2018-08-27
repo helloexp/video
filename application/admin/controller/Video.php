@@ -137,6 +137,36 @@ class Video extends Validate
     // 视频上传
     public function upload()
     {
+        // 判断是不是编辑
+        $id = Request::get('id');
+
+        // 获取分类列表
+        $typelist = Type::field('id, type')->order('sort', 'asc')->all();
+        if (!empty($id)) {
+            // 表示编辑
+            $data = \app\common\model\Video::where([
+                'id' => $id
+            ])->field('id, title, time, type, is_hd, img, url, desc')->find();
+            $data['recommend'] = Recommend::where(['video_id' => $id])->count();
+
+        } else {
+            $data = [
+                'title' => '',
+                'time' => '',
+                'type' => '',
+                'is_hd' => 0,
+                'img' => '',
+                'url' => '',
+                'desc' => '',
+                'recommend' => 0
+            ];
+        }
+
+        $this->assign([
+            'typelist' => $typelist,
+            'data' => $data
+        ]);
+
         return $this->fetch();
     }
 
