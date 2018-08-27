@@ -25,4 +25,11 @@ class Recommend extends Model
             ->join(['vd_video'=>'v'],'vr.video_id = v.id')
             ->field('vr.id, vr.video_id, v.img, v.title, v.desc');
     }
+
+    static public function revideo()
+    {
+        return self::alias('vr')
+            ->join(['vd_video'=>'v'],'vr.video_id = v.id')
+            ->field('vr.id, v.img, v.time,v.title, v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.create_time');
+    }
 }
