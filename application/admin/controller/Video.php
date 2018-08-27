@@ -24,67 +24,67 @@ class Video extends Validate
             $result = [
                 'code' => 0,
                 'msg' => '数据请求成功',
-                'count' => $type->where('deleted_time','=',NUll)->count(),
+                'count' => \app\common\model\Video::where('deleted_time','=',NUll)->count(),
                 'data' => $data,
             ];
 
             return json($result);
         }
 
+        // 分类列
+        $typelist = Type::field('id, type')->order('sort', 'asc')->all();
+        $this->assign('typelist', $typelist);
+
         return $this->fetch();
     }
 
-    //视频列表搜索 ->排序搜索
-    public function seach()
+    // 视频列表搜索 ->排序搜索
+    public function search()
     {
         if(Request::isAjax())
         {
-            $data = Request::post();
-            $map['type'] = $data['type'];
+            $data = Request::get();
+            $map = $data['type'] == 'all' ? 0 : [ 'type' => $data['type'] ];
+            $type = new Type();
 
             //参数 type seach 0 视频上传时间 1 视频喜欢度 2 观看次数
-            if($data['seach'] == 0)
-            {
-                $res = \app\common\model\Video::where($map)
-                    ->order('create_time','desc')
-                    ->limit($data['page'],$data['limit'])
-                    ->select();
-            }
-            if($data['seach'] ==1)
-            {
-                $res = \app\common\model\Video::where($map)
-                    ->order('fabulous','desc')
-                    ->limit($data['page'],$data['limit'])
-                    ->select();
-            }
-            if($data['seach'] ==2)
-            {
-                $res = \app\common\model\Video::where($map)
-                    ->order('watch_count','desc')
-                    ->limit($data['page'],$data['limit'])
-                    ->select();
+            if($data['search'] == 0) {
+                $order = 'create_time';
+
+            } elseif($data['search'] ==1) {
+                $order = 'fabulous';
+
+            } elseif($data['search'] ==2) {
+                $order = 'watch_count';
             }
 
+            // 设置条件
+            $where['v.deleted_time'] = NULL;
+            $data['type'] == 'all' ? '' : $where['v.type'] = $data['type'];
+
+            $res = $type->searchSort($where, $order)
+                ->page($data['page'], $data['limit'])
+                ->select();
+
             return json($result = [
-                'code'=>0,
-                'msg'=>'数据请求成功',
-                'data'=>$res
+                'code' => 0,
+                'msg' => '数据请求成功',
+                'count' => \app\common\model\Video::where($map)->count(),
+                'data' => $res
             ]);
         }
+
         return json($result = ['code'=>1,'msg'=>'非法操作']);
     }
 
     //视频列表操作->删除
     public function delete()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isAjax()) {
             $data = Request::post();
+            $res = \app\common\model\Video::destroy($data['id']);
 
-            $res = \app\common\model\Video::destroy($data);
-
-            if($res)
-            {
+            if($res) {
                 $result = [
                     'code' => 0 ,
                     'msg' => '删除成功',
@@ -98,16 +98,14 @@ class Video extends Validate
     //视频列表操作->修改
     public function update()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isAjax()) {
             $data = Request::post();
             $map['id'] = $data['id'];
 
             $res = \app\common\model\Video::where($map)
                 ->save($data);
 
-            if($res)
-            {
+            if($res) {
                 $result = [
                     'code' => 0 ,
                     'msg' => '修改成功',
@@ -121,51 +119,31 @@ class Video extends Validate
     //视频列表操作 ->是否高清
     public function definition()
     {
-        // id , is_hd:0 高清,1 其他
-        if(Request::isAjax())
-        {
+        // id , is_hd:0 其他, 1 高清
+        if(Request::isAjax()) {
             $data = Request::post();
-
             $map['id'] = $data['id'];
 
             //设置高清
-            if($data['is_hd'] == 0 )
-            {
-                $res = \app\common\model\Video::where($map)->update($data);
-                if($res)
-                {
-                    return json($result = ['code' => 0,'msg' =>'设置成功']);
-                }
+            $res = \app\common\model\Video::where($map)->update($data);
+            if($res) {
+                return json($result = ['code' => 0,'msg' =>'设置成功']);
             }
 
-            //设置其他
-            if($data['is_hd'] == 1)
-            {
-                $res = \app\common\model\Video::Where($map)->update($data);
-                if($res)
-                {
-                    return json($result = ['code' => 0,'msg' =>'设置成功']);
-                }
-            }
+            return json($result = ['code' => 1,'msg' =>'设置失败']);
         }
-        return json($result = ['code' => 1,'msg' =>'设置失败']);
     }
 
     // 视频上传
     public function upload()
     {
-        if(Request::isAjax())
-        {
-
-        }
         return $this->fetch();
     }
 
     // 特别推荐
     public function recommend()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isAjax()) {
             $data = Request::get();
 
             $res = Recommend::revideo()
@@ -184,15 +162,15 @@ class Video extends Validate
         }
         return $this->fetch();
     }
-    //特别推荐操作 -> 删除
+
+    // 特别推荐操作 -> 删除
     public function redeleted()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isAjax()) {
             $data = Request::post();
             $res = Recommend::destroy($data);
-            if($res)
-            {
+
+            if($res) {
                 return json($result=['code'=>0,'msg'=>'删除成功']);
             }
         }

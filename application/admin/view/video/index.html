@@ -14,7 +14,7 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">排序搜索</label>
 				    <div class="layui-input-block">
-				    	<select name="search">
+				    	<select name="search" lay-filter="search">
 					        <option value="0">按视频上传时间新到老排序</option>
 					        <option value="1">按视频喜欢多到少排序</option>
 					        <option value="2">按视频观看次数多到少排序</option>
@@ -26,20 +26,20 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">类型搜索</label>
 				    <div class="layui-input-block">
-				    	<select name="type">
-					        <option value=""></option>
-					        <option value="0">欧美</option>
-					        <option value="1">日韩</option>
-					        <option value="2">国产</option>
+				    	<select name="type" lay-filter="type">
+					        <option value="all">全部</option>
+					        {foreach $typelist as $key => $vo}
+						        <option value="{$vo.id}">{$vo.type}</option>
+						    {/foreach}
 				    	</select>
 				    </div>
 				</div>
 
 				<div class="btn-container">
-					<button class="layui-btn layui-btn-normal" onclick="pop()">上传视频</button>
-					<button class="layui-btn layui-btn-danger layui-btn-normal" onclick="pop()">批量删除</button>
+					<button class="layui-btn layui-btn-normal" onclick="upload(null)">上传视频</button>
+					<button class="layui-btn layui-btn-danger layui-btn-normal" id="moreDeleted">批量删除</button>
 				</div>
-				<table id="table" lay-filter="table"></table>
+				<table id="table" lay-filter="table" lay-data="{id: table}"></table>
 			</div>
 		</div>
 	</div>
@@ -48,8 +48,9 @@
 <script>
 	layui.use(['table', 'form'], function() {
 		var table = layui.table;
+		var form  = layui.form;
 
-		table.render({
+		var tableIns = table.render({
 			elem: "#table",
 			url: "{:url('index')}",
 			page: true,
@@ -77,75 +78,93 @@
 				lEv = o.event,
 				tr  = o.tr
 
-			if (lEv == 'detail') pop(d);
+			if (lEv == 'detail') upload(d.id);
 			if (lEv == 'deleted') deleted(d);
 		})
-	});
 
-	// 弹出层
-	var pop = function(data) {
-		var title = data == null ? '分类添加' : '分类编辑'
-		var html  = '<div class="layui-form">'
-			html += '<div class="layui-form-item">'
-			html += '<label class="layui-form-label">类型</label>'
-			html += '<div class="layui-input-block">'
-			html += '<input type="text" name="type" required placeholder="请输入类型" class="layui-input">'
-			html += '</div>'
-			html += '</div>'
-			html += '<div class="layui-form-item">'
-			html += '<label class="layui-form-label">排序</label>'
-			html += '<div class="layui-input-block">'
-			html += '<input type="number" name="sort" required placeholder="请输入排序" class="layui-input">'
-			html += '</div>'
-			html += '</div>'
-			html += '</div>'
+		// 监听排序搜索
+		form.on('select(search)', function(data) {
+			search(tableIns);
+		})
 
-		layer.open({
-			title: title,
-			content: html,
-			yes: function(res) {
-				// 判断输入框是否为空
-				if ($('[name=type]').val().length == 0 
-					|| $('[name=sort]').val().length == 0) {
+		// 类型搜索
+		form.on('select(type)', function(data) {
+			search(tableIns);
+		})
 
-					layer.alert('不能存在空的输入框', { icon: 5 });
+		// 监听高清
+		form.on('checkbox(isHd)', function(obj) {
+			var u = '{:url("definition")}',
+				d = { id: this.id, is_hd: this.value == 0 ? 1 : 0 }
+
+			layer.load(2)
+			$.post(u, d, function(res) {
+				layer.closeAll()
+				window.location.reload()
+			})
+		}) 
+
+		// 批量删除
+		$('#moreDeleted').click(function() {
+			layer.confirm('确定批量删除数据?', function() {
+				layer.closeAll();
+				var cs = table.checkStatus('table')
+
+				if (cs.data.length == 0) {
+					layer.msg('请您选择操作项!')
 					return ;
 				}
 
-				var d = {
-						type: $('[name=type]').val(),
-						sort: $('[name=sort]').val()
-					}
-				if (data == null) {
-					var u = '{:url("add")}'
-
-				} else {
-					var u = '{:url("update")}'
-					d.id = data.id
+				var id = ''
+				for (var i=0; i<cs.data.length; i++) {
+					id += cs.data[i].id
+					id += i == cs.data.length-1 ? '' : ','
 				}
 
-				layer.load(2);
-				$.post(u, d, function(res) {
-					// 清除弹出层
+				layer.load(2)
+				$.post('{:url("delete")}', { id: id }, function(res) {
 					layer.closeAll()
-					
-					if (res.code == 0) {
-						layer.msg(title+'成功', {icon: 6, time: 1500}, function() {
-							window.location.reload()
-						})
-						return ;
-					}
-
-					layer.msg(title+'失败', {icon: 5, time: 1500})
+                    if(res.code == 0){
+                        layer.msg("删除成功", {icon: 6}, function() {
+                        	location.reload()
+                        });
+                        
+                    } else{
+                        layer.msg("删除失败", {icon: 5});
+                    }
 				})
-			}
-		});
+			})
+		})
+	}); 
 
-		// 设置数据
-		if (data != null) {
-			$('[name=type]').val(data.type)
-			$('[name=sort]').val(data.sort)
-		}
+	// 上传视频
+	var upload = function(id) {
+		console.log(id)
+		// data is null就是上传否则就是编辑
+		var title = id == null ? '视频上传' : '视频编辑'
+		layer.open({
+			type: 2,
+			content: 'upload?id='+id,
+			area: ['100%', '100%'],
+			offset: 't',
+			title: title,
+			resize: false,
+			move: false,
+		})
+	}
+
+	// 搜索
+	var search = function(tableIns) {
+		tableIns.reload({
+			url: '{:url("search")}',
+			where: {
+				type: $('[name=type]').val(),
+				search: $('[name=search]').val()
+			},
+			page: {
+				curr: 1
+			}
+		})
 	}
 
 	// 删除
@@ -153,6 +172,7 @@
 		layer.confirm('确认删除该数据?', function() {
 			layer.closeAll()
 
+			layer.load(2)
 			$.ajax({
 				url : "{:url('delete')}",
 				type : "POST",
@@ -161,6 +181,7 @@
 				},
 				dataType : 'json' ,
 				success : function(res){
+					layer.closeAll()
                     if(res.code == 0){
                         layer.msg("删除成功", {icon: 6}, function() {
                         	location.reload()
@@ -176,7 +197,7 @@
 </script>
 
 <script type="text/html" id="isHd">
-	<input type="checkbox" name="is_hd" value="{{ d.is_hd }}" title="高清" lay-filter="isHd" />
+	<input type="checkbox" name="is_hd" id="{{ d.id }}" value="{{ d.is_hd }}" title="高清" lay-filter="isHd" {{ d.is_hd == 1 ? 'checked' : '' }} />
 </script>
 
 <script type="text/html" id="operation">
