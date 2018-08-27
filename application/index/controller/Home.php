@@ -150,4 +150,15 @@ class Home extends Validate
 
         return json($result = ['code' =>1,'msg' => '换个姿势试试']);
     }
+
+    // 获取点赞和踩
+    public function getComment()
+    {
+        $get = Request::get();
+
+        $map['id'] = $get['id'];
+        $data = Video::where($map)->field('fabulous, step_on')->find();
+
+        return json($data);
+    }
 }
