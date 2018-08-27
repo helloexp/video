@@ -109,16 +109,15 @@ class Home extends Validate
     //相关视频
     public function relevant()
     {
-        $res = Related::alias('vre')
-            ->join('vd_video v','vre.video_id = v.id')
-            ->field('vre.id,v.img,v.time,v.title,v.desc,v.type,v.fabulous,v.step_on,v.watch_count,v.is_hd, v.create_time')
-            ->order('vre.create_time','desc')
-            ->select();
+        $data = Request::get();
+        $map['id'] = $data['id'];
+
+        $type = Video::taskout()->where($map)->value('type');
+        $res = Video::taskout()->where('type',$type)->limit(12)->select();
 
         $result = [
-            'code' => 1,
+            'code' => 0,
             'msg' => '数据请求成功',
-            'count' => Related::count(),
             'data' => $res
         ];
         return json($result);
