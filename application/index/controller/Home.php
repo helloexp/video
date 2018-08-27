@@ -20,11 +20,17 @@ class Home extends Validate
     }
 
     // 首页搜索
-    public function seach()
+    public function search()
     {
         $data = Request::get();
-        $result = Video::taskout()
-            ->where('title','like','%'.$data['title'].'%')
+
+        $result['code'] = 0;
+        $result['msg'] = '成功获取数据';
+        $result['count'] = Video::where('title|desc','like','%'.$data['title'].'%')->count();
+        $result['data'] = Video::taskout()
+            ->where('title|desc','like','%'.$data['title'].'%')
+            ->order('create_time', 'desc')
+            ->page($data['page'], $data['limit'])
             ->select();
 
         return json($result);
@@ -77,7 +83,7 @@ class Home extends Validate
         return json($result);
     }
 
-    //电影详情
+    // 电影详情
     public function detailVideo()
     {
         $data = Request::get();

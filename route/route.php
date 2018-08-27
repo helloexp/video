@@ -25,5 +25,8 @@ Route::rule('play', 'index/index/play');
 // 分类路由 /category
 Route::rule('category', 'index/index/category');
 
+// 搜索
+Route::rule('search', 'index/index/search');
+
 return [
 ];

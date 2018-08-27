@@ -21,7 +21,7 @@
                     	<a href="{:url('index')}">主页</a>
                     </li>
                     <li>
-                        <span class="show-for-sr">当前: </span> {$data['type']}
+                        <span class="show-for-sr">当前: </span> {$data['keyword']}
                     </li>
                 </ul>
             </nav>
@@ -30,14 +30,14 @@
 </section>
 <!--end breadcrumbs-->
 
-<section class="content" style="margin: 10px 0" id="category">
+<section class="content" style="margin: 10px 0" id="search">
     <!-- newest video -->
     <div class="main-heading">
         <div class="row secBg padding-14">
             <div class="medium-8 small-8 columns">
                 <div class="head-title">
                     <i class="fa fa-film"></i>
-                    <h4>{$data['type']}</h4>
+                    <h4>{$data['keyword']}</h4>
                 </div>
             </div>
             <div class="medium-4 small-4 columns">
@@ -51,7 +51,7 @@
     <div class="row secBg">
         <div class="large-12 columns">
             <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>{{ total }}</span></p>
+                <p class="pull-left">搜索到的视频 : <span>{{ total }}</span></p>
                 <div class="grid-system pull-right show-for-large">
                     <a class="secondary-button current grid-default" href="#"><i class="fa fa-th"></i></a>
                     <a class="secondary-button grid-medium" href="#"><i class="fa fa-th-large"></i></a>
@@ -159,7 +159,7 @@
             </div>
 
             <div id="nodata" style="padding-bottom: 30px; font-size: 25px; text-align: center; display: none;">
-                暂无视频~~~
+                没有搜到任何视频~~~
             </div>
 
             <!-- 分页 -->
@@ -170,21 +170,21 @@
 </section>
 
 <script>
-    var categoryvm = new Vue({
-        el: '#category',
+    var searchvm = new Vue({
+        el: '#search',
         data: {
             renderdata: [],
 
             // 分页条数
-            limit: 8,
+            limit: 12,
 
             // 总视频数
             total: 0,
         },
         created: function() {
-            var u = '{:url("home/type")}',
+            var u = '{:url("home/search")}',
                 d = {
-                    id: '{$data["id"]}',
+                    title: '{$data["keyword"]}',
                     page: 1,
                     limit: this.limit
                 },
@@ -192,9 +192,10 @@
 
             $.get(u, d, function(res) {
                 res = _this.playurl(res)
-
+                
                 _this.renderdatafn(res)
                 _this.pagecategory(res)
+                console.log(res)
             })
         },
         methods: {
@@ -213,11 +214,11 @@
                         theme: '#e96969',
                         layout: ['prev', 'page', 'next', 'skip', 'refresh'],
                         jump: function(obj, first) {
-                            var u = '{:url("home/type")}',
+                            var u = '{:url("home/search")}',
                                 d = {
-                                    id: '{$data["id"]}',
                                     page: obj.curr,
-                                    limit: this.limit
+                                    limit: this.limit,
+                                    title: '{$data["keyword"]}'
                                 }
 
                             $.get(u, d, function(res) {
@@ -235,8 +236,8 @@
                 var nodata = document.getElementById('nodata'),
                     opage  = document.getElementById('page-category')
 
-                Vue.set(categoryvm, 'renderdata', res.data)
-                Vue.set(categoryvm, 'total', res.count)
+                Vue.set(searchvm, 'renderdata', res.data)
+                Vue.set(searchvm, 'total', res.count)
                 
                 // 暂无数据
                 if (res.data.length === 0) {

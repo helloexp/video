@@ -13,14 +13,14 @@
         </li>
     </ul>
     <div class="responsive-search">
-        <form method="post">
+        <div>
             <div class="input-group">
-                <input class="input-group-field" type="text" placeholder="请输入要搜索的视频名称">
+                <input class="input-group-field" type="text" name="phonesearch" placeholder="请输入要搜索的视频名称">
                 <div class="input-group-button">
-                    <button type="submit" name="search"><i class="fa fa-search"></i></button>
+                    <button type="submit" name="search" @click="search"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -49,6 +49,15 @@
                 // 设置导航
                 Vue.set(phonevm, 'nav', newres)
             })
+        },
+
+        methods: {
+            // 搜索
+            search: function() {
+                var u = '/search?keyword=' + $('[name=phonesearch]').val()
+
+                window.location.href = u
+            }
         }
     });
 </script>

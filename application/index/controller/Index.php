@@ -30,6 +30,15 @@ class Index extends Validate
         return $this->fetch();
     }
 
+    // 搜索页面
+    public function search()
+    {
+        $data = Request::get();
+        $this->assign('data', $data);
+
+        return $this->fetch();
+    }
+
     // 404
     public function _404()
     {
