@@ -1,6 +1,11 @@
 {extend name="public:base" /}
 
 {block name="content"}
+<style>
+    /* 手机屏幕 */
+    .SinglePostStats .media-object .social-share .post-like-btn .min-btn { border: 1px solid #ececec; line-height: 27px; font-size: 13px; width: 34px; margin-right: 5px; height: 30px; border-radius: 3px; background: #f6f6f6; display: inline-block; color: #8e8e8e; text-align: center; cursor: pointer; }
+</style>
+
 <!--breadcrumbs-->
 <section id="breadcrumb">
     <div class="row">
@@ -61,8 +66,8 @@
                             </div>
                             <div class="social-share">
                                 <div class="post-like-btn clearfix">
-                                    <a href="#" class="secondary-button"><i class="fa fa-thumbs-o-up"></i></a>
-                                    <a href="#" class="secondary-button"><i class="fa fa-thumbs-o-down"></i></a>
+                                    <span class="min-btn" onclick="comment(1)"><i class="fa fa-thumbs-o-up"></i></span>
+                                    <span class="min-btn" onclick="comment(2)"><i class="fa fa-thumbs-o-down"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +162,9 @@
 <!-- content-end -->
 
 <script>
+    // 点赞标记
+    var commentFlag = false;
+
     // 视频播放
     $(function() {
         var u = '{:url("home/detailVideo")}',
@@ -187,6 +195,36 @@
         })
     })
     // 视频播放结束
+    
+    // 点赞和踩
+    var comment = function(mode) {
+        // mode为1是点赞，mode为2是踩
+        if (commentFlag) return ;
+
+        var u = '{:url("home/comment")}',
+            d = { id: '{$data["id"]}' }
+
+        $($('.social-share .min-btn')[mode-1]).css({
+            'background': '#e96969',
+            'color': '#fff',
+            'border-color': '#e96969'
+        });
+
+        commentFlag = true
+        mode == 1 ? d.fabulous = 1 : d.step_on = 1
+        $.post(u, d, function(res) {
+            if (res.code == 0) {
+                // 成功，获取点赞和踩数据重新渲染
+                var u = '{:url("home/getComment")}',
+                    d = { id: '{$data["id"]}' }
+
+                $.get(u, d, function(res) {
+                    $($('.post-title>p>span .play-num')[2]).text(res.fabulous)
+                    $($('.post-title>p>span .play-num')[3]).text(res.step_on)
+                })
+            }
+        })
+    }
      
     // 相关视频
     var relevantvm = new Vue({

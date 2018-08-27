@@ -44,15 +44,17 @@
     </div>
     <div id="owl-demo" class="owl-carousel carousel" data-car-length="4" data-items="4" data-loop="true" data-nav="false" data-autoplay="true" data-autoplay-timeout="3000" data-dots="false" data-auto-width="false" data-responsive-small="1" data-responsive-medium="2" data-responsive-xlarge="5">
         <div class="item" v-for="item in premium">
-            <figure class="premium-img">
-                <img v-bind:src="item.img" v-bind:alt="item.title">
-                <figcaption>
-                    <h5>{{ item.title }}</h5>
-                    <p>{{ item.desc }}</p>
-                </figcaption>
-            </figure>
-            <a v-bind:href="item.id" class="hover-posts">
-                <span><i class="fa fa-play"></i>播放视频</span>
+            <a :href="item.id">
+                <figure class="premium-img">
+                    <img v-bind:src="item.img" v-bind:alt="item.title">
+                    <figcaption>
+                        <h5>{{ item.title }}</h5>
+                        <p>{{ item.desc }}</p>
+                    </figcaption>
+                </figure>
+                <a v-bind:href="item.id" class="hover-posts">
+                    <span><i class="fa fa-play"></i>播放视频</span>
+                </a>
             </a>
         </div>
     </div>
@@ -94,26 +96,28 @@
                     <div class="row list-group">
                         <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos">
                             <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img v-bind:src="item.img" v-bind:alt="item.title">
-                                    <a v-bind:href="item.id" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <!-- 高清 -->
-                                        <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <!-- 高清end -->
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>{{ item.fabulous }}</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>{{ item.time }}</span>
+                                <a :href="item.id">
+                                    <div class="post-thumb">
+                                        <img v-bind:src="item.img" v-bind:alt="item.title">
+                                        <a v-bind:href="item.id" class="hover-posts">
+                                            <span><i class="fa fa-play"></i>播放视频</span>
+                                        </a>
+                                        <div class="video-stats clearfix">
+                                            <!-- 高清 -->
+                                            <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
+                                                <h6>高清</h6>
+                                            </div>
+                                            <!-- 高清end -->
+                                            <div class="thumb-stats pull-left">
+                                                <i class="fa fa-heart"></i>
+                                                <span>{{ item.fabulous }}</span>
+                                            </div>
+                                            <div class="thumb-stats pull-right">
+                                                <span>{{ item.time }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-des">
                                     <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
@@ -144,24 +148,26 @@
                     <div class="row list-group">
                         <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos" v-if="item.is_hd == 1">
                             <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img v-bind:src="item.img" alt="item.title">
-                                    <a v-bind:href="item.id"  class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>{{ item.fabulous }}</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>{{ item.time }}</span>
+                                <a :href="item.id">
+                                    <div class="post-thumb">
+                                        <img v-bind:src="item.img" alt="item.title">
+                                        <a v-bind:href="item.id"  class="hover-posts">
+                                            <span><i class="fa fa-play"></i>播放视频</span>
+                                        </a>
+                                        <div class="video-stats clearfix">
+                                            <div class="thumb-stats pull-left">
+                                                <h6>高清</h6>
+                                            </div>
+                                            <div class="thumb-stats pull-left">
+                                                <i class="fa fa-heart"></i>
+                                                <span>{{ item.fabulous }}</span>
+                                            </div>
+                                            <div class="thumb-stats pull-right">
+                                                <span>{{ item.time }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-des">
                                     <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
@@ -231,24 +237,26 @@
                     <div class="row list-group">
                         <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot">
                             <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img v-bind:src="item.img" alt="item.title">
-                                    <a v-bind:href="item.id" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>{{ item.fabulous }}</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>{{ item.time }}</span>
+                                <a :href="item.id">
+                                    <div class="post-thumb">
+                                        <img v-bind:src="item.img" alt="item.title">
+                                        <a v-bind:href="item.id" class="hover-posts">
+                                            <span><i class="fa fa-play"></i>播放视频</span>
+                                        </a>
+                                        <div class="video-stats clearfix">
+                                            <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
+                                                <h6>高清</h6>
+                                            </div>
+                                            <div class="thumb-stats pull-left">
+                                                <i class="fa fa-heart"></i>
+                                                <span>{{ item.fabulous }}</span>
+                                            </div>
+                                            <div class="thumb-stats pull-right">
+                                                <span>{{ item.time }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-des">
                                     <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">
@@ -279,24 +287,26 @@
                     <div class="row list-group">
                         <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot" v-if="item.is_hd == 1">
                             <div class="post thumb-border">
-                                <div class="post-thumb">
-                                    <img v-bind:src="item.img" alt="item.title">
-                                    <a v-bind:href="item.id" class="hover-posts">
-                                        <span><i class="fa fa-play"></i>播放视频</span>
-                                    </a>
-                                    <div class="video-stats clearfix">
-                                        <div class="thumb-stats pull-left">
-                                            <h6>高清</h6>
-                                        </div>
-                                        <div class="thumb-stats pull-left">
-                                            <i class="fa fa-heart"></i>
-                                            <span>{{ item.fabulous }}</span>
-                                        </div>
-                                        <div class="thumb-stats pull-right">
-                                            <span>{{ item.time }}</span>
+                                <a :href="item.id">
+                                    <div class="post-thumb">
+                                        <img v-bind:src="item.img" alt="item.title">
+                                        <a v-bind:href="item.id" class="hover-posts">
+                                            <span><i class="fa fa-play"></i>播放视频</span>
+                                        </a>
+                                        <div class="video-stats clearfix">
+                                            <div class="thumb-stats pull-left">
+                                                <h6>高清</h6>
+                                            </div>
+                                            <div class="thumb-stats pull-left">
+                                                <i class="fa fa-heart"></i>
+                                                <span>{{ item.fabulous }}</span>
+                                            </div>
+                                            <div class="thumb-stats pull-right">
+                                                <span>{{ item.time }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-des">
                                     <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
                                     <div class="post-stats clearfix">

@@ -20,11 +20,17 @@ class Home extends Validate
     }
 
     // 首页搜索
-    public function seach()
+    public function search()
     {
         $data = Request::get();
-        $result = Video::taskout()
-            ->where('title','like','%'.$data['title'].'%')
+
+        $result['code'] = 0;
+        $result['msg'] = '成功获取数据';
+        $result['count'] = Video::where('title|desc','like','%'.$data['title'].'%')->count();
+        $result['data'] = Video::taskout()
+            ->where('title|desc','like','%'.$data['title'].'%')
+            ->order('create_time', 'desc')
+            ->page($data['page'], $data['limit'])
             ->select();
 
         return json($result);
@@ -77,7 +83,7 @@ class Home extends Validate
         return json($result);
     }
 
-    //电影详情
+    // 电影详情
     public function detailVideo()
     {
         $data = Request::get();
@@ -118,24 +124,17 @@ class Home extends Validate
         return json($result);
     }
 
-    //视频 点赞\踩
+    // 视频 点赞\踩
     public function comment()
     {
-        if(Request::isAjax())
-        {
+        if(Request::isPost()) {
+            // 发 fabulous: 1 点赞, 发 step_on: 1 踩
             $data = Request::post();
-
-//            $data['fabouls'] =1;
-//            $data['step_on'] =2;
-
             $map['id'] = $data['id'];
 
-            if(isset($data['fabouls']))
-            {
+            if(isset($data['fabulous'])) {
                 $res = Video::where($map)->setInc('fabulous');
-
-                if($res)
-                {
+                if($res) {
                     $result = [
                         'code' => 0,
                         'msg' => '赞的很华丽' ,
@@ -143,11 +142,9 @@ class Home extends Validate
                     return json($result);
                 }
 
-            }else if(isset($data['step_on']))
-            {
+            } else if(isset($data['step_on'])) {
                 $res = Video::where($map)->setInc('step_on');
-                if($res)
-                {
+                if($res) {
                     $result = [
                         'code' => 0,
                         'msg' => '踩了一下' ,
@@ -156,6 +153,18 @@ class Home extends Validate
                 }
             }
         }
+
         return json($result = ['code' =>1,'msg' => '换个姿势试试']);
+    }
+
+    // 获取点赞和踩
+    public function getComment()
+    {
+        $get = Request::get();
+
+        $map['id'] = $get['id'];
+        $data = Video::where($map)->field('fabulous, step_on')->find();
+
+        return json($data);
     }
 }
