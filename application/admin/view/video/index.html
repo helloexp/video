@@ -3,6 +3,7 @@
 <style>
 	.btn-container { margin-bottom: 10px; }
 	.layui-table-cell .layui-form-checkbox[lay-skin=primary] { top: 5px; }
+	.layui-layer-dialog { top: 160px !important; }
 </style>
 
 <div class="layui-fluid">
@@ -58,8 +59,8 @@
 			},
 			cols: [[
 				{type: 'checkbox', fixed: 'left'},
-				{field: 'id', title: 'ID', width: 70, align: 'center'},
-				{field: 'title', title: '视频名称', width: 140, align: 'center'},
+				{field: 'id', title: 'ID', width: 50, align: 'center', fixed: 'left'},
+				{field: 'title', title: '视频名称', width: 140, align: 'center', fixed: 'left'},
 				{field: 'time', title: '视频长度', width: 90, align: 'center'},
 				{field: 'type', title: '视频类型', width: 90, align: 'center'},
 				{field: 'fabulous', title: '喜欢', width: 80, align: 'center'},
@@ -67,6 +68,7 @@
 				{field: 'watch_count', title: '观看次数', width: 100, align: 'center', sort: true},
 				{field: 'create_time', title: '上传时间', width: 120, align: 'center'},
 				{field: 'update_time', title: '更新时间', width: 120, align: 'center'},
+				{title: '特别推荐', width: 100, align: 'center', templet: '#recommend', fixed: 'right'},
 				{title: '是否高清', width: 100, align: 'center', templet: '#isHd', fixed: 'right'},
 				{title: '操作', width: 120, align: 'center', templet: '#operation', fixed: 'right'}
 			]]
@@ -93,12 +95,22 @@
 		})
 
 		// 监听高清
+		var checkU = '{:url("definition")}'
 		form.on('checkbox(isHd)', function(obj) {
-			var u = '{:url("definition")}',
-				d = { id: this.id, is_hd: this.value == 0 ? 1 : 0 }
+			var d = { id: this.id, is_hd: this.value == 0 ? 1 : 0 }
 
 			layer.load(2)
-			$.post(u, d, function(res) {
+			$.post(checkU, d, function(res) {
+				layer.closeAll()
+				window.location.reload()
+			})
+		})
+		// 监听推荐
+		form.on('checkbox(recommend)', function(obj) {
+			var d= { id: this.id, recommend: this.value == 0 ? 1 : 0 }
+
+			layer.load(2)
+			$.post(checkU, d, function(res) {
 				layer.closeAll()
 				window.location.reload()
 			})
@@ -195,8 +207,14 @@
 	}
 </script>
 
+<!-- 是否高清 -->
 <script type="text/html" id="isHd">
 	<input type="checkbox" name="is_hd" id="{{ d.id }}" value="{{ d.is_hd }}" title="高清" lay-filter="isHd" {{ d.is_hd == 1 ? 'checked' : '' }} />
+</script>
+
+<!-- 特别推荐 -->
+<script type="text/html" id="recommend">
+	<input type="checkbox" name="recommend" id="{{ d.id }}" value="{{ d.recommend }}" title="推荐" lay-filter="recommend" {{ d.recommend == 1 ? 'checked' : '' }} />
 </script>
 
 <script type="text/html" id="operation">

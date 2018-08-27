@@ -120,7 +120,7 @@ class Video extends Validate
     //视频列表操作 ->是否高清
     public function definition()
     {
-        // id , is_hd:0 其他, 1 高清
+        // id , is_hd:0 其他, 1 高清(表示高清)  recommend: 0其他，1推荐（表示推荐）
         if(Request::isAjax()) {
             $data = Request::post();
             $map['id'] = $data['id'];
@@ -184,48 +184,4 @@ class Video extends Validate
 
         return $this->fetch();
     }
-
-    // 特别推荐
-    public function recommend()
-    {
-        if(Request::isAjax()) {
-            $data = Request::get();
-
-            $res = Recommend::revideo()
-                ->limit($data['page'],$data['limit'])
-                ->select();
-
-            $result = [
-                'code' => 0,
-                'msg' => '数据请求成功',
-                'count' => Recommend::count(),
-                'data' => $res,
-            ];
-
-            return json($result);
-
-        }
-        return $this->fetch();
-    }
-
-    // 特别推荐操作 -> 删除
-    public function redeleted()
-    {
-        if (Request::isAjax()) {
-            $data = Request::post();
-            $res = Recommend::destroy($data);
-
-            if ($res) {
-                return json($result=['code'=>0,'msg'=>'删除成功']);
-            }
-        }
-        return json($result=['code'=>1,'msg'=>'删除失败']);
-    }
-
-    // 相关视频
-    public function relevant()
-    {
-        return $this->fetch();
-    }
-
 }

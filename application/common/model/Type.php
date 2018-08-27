@@ -30,7 +30,7 @@ class Type extends Model
             ->join('vd_video v', 't.id=v.type')
             ->field('
                 v.id, v.time, v.title, v.fabulous, v.step_on, v.watch_count, v.is_hd, v.create_time,
-                v.update_time, t.type
+                v.update_time, v.recommend, t.type
             ')
             ->order('create_time', 'desc');
     }
@@ -42,7 +42,7 @@ class Type extends Model
             ->join('vd_video v', 't.id=v.type')
             ->field('
                 v.id, v.time, v.title, v.fabulous, v.step_on, v.watch_count, v.is_hd, v.create_time,
-                v.update_time, t.type
+                v.update_time, v.recommend, t.type
             ')
             ->where($where)
             ->order($order, 'desc');
