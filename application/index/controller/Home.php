@@ -3,8 +3,6 @@ namespace app\index\Controller;
 
 use app\common\model\Video;
 use app\common\model\Type;
-use app\common\model\Recommend;
-use app\common\model\Related;
 use think\facade\Request;
 
 class Home extends Validate
@@ -39,7 +37,10 @@ class Home extends Validate
     // 特别推荐
     public function recommend()
     {
-        $result = Recommend::linkVideo()->select();
+        $result = Video::taskout()
+            ->where('recommend=1')
+            ->order('create_time', 'desc')
+            ->all();
         return json($result);
     }
 
@@ -106,14 +107,14 @@ class Home extends Validate
         return json($result);
     }
 
-    //相关视频
+    // 相关视频
     public function relevant()
     {
         $data = Request::get();
         $map['id'] = $data['id'];
 
         $type = Video::taskout()->where($map)->value('type');
-        $res = Video::taskout()->where('type',$type)->limit(12)->select();
+        $res = Video::taskout()->where('type',$type)->order('create_time', 'desc')->limit(12)->select();
 
         $result = [
             'code' => 0,

@@ -2,7 +2,6 @@
 namespace app\admin\controller;
 
 use app\common\model\Type;
-use app\common\model\Recommend;
 use think\facade\Request;
 
 //视频管理
@@ -95,13 +94,12 @@ class Video extends Validate
         return json($result =['code' => 1,'msg' =>'删除失败']);
     }
 
-    //视频列表操作->修改
+    // 视频列表操作->修改
     public function update()
     {
-        if(Request::isAjax()) {
+        if (Request::isAjax()) {
             $data = Request::post();
             $map['id'] = $data['id'];
-
             $res = \app\common\model\Video::where($map)
                 ->save($data);
 
@@ -112,8 +110,11 @@ class Video extends Validate
                 ];
                 return json($result);
             }
+
+            return json($result =['code' => 1,'msg' =>'修改失败']);
         }
-        return json($result =['code' => 1,'msg' =>'修改失败']);
+
+        return json($result =['code' => -1,'msg' =>'非法操作']);
     }
 
     //视频列表操作 ->是否高清
@@ -137,6 +138,20 @@ class Video extends Validate
     // 视频上传
     public function upload()
     {
+        // post提交, 修改与添加
+        if (Request::isPost()) {
+            $post = Request::post();
+            $video = new \app\common\model\Video();
+            $rsuccess = ['code' => 0, 'msg' => '添加/修改成功'];
+            $rfailed = ['code' => -1, 'msg' => '添加/修改失败'];
+
+            $vid = empty($post['id'])
+                ? $video->save($post)
+                : $video->save($post, ['id' => $post['id']]);
+
+            return isset($vid) ? json($rsuccess) : json($rfailed);
+        }
+
         // 判断是不是编辑
         $id = Request::get('id');
 
@@ -146,11 +161,11 @@ class Video extends Validate
             // 表示编辑
             $data = \app\common\model\Video::where([
                 'id' => $id
-            ])->field('id, title, time, type, is_hd, img, url, desc')->find();
-            $data['recommend'] = Recommend::where(['video_id' => $id])->count();
+            ])->field('id, title, time, type, is_hd, img, url, desc, recommend')->find();
 
         } else {
             $data = [
+                'id' => '',
                 'title' => '',
                 'time' => '',
                 'type' => '',
@@ -196,11 +211,11 @@ class Video extends Validate
     // 特别推荐操作 -> 删除
     public function redeleted()
     {
-        if(Request::isAjax()) {
+        if (Request::isAjax()) {
             $data = Request::post();
             $res = Recommend::destroy($data);
 
-            if($res) {
+            if ($res) {
                 return json($result=['code'=>0,'msg'=>'删除成功']);
             }
         }

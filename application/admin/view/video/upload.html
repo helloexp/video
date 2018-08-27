@@ -67,14 +67,14 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频描述</label>
 				    <div class="layui-input-block">
-				    	<textarea name="desc" id="desc" style="display: none"></textarea>
+				    	<textarea name="desc" id="desc" style="display: none">{$data['desc']}</textarea>
 				    </div>
 				</div>
 
 				<div class="layui-form-item">
     				<div class="layui-input-block">
       					<button class="layui-btn" lay-submit lay-filter="upload-btn">立即提交</button>
-      					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      					<button type="reset" class="layui-btn layui-btn-primary" onclick="window.location.reload()">重置</button>
     				</div>
   				</div>
 			</div>
@@ -89,14 +89,49 @@
 		var form = layui.form,
 			layedit = layui.layedit
 
-		layedit.build('desc', {
-			height: 180
+		// 富文本编辑器
+		var edit = layedit.build('desc', {
+			height: 180,
+			tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', 'link', 'face']
 		})
 
 		// 表单初始化
 		form.val('upload', {
 			'is_hd': parseInt('{$data["is_hd"]}'),
-			'recommend': parseInt('{$data["recommend"]}')
+			'recommend': parseInt('{$data["recommend"]}'),
+			'type': parseInt('{$data["type"]}')
+		})
+
+		// 提交按钮监听
+		form.on('submit(upload-btn)', function(data) {
+			var d = data.field;
+			var u = '{:url("upload")}'
+
+			// 设置数据
+			d.is_hd = d.is_hd == undefined ? 0 : 1
+			d.recommend = d.recommend == undefined ? 0 : 1
+			d.desc = layedit.getContent(edit)
+
+			// 表明是视频上传
+			if ('{$data["id"]}' == '' || '{$data["id"]}' == null || '{$data["id"]}' == undefined) {
+				var title = "视频上传"
+			} else {
+				// 表示视频编辑
+				d.id = '{$data["id"]}'
+				var title = "视频编辑"
+			}
+
+			layer.load(2)
+			$.post(u, d, function(res) {
+				layer.closeAll()
+				if (res.code == 0) {
+					layer.alert(title + '成功', function() {
+						window.location.reload()
+					})
+					return ;
+				}
+				layer.msg(title + '失败', { icon: 5 })
+			})
 		})
 	})
 </script>
