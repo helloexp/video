@@ -15,6 +15,7 @@ class Statistics extends Model
 {
     use SoftDelete;
     protected $deleteTime = 'deleted_time';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     // 设置区间
     public static function section($start, $end)

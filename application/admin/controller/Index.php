@@ -2,8 +2,7 @@
 namespace app\admin\controller;
 
 use app\common\model\Statistics;
-use think\Request;
-use think\Controller;
+use think\facade\Request;
 
 class Index extends Validate
 {
@@ -30,7 +29,57 @@ class Index extends Validate
     // 数据信息
     public function datainfo() 
     {
+        // 获取数据表格
+        if (Request::isAjax()) {
+            $get = Request::get();
+            $data = Statistics::page($get['page'], $get['limit'])->order('create_time', 'desc')->all();
+
+            $result = [
+                'code' => 0,
+                'msg' => '',
+                'count' => Statistics::count(),
+                'data' => $data
+            ];
+            return json($result);
+        }
+
+        // 日访问
+        $day = Statistics::whereTime('create_time', 'today')->group('browse_ip')->count();
+        // 月访问
+        $month = Statistics::whereTime('create_time', 'month')->group('browse_ip')->count();
+        // 年访问
+        $year = Statistics::whereTime('create_time', 'year')->group('browse_ip')->count();
+        // 总访问
+        $total = Statistics::group('browse_ip')->count();
+
+        // 数据整理
+        $result = [
+            ['data' => $day, 'class' => 'layui-bg-blue','name' => '日'],
+            ['data' => $month, 'class' => '', 'name' => '月'],
+            ['data' => $year, 'class' => 'layui-bg-cyan', 'name' => '年'],
+            ['data' => $total, 'class' => 'layui-bg-black', 'name' => '总'],
+        ];
+
+        $this->assign('data', $result);
         return $this->fetch();
+    }
+
+    // 数据信息搜索
+    public function datainfosearch() {
+        $get = Request::get();
+
+        $data = $get['flow'] == 0
+            ? Statistics::page($get['page'], $get['limit'])->order('create_time', 'desc')->all()
+            : Statistics::group('browse_ip')->order('create_time', 'desc')->all();
+
+        return json([
+            'code' => 0,
+            'msg'  => '',
+            'count' => $get['flow'] == 0
+                ? Statistics::count()
+                : Statistics::group('browse_ip')->count(),
+            'data' => $data
+        ]);
     }
 
     // 年统计量
