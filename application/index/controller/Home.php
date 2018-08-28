@@ -37,7 +37,7 @@ class Home extends Validate
     // 特别推荐
     public function recommend()
     {
-        $result = Video::taskout()
+        $result['data'] = Video::taskout()
             ->where('recommend=1')
             ->order('create_time', 'desc')
             ->all();
@@ -47,7 +47,6 @@ class Home extends Validate
     // 最新视频
     public function newVideo()
     {
-        $result['count'] = Video::count();
         $result['data'] = Video::taskout()
             ->order('create_time','desc')
             ->limit(8)

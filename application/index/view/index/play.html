@@ -1,9 +1,25 @@
 {extend name="public:base" /}
 
 {block name="content"}
+<!-- 视频播放插件 -->
+
 <style>
     /* 手机屏幕 */
     .SinglePostStats .media-object .social-share .post-like-btn .min-btn { border: 1px solid #ececec; line-height: 27px; font-size: 13px; width: 34px; margin-right: 5px; height: 30px; border-radius: 3px; background: #f6f6f6; display: inline-block; color: #8e8e8e; text-align: center; cursor: pointer; }
+    .singlePostDescription .heading { margin-bottom: 0; padding: 20px 0 10px 0; }
+    .singlePostDescription .description { padding: 10px 0; }
+    .singlePostDescription .description p { margin-bottom: 0; }
+    
+    /* 视频播放器 */
+    .fullwidth-single-video { padding: 5px 0 0 0; margin-bottom: 14px; }
+    .m { padding: 0; }
+    #playVideo { height: 450px; width: 100%; margin: 0 auto; border: 1px solid; }
+    
+    @media screen and (max-width: 1000px) { 
+        #playVideo { height: 230px; width: 100%; } 
+        .content .list-group .item { margin-bottom: -10px; }
+        .content .list-group .item:nth-child(1) { margin-top: -20px; }
+    } 
 </style>
 
 <!--breadcrumbs-->
@@ -32,8 +48,10 @@
 <section class="fullwidth-single-video" id="video-play">
     <div class="row">
         <div class="large-12 columns">
-            <div class="flex-video widescreen">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen></iframe>
+            <div class="m">
+                <video id="playVideo" controls src="">
+                    您的浏览器版本过低，请更新浏览器或者更换高版本的浏览器。
+                </video>
             </div>
         </div>
     </div>
@@ -180,8 +198,8 @@
             var span = '<span class="show-for-sr">当前: </span> '+ res.data.title
             $('#breadcrumb .breadcrumbs>li:nth-child(3)').html(span)
 
-            // 设置资源
-            $('#video-play iframe').attr('src', res.data.url)
+            // 设置资源,视频播放
+            $('#playVideo').attr('src', res.data.url)
 
             // 设置信息
             $('.post-title>h4').text(res.data.title)
@@ -195,6 +213,11 @@
         })
     })
     // 视频播放结束
+
+    // 暂停/播放
+    var videoControls = function() {
+
+    }
     
     // 点赞和踩
     var comment = function(mode) {

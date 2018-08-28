@@ -1,8 +1,10 @@
 {extend name="public:base" /}
 
 {block name="content"}
+<!-- 轮播图插件 -->
 {load href="/public/static/plug-in/jQuerySwipeslider/css/style.css" /}
 {load href="/public/static/plug-in/jQuerySwipeslider/dist/swipeslider.css" /}
+<!-- 轮播图插件结束 -->
 <style>
     .column:last-child:not(:first-child), .columns:last-child:not(:first-child) { float: left; }
 
@@ -12,10 +14,17 @@
     #full-feature ul { margin: 0; }
     #full-feature img { width: 100%; height: 100%; }
     #full-feature .sw-next, #full-feature .sw-prev { display: none; }
+    @media screen and (max-width: 1000px) { 
+        #full-feature { height: 200px; width: 100%; } 
+    }
 
-    /* 特别推荐 */
     #premium { max-width: 75rem; margin: 14px auto; }
     #premium .heading { padding: 14px 0; }
+    
+    /* 重写布局 */
+    .secBg { border: 0; }
+    .content>.secBg {  margin-top: 20px; }
+    .content .main-heading { border-bottom: 1px solid #ececec; }
 </style>
 
 <!-- layerslider h:500px 轮播 -->
@@ -35,211 +44,29 @@
 
 <!-- 推荐 -->
 <div id="home">
-<section id="premium">
-    <div class="row">
-        <div class="heading clearfix">
-            <div class="large-11 columns">
-                <h4><i class="fa fa-play-circle-o"></i>特别推荐</h4>
-            </div>
-            <div class="large-1 columns">
-                <div class="navText show-for-large">
-                    <a class="prev secondary-button"><i class="fa fa-angle-left"></i></a>
-                    <a class="next secondary-button"><i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="owl-demo" class="owl-carousel carousel" data-car-length="4" data-items="4" data-loop="true" data-nav="false" data-autoplay="true" data-autoplay-timeout="3000" data-dots="false" data-auto-width="false" data-responsive-small="1" data-responsive-medium="2" data-responsive-xlarge="5">
-        <div class="item" v-for="item in premium">
-            <a :href="item.id">
-                <figure class="premium-img">
-                    <img v-bind:src="item.img" v-bind:alt="item.title">
-                    <figcaption>
-                        <h5>{{ item.title }}</h5>
-                        <p>{{ item.desc }}</p>
-                    </figcaption>
-                </figure>
-                <a v-bind:href="item.id" class="hover-posts">
-                    <span><i class="fa fa-play"></i>播放视频</span>
-                </a>
-            </a>
-        </div>
-    </div>
-</section>
-<!-- End 推荐 -->
-
-<!-- main content -->
-<section class="content">
-    <!-- newest video -->
+<section id="premium" class="content" v-for="ihead in hometype">
     <div class="main-heading">
         <div class="row secBg padding-14">
             <div class="medium-8 small-8 columns">
                 <div class="head-title">
-                    <i class="fa fa-film"></i>
-                    <h4>最新视频</h4>
+                    <i class="fa" :class="ihead.icon"></i>
+                    <h4>{{ ihead.title }}</h4>
                 </div>
-            </div>
-            <div class="medium-4 small-4 columns">
-                <ul class="tabs text-right pull-right" data-tabs id="newVideos">
-                    <li class="tabs-title is-active"><a href="#new-all">全部</a></li>
-                    <li class="tabs-title"><a href="#new-hd">高清</a></li>
-                </ul>
             </div>
         </div>
     </div>
+    <!-- 内容 -->
     <div class="row secBg">
         <div class="large-12 columns">
-            <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>{{ videototal }}</span></p>
-                <div class="grid-system pull-right show-for-large">
-                    <a class="secondary-button current grid-default" href="#"><i class="fa fa-th"></i></a>
-                    <!-- <a class="secondary-button grid-medium" href="#"><i class="fa fa-th-large"></i></a> -->
-                    <a class="secondary-button list" href="#"><i class="fa fa-th-list"></i></a>
-                </div>
-            </div>
-            <div class="tabs-content" data-tabs-content="newVideos">
-                <!-- 全部视频 -->
-                <div class="tabs-panel is-active" id="new-all">
-                    <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos">
-                            <div class="post thumb-border">
-                                <a :href="item.id">
-                                    <div class="post-thumb">
-                                        <img v-bind:src="item.img" v-bind:alt="item.title">
-                                        <a v-bind:href="item.id" class="hover-posts">
-                                            <span><i class="fa fa-play"></i>播放视频</span>
-                                        </a>
-                                        <div class="video-stats clearfix">
-                                            <!-- 高清 -->
-                                            <div class="thumb-stats pull-left" v-if="item.is_hd == 1">
-                                                <h6>高清</h6>
-                                            </div>
-                                            <!-- 高清end -->
-                                            <div class="thumb-stats pull-left">
-                                                <i class="fa fa-heart"></i>
-                                                <span>{{ item.fabulous }}</span>
-                                            </div>
-                                            <div class="thumb-stats pull-right">
-                                                <span>{{ item.time }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="post-des">
-                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>{{ item.create_time }}</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>{{ item.watch_count }}</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        {{ item.desc }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 全部视频end -->
-
-                <!-- 高清 -->
-                <div class="tabs-panel" id="new-hd">
-                    <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in newvideos" v-if="item.is_hd == 1">
-                            <div class="post thumb-border">
-                                <a :href="item.id">
-                                    <div class="post-thumb">
-                                        <img v-bind:src="item.img" alt="item.title">
-                                        <a v-bind:href="item.id"  class="hover-posts">
-                                            <span><i class="fa fa-play"></i>播放视频</span>
-                                        </a>
-                                        <div class="video-stats clearfix">
-                                            <div class="thumb-stats pull-left">
-                                                <h6>高清</h6>
-                                            </div>
-                                            <div class="thumb-stats pull-left">
-                                                <i class="fa fa-heart"></i>
-                                                <span>{{ item.fabulous }}</span>
-                                            </div>
-                                            <div class="thumb-stats pull-right">
-                                                <span>{{ item.time }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="post-des">
-                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>{{ item.time }}</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>{{ item.watch_count }}</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        {{ item.desc }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 高清end -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ad Section -->
-    <div class="googleAdv">
-        <a href="#"><img src="/images/goodleadv.png" alt="googel ads"></a>
-    </div>
-    <!-- End ad Section -->
-</section>
-<section class="content">
-    <!-- 热门 Videos -->
-    <div class="main-heading">
-        <div class="row secBg padding-14">
-            <div class="medium-8 small-8 columns">
-                <div class="head-title">
-                    <i class="fa fa-star"></i>
-                    <h4>热门影片</h4>
-                </div>
-            </div>
-            <div class="medium-4 small-4 columns">
-                <ul class="tabs text-right pull-right" data-tabs id="popularVideos">
-                    <li class="tabs-title is-active"><a href="#popular-all">全部</a></li>
-                    <li class="tabs-title"><a href="#popular-hd">高清</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="row secBg">
-        <div class="large-12 columns">
-            <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>{{ videototal }}</span></p>
-                <div class="grid-system pull-right show-for-large">
-                    <a class="secondary-button current grid-default" href="#"><i class="fa fa-th"></i></a>
-                    <a class="secondary-button list" href="#"><i class="fa fa-th-list"></i></a>
-                </div>
-            </div>
-            <div class="tabs-content" data-tabs-content="popularVideos">
+            <div class="tabs-content">
                 <!-- 全部 -->
-                <div class="tabs-panel is-active" id="popular-all">
+                <div class="tabs-panel is-active">
                     <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot">
+                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in ihead.data">
                             <div class="post thumb-border">
                                 <a :href="item.id">
                                     <div class="post-thumb">
-                                        <img v-bind:src="item.img" alt="item.title">
+                                        <img v-bind:src="item.img" alt="item.title" onerror="this.src='/images/unload.png; this.src=null'">
                                         <a v-bind:href="item.id" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>
@@ -268,9 +95,6 @@
                                             <i class="fa fa-eye"></i>
                                             <span>{{ item.watch_count }}</span>
                                         </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        {{ item.desc }}
                                     </div>
                                 </div>
                             </div>
@@ -278,61 +102,10 @@
                     </div>
                 </div>
                 <!-- 全部end -->
-
-                <!-- 高清 -->
-                <div class="tabs-panel" id="popular-hd">
-                    <div class="row list-group">
-                        <div class="item large-3 medium-6 columns group-item-grid-default" v-for="item in hot" v-if="item.is_hd == 1">
-                            <div class="post thumb-border">
-                                <a :href="item.id">
-                                    <div class="post-thumb">
-                                        <img v-bind:src="item.img" alt="item.title">
-                                        <a v-bind:href="item.id" class="hover-posts">
-                                            <span><i class="fa fa-play"></i>播放视频</span>
-                                        </a>
-                                        <div class="video-stats clearfix">
-                                            <div class="thumb-stats pull-left">
-                                                <h6>高清</h6>
-                                            </div>
-                                            <div class="thumb-stats pull-left">
-                                                <i class="fa fa-heart"></i>
-                                                <span>{{ item.fabulous }}</span>
-                                            </div>
-                                            <div class="thumb-stats pull-right">
-                                                <span>{{ item.time }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="post-des">
-                                    <h6><a v-bind:href="item.id">{{ item.title }}</a></h6>
-                                    <div class="post-stats clearfix">
-                                        <p class="pull-left">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span>{{ item.create_time }}</span>
-                                        </p>
-                                        <p class="pull-left">
-                                            <i class="fa fa-eye"></i>
-                                            <span>{{ item.watch_count }}</span>
-                                        </p>
-                                    </div>
-                                    <div class="post-summary">
-                                        {{ item.desc }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 高清end -->
             </div>
         </div>
     </div>
-    <!-- ad Section -->
-    <div class="googleAdv">
-        <a href="#"><img src="/images/goodleadv.png" alt="googel ads"></a>
-    </div>
-    <!-- End ad Section -->
+    <!-- 内容end -->
 </section>
 </div>
 <!-- End main content -->
@@ -344,23 +117,26 @@
     var homevm = new Vue({
         el: '#home',
         data: {
-            // 特别推荐
-            premium: [],
-
-            // 视频总数
-            videototal: '1,895',
-
-            // 最新视频
-            newvideos: [],
-
-            // 热门影视
-            hot: []
+            // 主页分类
+            hometype: [{
+                icon: 'fa-play-circle-o',
+                title: '特别推荐',
+                data: 'premium'
+            }, {
+                icon: 'fa-film',
+                title: '最新视频',
+                data: 'newvideos'
+            }, {
+                icon: 'fa-star',
+                title: '热门影视',
+                data: 'hot'
+            }],
         },
         created: function() {
+            this.slider()
             this.premiumfn()
             this.newvideosfn()
             this.hotfn()
-            this.slider()
         },
         methods: {
             // 轮播插件
@@ -371,33 +147,12 @@
             // 特别推荐
             premiumfn: function() {
                 var u = '{:url("home/recommend")}',
-                    _this = this
+                    t = this
 
                 $.get(u, function(res) {
-                    var newres = []
+                    res = t.playurl(res)
 
-                    for (var i in res) {
-                        // 设置标题不能超过8位
-                        var t = res[i].title.length > 8 
-                            ? res[i].title.substring(0, 5) + '...'
-                            : res[i].title,
-                        // 设置描述不能超过10位
-                            desc = res[i].desc.length > 12
-                            ? res[i].desc.substring(0, 10) + '...'
-                            : res[i].desc
-
-                        var temp = {
-                            'title': t,
-                            'desc': _this.filterHTML(desc),
-                            'img': res[i].img,
-                            'id': '/play?playid=' + res[i].id,
-                            'video_id': res[i].video_id
-                        }
-
-                        newres.push(temp)
-                    }
-
-                    Vue.set(homevm, 'premium', newres)
+                    Vue.set(homevm.hometype[0], 'data', res.data)
                 })
             },
 
@@ -416,10 +171,8 @@
 
                 $.get(u, function(res) {
                     res = t.playurl(res)
-                    res = t.descfilter(res)
 
-                    Vue.set(homevm, 'newvideos', res.data)
-                    Vue.set(homevm, 'videototal', res.count)
+                    Vue.set(homevm.hometype[1], 'data', res.data)
                 })
             },
 
@@ -430,19 +183,9 @@
 
                 $.get(u, function(res) {
                     res = t.playurl(res)
-                    res = t.descfilter(res)
 
-                    Vue.set(homevm, 'hot', res.data)
+                    Vue.set(homevm.hometype[2], 'data', res.data)
                 })
-            },
-
-            // 描述
-            descfilter: function(res) {
-                for (var i=0; i<res.data.length; i++) {
-                    res.data[i].desc = this.filterHTML(res.data[i].desc)
-                }
-
-                return res
             },
 
             // 添加视频播放id
