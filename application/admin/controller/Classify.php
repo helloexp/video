@@ -7,7 +7,6 @@
 namespace app\admin\controller;
 
 use app\common\model\Type;
-use app\common\model\Admin;
 use think\facade\Request;
 
 class Classify extends Validate

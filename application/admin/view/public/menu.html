@@ -50,10 +50,10 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a lay-href="{:url('link/index')}">链接列表</a>
+                        <a onclick="layer.tips('尚未开放', this);">链接列表</a>
                     </dd>
                     <dd>
-                        <a lay-href="{:url('link/add')}">链接添加</a>
+                        <a onclick="layer.tips('尚未开放', this);">链接添加</a>
                     </dd>
                 </dl>
             </li>
@@ -69,6 +69,9 @@
                     </dd>
                     <dd>
                         <a href="javascript:;" onclick="layer.tips('尚未开放', this);">域名设置</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="{:url('slider/index')}">轮播图设置</a>
                     </dd>
                 </dl>
             </li>
