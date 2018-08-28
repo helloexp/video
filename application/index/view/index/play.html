@@ -168,7 +168,7 @@
     // 视频播放
     $(function() {
         var u = '{:url("home/detailVideo")}',
-            d = { id: '{$data["id"]}' }
+            d = { id: '{$data["playid"]}' }
 
         $.get(u, d, function(res) {
             // 设置分类导航
@@ -202,7 +202,7 @@
         if (commentFlag) return ;
 
         var u = '{:url("home/comment")}',
-            d = { id: '{$data["id"]}' }
+            d = { id: '{$data["playid"]}' }
 
         $($('.social-share .min-btn')[mode-1]).css({
             'background': '#e96969',
@@ -216,7 +216,7 @@
             if (res.code == 0) {
                 // 成功，获取点赞和踩数据重新渲染
                 var u = '{:url("home/getComment")}',
-                    d = { id: '{$data["id"]}' }
+                    d = { id: '{$data["playid"]}' }
 
                 $.get(u, d, function(res) {
                     $($('.post-title>p>span .play-num')[2]).text(res.fabulous)
@@ -235,11 +235,11 @@
         created: function() {
             // 获取相关视频
             var u = '{:url("home/relevant")}'
-            d= { id: '{$data["id"]}' }
+            d= { id: '{$data["playid"]}' }
 
             $.get(u, d,function(res) {
                 for (var i=0; i<res.data.length; i++) {
-                    res.data[i].url = '/play?id=' + res.data[i].id
+                    res.data[i].url = '/play?playid=' + res.data[i].id
                 }
 
                 Vue.set(relevantvm, 'relevant', res)
