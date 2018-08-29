@@ -211,6 +211,10 @@
             // 描述
             $('.description').html("<p>"+res.data.desc+"</p>")
         })
+
+        // 统计观看次数
+        u = '{:url("home/countWatch")}'
+        $.get(u, d)
     })
     // 视频播放结束
 

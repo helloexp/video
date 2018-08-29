@@ -23,7 +23,31 @@ class Index extends Validate
     // 控制台
     public function console()
     {
+        $controls = new Controls();
+        // 设置进度条颜色
+        if ((float)$controls->hd['PCT'] < 20) {
+            $color = 'layui-bg-blue';
+        } elseif ((float)$controls->hd['PCT'] >= 20 || (float)$controls->hd['PCT'] < 60) {
+            $color = '';
+        } elseif ((float)$controls->hd['PCT'] >= 60 || (float)$controls->hd['PCT'] < 80) {
+            $color = 'layui-bg-red';
+        } else {
+            $color = 'pred';
+        }
+
+        $this->assign([
+            'c' => $controls,
+            'color' => $color
+        ]);
         return $this->fetch();
+    }
+
+    // 实时获取服务器数据
+    public function getRealTime()
+    {
+        $controls = new Controls();
+
+        return json($controls);
     }
 
     // 数据信息

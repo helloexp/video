@@ -1,6 +1,7 @@
 <?php
 namespace app\index\Controller;
 
+use app\common\model\Statistics;
 use app\common\model\Video;
 use app\common\model\Type;
 use think\facade\Request;
@@ -154,6 +155,22 @@ class Home extends Validate
         }
 
         return json($result = ['code' =>1,'msg' => '换个姿势试试']);
+    }
+
+    // 统计观看次数
+    public function countWatch()
+    {
+        $map['id'] = Request::get();
+        Video::where($map)->setInc('watch_count');
+    }
+
+    // 浏览网站数据统计
+    public function statistics()
+    {
+        $statistics = new Statistics();
+        $statistics->browse_ip = $_SERVER['REMOTE_ADDR'];
+
+        $statistics->save();
     }
 
     // 获取点赞和踩

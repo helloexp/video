@@ -12,90 +12,125 @@
 	<style>
 		.layuiadmin-big-font { font-size: 2em; padding: 10px 0; }
 		.layui-card-header .layuiadmin-badge { position: absolute; top: 11px; right: 15px; }
+		.pred { background: red; }
 	</style>
 </head>
 <body>
 	<div class="layui-fluid">
 		<div class="layui-row layui-col-space15">
-			<!-- 访问量统计 -->
-			<div class="layui-col-sm6 layui-col-md3">
-				<div class="layui-card">
-					<div class="layui-card-header">
-			            访问量
-			        	<span class="layui-badge layuiadmin-badge">日</span>
-			        </div>
-			        <div class="layui-card-body layuiadmin-card-list">
-			            <p class="layuiadmin-big-font">123123</p>
-		            </div>
-				</div>
-			</div>
-			<!-- 访问量曲线图统计 -->
+			<!-- 服务器信息 -->
 			<div class="layui-col-sm12">
 				<div class="layui-card">
-					<div class="layui-card-header">访问量统计</div>
+					<div class="layui-card-header">服务器信息</div>
 					<div class="layui-card-body">
 						<div class="layui-row">
-							<div id="chart" class="border"><svg height=225></svg></div>
+							<table class="layui-table">
+								<tr>
+									<td>你的IP地址</td>
+									<td>{$c->S['YourIP']}</td>
+								</tr>
+								<tr>
+									<td>服务器IP地址</td>
+									<td>{$c->S['DomainIP']}</td>
+								</tr>
+								<tr>
+									<td>服务器信息</td>
+									<td>{$c->S['Flag']}</td>
+								</tr>
+								<tr>
+									<td>服务器OS</td>
+									<td>{$c->S['OS']}</td>
+								</tr>
+								<tr>
+									<td>服务器语言</td>
+									<td>{$c->S['Language']}</td>
+								</tr>
+								<tr>
+									<td>主机名</td>
+									<td>{$c->S['Name']}</td>
+								</tr>
+								<tr>
+									<td>WEB引擎</td>
+									<td>{$c->S['WebEngine']}</td>
+								</tr>
+								<tr>
+									<td>WEB端口</td>
+									<td>{$c->S['WebPort']}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 服务器信息 -->
+			<div class="layui-col-sm12" style="margin-bottom: 100px">
+				<div class="layui-card">
+					<div class="layui-card-header">服务器实时信息</div>
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<table class="layui-table">
+								<tr>
+									<td>服务器时间</td>
+									<td>{$c->S['sTime']}</td>
+								</tr>
+								<tr>
+									<td>磁盘使用情况</td>
+									<td id="disk">
+										<p>总空间<span>{$c->hd['t']}</span>GB, 空闲<span>{$c->hd['f']}</span>GB, 已用<span>{$c->hd['u']}</span>GB, 使用率<span>{$c->hd['PCT']}</span>%</p>
+										<div class="layui-progress layui-progress-big" lay-showPercent="yes">
+  											<div class="layui-progress-bar {$color}" lay-percent="{$c->hd['PCT']}%"></div>
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- 图表 -->
+	
+	<!-- js -->
 	<script>
-		// 请求图表数据
-		$.get('{:url("index/yearstatis")}', function(res) {
-			drawimg(res)
-		})
+		layui.use('element');
+		/*$(function() {
+			getRealTime()
+		})*/
 
-		// 绘制图表
-		var drawimg = function(res) {
-			$('#chart').highcharts({
-				charts: {},
-				title: {
-					text: ''
-				},
-				xAxis: {
-					categories: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', ]
-				},
-				tooltips: {
-					formatter: function() {
-						var s;
-						if (this.point.name) { // the pie chart                   
-		                    s = ''+                                               
-		                        this.point.name +': '+ this.y +' fruits';         
-		                } else {                                                  
-		                    s = ''+                                               
-		                        this.x  +': '+ this.y;                            
-		                }                                                         
-		                return s;  
-					}
-				},
-				labels: {
-					items: [{
-						html: res.year + '年访问量统计',
-						style: {
-							left: '40px',
-							top: '10px',
-							color: 'black'
-						}
-					}]
-				},
-				series: [{
-					type: 'spline',                                               
-		            name: '访问量',                                              
-		            data: res.month,                               
-		            marker: {                                                     
-		            	lineWidth: 2,                                               
-		            	lineColor: Highcharts.getOptions().colors[3],               
-		            	fillColor: 'white'                                          
-		            }   
-				}]
-			})
+		// 暂不使用
+		var getRealTime = function() {
+			var progress = ['layui-bg-blue', 'layui-bg-red', 'pred']
+
+			$.get('{:url("index/getRealTime")}', function(res) {
+				console.log(res)
+				var pct = parseFloat(res.hd.PCT)
+				// 改变进度条颜色
+				if (pct < 55) {
+					var color = progress[0]
+				} else if (pct >= 55 || pct < 80) {
+					var color = progress[1]
+				} else {
+					var color = progress[2]
+				}
+
+				// 设置磁盘数据
+				$('#disk>p>span:nth-child(1)').text(res.hd.t)
+				$('#disk>p>span:nth-child(2)').text(res.hd.f)
+				$('#disk>p>span:nth-child(3)').text(res.hd.u)
+				$('#disk>p>span:nth-child(4)').text(pct)
+				$('#disk>p').append(progress(pct))
+			});
+
+			// 进度条
+			var progress = function(data, color) {
+				var html  = '<div id="appendProgress" class="layui-progress layui-progress-big" lay-showPercent="yes">'
+					html += '<div class="layui-progress-bar" lay-percent="20%"></div></div>'
+
+				$('#appendProgress').remove()
+				return html
+			}
 		}
 	</script>
-	<!-- 图表结束 -->
 </body>
 </html>

@@ -138,8 +138,15 @@
             this.premiumfn()
             this.newvideosfn()
             this.hotfn()
+
+            this.statistics()
         },
         methods: {
+            // 统计访问量
+            statistics: function() {
+                $.get('{:url("home/statistics")}')
+            },
+
             // 轮播插件
             slider: function() {
                 $('#full-feature').swipeslider();
