@@ -1,5 +1,6 @@
 {include file="public:head" /}
 
+{load href="/public/static/plug-in/easyUpload.js/easy-upload.css" /}
 <style>
 	.layui-layer-dialog { top: 160px !important; }
 </style>
@@ -64,7 +65,8 @@
 				    <label class="layui-form-label">视频地址</label>
 				    <div class="layui-input-block">
 				    	<input type="text" name="url" required lay-verify="required" placeholder="请输入视频地址或者上传视频" class="layui-input" value="{$data['url']}">
-				    	<button class="layui-btn" style="margin-top: 5px" id="video-btn">视频上传</button>
+				    	<!-- <button class="layui-btn" style="margin-top: 5px" id="video-btn">视频上传</button> -->
+				    	<div id="easyContainer"></div>
 				    </div>
 				</div>
 
@@ -87,6 +89,8 @@
 </div>
 
 <!-- js -->
+{load href="/public/static/plug-in/easyUpload.js/vendor/jquery.cookie-1.4.1.min.js" /}
+{load href="/public/static/plug-in/easyUpload.js/easyUpload.js" /}
 <script>
 	// 初始化组件
 	layui.use(['form', 'layedit', 'upload'], function() {
@@ -141,7 +145,7 @@
 
 		// 上传
 		uploadFile(upload, '#img-btn', 'images')
-		uploadFile(upload, '#video-btn', 'videos')
+		// uploadFile(upload, '#video-btn', 'videos')
 		
 		// 上传文件
 		function uploadFile(upload, elem, type) {
@@ -155,7 +159,6 @@
 					layer.load(2)
 				},
 				done: function(res) {
-					console.log(res)
 					layer.closeAll('loading')
 					if (res.code == 0) {
 						type == 'images' ? $('[name=img]').val(res.path) : $('[name=url]').val(res.path)
@@ -166,6 +169,26 @@
 					layer.msg('上传失败', { icon: 5, time: 1200 })
 				}
 			})
+		}
+	})
+
+	// 视频上传
+	$('#easyContainer').easyUpload({
+		allowFileTypes: '*.mp4',
+		allowFileSize: 1000000,
+		selectText: '选择文件',
+		multi: false,
+		multiName: 1,
+		showNote: false,
+		showPreview: true,
+		url: '{:url("upload/index")}',
+		fileName: 'filename',
+		formParam: { type: 'videos' },
+		timeout: 30000,
+		okCode: 0,
+		successFunc: function(res) {
+			console.log('success', res)
+			$('[name=url]').val(res.path)
 		}
 	})
 </script>

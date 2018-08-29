@@ -1,7 +1,6 @@
 <?php
 namespace app\index\Controller;
 
-use app\common\model\Slider;
 use app\common\model\Video;
 use app\common\model\Type;
 use think\facade\Request;
