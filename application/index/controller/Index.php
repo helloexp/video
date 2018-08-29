@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\common\model\Slider;
 use think\facade\Request;
 
 class Index extends Validate
@@ -8,6 +9,10 @@ class Index extends Validate
     // 首页
     public function index()
     {
+        // 获取轮播图
+        $slider = Slider::field('img, jump')->order('sort', 'asc')->select();
+
+        $this->assign('slider', $slider);
         return $this->fetch();
     }
 

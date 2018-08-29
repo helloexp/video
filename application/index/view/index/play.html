@@ -130,7 +130,7 @@
                             <div class="post thumb-border">
                                 <a :href="item.url">
                                     <div class="post-thumb">
-                                        <img :src="item.img" :alt="item.title">
+                                        <img :src="item.img" :alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
                                         <a :href="item.url" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>

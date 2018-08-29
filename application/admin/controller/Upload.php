@@ -23,7 +23,7 @@ class Upload
             return json([
                 'code' => 0,
                 'msg' => '上传成功',
-                'path' => $info->getPathName()
+                'path' => '/uploads/'.$type.'/'.$info->getSaveName()
             ]);
         }
 

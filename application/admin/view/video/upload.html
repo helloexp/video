@@ -56,7 +56,7 @@
 				    <label class="layui-form-label">视频封面</label>
 				    <div class="layui-input-block">
 				    	<input type="text" name="img" required lay-verify="required" placeholder="请输入封面链接或者上传封面" class="layui-input" value="{$data['img']}">
-				    	<button class="layui-btn" style="margin-top: 5px">封面上传</button>
+				    	<button class="layui-btn" style="margin-top: 5px" id="img-btn">封面上传</button>
 				    </div>
 				</div>
 
@@ -64,7 +64,7 @@
 				    <label class="layui-form-label">视频地址</label>
 				    <div class="layui-input-block">
 				    	<input type="text" name="url" required lay-verify="required" placeholder="请输入视频地址或者上传视频" class="layui-input" value="{$data['url']}">
-				    	<button class="layui-btn" style="margin-top: 5px">视频上传</button>
+				    	<button class="layui-btn" style="margin-top: 5px" id="video-btn">视频上传</button>
 				    </div>
 				</div>
 
@@ -89,9 +89,10 @@
 <!-- js -->
 <script>
 	// 初始化组件
-	layui.use(['form', 'layedit'], function() {
+	layui.use(['form', 'layedit', 'upload'], function() {
 		var form = layui.form,
-			layedit = layui.layedit
+			layedit = layui.layedit,
+			upload = layui.upload
 
 		// 富文本编辑器
 		var edit = layedit.build('desc', {
@@ -137,5 +138,34 @@
 				layer.msg(title + '失败', { icon: 5 })
 			})
 		})
+
+		// 上传
+		uploadFile(upload, '#img-btn', 'images')
+		uploadFile(upload, '#video-btn', 'videos')
+		
+		// 上传文件
+		function uploadFile(upload, elem, type) {
+			upload.render({
+				elem: elem,
+				url: '{:url("upload/index")}',
+				field: 'filename',
+				accept: 'file',
+				data: { type: type },
+				before: function() {
+					layer.load(2)
+				},
+				done: function(res) {
+					console.log(res)
+					layer.closeAll('loading')
+					if (res.code == 0) {
+						type == 'images' ? $('[name=img]').val(res.path) : $('[name=url]').val(res.path)
+						layer.msg('上传成功', { icon: 6, time: 1200 })
+						return false
+					}
+
+					layer.msg('上传失败', { icon: 5, time: 1200 })
+				}
+			})
+		}
 	})
 </script>

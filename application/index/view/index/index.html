@@ -31,12 +31,13 @@
 <section id="slider">
     <div id="full-feature" class="swipslider">
         <ul class="sw-slides">
-            <li class="sw-slide">
-                <img src="/images/sliderimages/bg.png">
-            </li>
-            <li class="sw-slide">
-                <img src="/images/sliderimages/bg2.png">
-            </li>
+            {foreach $slider as $k => $v }
+                <li class="sw-slide">
+                    <a href="{$v.jump}" target="_blank">
+                        <img src="{$v.img}" onerror='this.src="/images/errorimg.jpg"'>
+                    </a>
+                </li>
+            {/foreach}
         </ul>
     </div>
 </section>
@@ -66,7 +67,7 @@
                             <div class="post thumb-border">
                                 <a :href="item.id">
                                     <div class="post-thumb">
-                                        <img v-bind:src="item.img" alt="item.title" onerror="this.src='/images/unload.png; this.src=null'">
+                                        <img v-bind:src="item.img" alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
                                         <a v-bind:href="item.id" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>

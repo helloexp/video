@@ -137,12 +137,12 @@
 				$.post('{:url("delete")}', { id: id }, function(res) {
 					layer.closeAll()
                     if(res.code == 0){
-                        layer.msg("删除成功", {icon: 6}, function() {
+                        layer.msg("删除成功", {icon: 6, time: 1200}, function() {
                         	location.reload()
                         });
                         
                     } else{
-                        layer.msg("删除失败", {icon: 5});
+                        layer.msg("删除失败", {icon: 5, time: 1200});
                     }
 				})
 			})
@@ -194,12 +194,12 @@
 				success : function(res){
 					layer.closeAll()
                     if(res.code == 0){
-                        layer.msg("删除成功", {icon: 6}, function() {
+                        layer.msg("删除成功", {icon: 6, time: 1200}, function() {
                         	location.reload()
                         });
                         
                     } else{
-                        layer.msg("删除失败", {icon: 5});
+                        layer.msg("删除失败", {icon: 5, time: 1200});
                     }
 				}
 			});
