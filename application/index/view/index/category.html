@@ -1,5 +1,7 @@
 {extend name="public:base" /}
 
+{block name="title"}在线播放,高清无码色情视频-{$data['type']}{/block}
+
 {block name="content"}
 
 <!-- 引入layui -->
@@ -230,10 +232,22 @@
                 })
             },
 
+            // 过滤html标签
+            filterHTML: function(msg) {
+                var msg = msg.replace(/<\/?[^>]*>/g, ''); //去除HTML Tag
+                msg = msg.replace(/[|]*\n/, '') //去除行尾空格
+                msg = msg.replace(/&npsp;/ig, ''); //去掉npsp
+                return msg;
+            },
+
             // 数据渲染
             renderdatafn: function(res) {
                 var nodata = document.getElementById('nodata'),
                     opage  = document.getElementById('page-category')
+
+                for (var i=0; i<res.data.length; i++) {
+                    res.data[i].desc = this.filterHTML(res.data[i].desc)
+                }
 
                 Vue.set(categoryvm, 'renderdata', res.data)
                 Vue.set(categoryvm, 'total', res.count)
