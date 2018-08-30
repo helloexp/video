@@ -1,3 +1,7 @@
+<style>
+.layui-nav-child dd { cursor: pointer; }
+</style>
+
 <div class="layui-header">
     <!-- 头部区域 -->
     <ul class="layui-nav layui-layout-left">
@@ -37,7 +41,10 @@
             <dl class="layui-nav-child">
                 <!-- <dd><a lay-href="set/user/info.html">基本资料</a></dd> -->
                 <!-- <dd><a lay-href="set/user/password.html">修改密码</a></dd> -->
-                <dd layadmin-event="logout" style="text-align: center;" onclick="exit()">
+                <dd style="text-align: center;" onclick="update()">
+                    <a>修改密码</a>
+                </dd>
+                <dd style="text-align: center;" onclick="exit()">
                     <a>退出</a>
                 </dd>
             </dl>
@@ -54,6 +61,50 @@
     var exit = function() {
         layer.confirm('确认退出后台控制？', function(idx) {
             layer.closeAll();
+            layer.load(2)
+            $.get('{:url("login/logout")}', function() {
+                layer.closeAll()
+                layer.msg('后台管理退出成功', { icon: 6, time: 1200 }, function() {
+                    window.location.reload()
+                })
+            })
         });
+    }
+
+    // 修改密码
+    var update = function() {
+        var html = '<div class="layui-form-item">'
+            html += '<input type="password" name="n-password" placeholder="请输入新的密码" class="layui-input"></div>'
+            html += '<div class="layui-form-item">'
+            html += '<input type="password" name="c-password" placeholder="请再次输入密码" class="layui-input"></div>'
+
+        layer.open({
+            title: '修改密码',
+            content: html,
+            yes: function() {
+                layer.closeAll()
+                var u = '{:url("index/passwordSave")}',
+                    d = { password: $('[name=c-password]').val() }
+
+                if ($('[name=n-password]').val() != $('[name=c-password]').val()) {
+                    layer.msg('输入两次密码不一致', { icon: 5, time: 1500 })
+                    return false;
+                }
+
+                // 密码一致
+                layer.load(2)
+                $.post(u, d, function(res) {
+                    layer.closeAll()
+                    if (res.code == 0) {
+                        layer.msg('密码修改成功', { icon: 6, time: 1500 }, function() {
+                            window.location.reload()
+                        })
+                        return true
+                    }
+
+                    layer.msg('密码修改失败', { icon: 5, time: 1500 })
+                })
+            }
+        })
     }
 </script>

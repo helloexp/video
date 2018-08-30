@@ -15,4 +15,5 @@ class Admin extends Model
 {
     use SoftDelete;
     protected $deleteTime = 'deleted_time';
+    protected $autoWriteTimestamp  = false;
 }

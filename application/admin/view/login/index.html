@@ -17,9 +17,9 @@
 		.login-container .layui-input { padding-left: 38px; }
 		.login-container .login-footer { text-align: center; }
 		
-		#code canvas:nth-child(1) { width: 100% !important; }
+		/*#code canvas:nth-child(1) { width: 100% !important; }*/
 		.sliderContainer { width: 100%; }
-		#code canvas:nth-child(3) { height: 166px !important; }
+		/*#code canvas:nth-child(3) { height: 166px !important; }*/
 	</style>
 </head>
 <body>
@@ -60,7 +60,22 @@
 
 			// 事件监听
 			form.on('submit(login-btn)', function(data) {
-				console.log(data.field)
+				var d = data.field 
+
+				layer.load(2)
+				$.post('{:url("index")}', d, function(res) {
+					layer.closeAll()
+					if (res.code == 0) {
+						layer.msg('登录成功，正在跳转...', { icon: 6, time: 1500 }, function() {
+							window.location.href = '{:url("/admin")}'
+						})
+						return true
+					}
+
+					layer.msg(res.msg, { icon: 5, time: 1500 }, function() {
+						window.location.reload()
+					})
+				})
 			})
 		})
 	</script>

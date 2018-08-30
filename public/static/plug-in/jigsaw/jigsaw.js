@@ -1,7 +1,7 @@
 (function (window) {
   const l = 42, // 滑块边长
     r = 10, // 滑块半径
-    w = 310, // canvas宽度
+    w = 335, // canvas宽度
     h = 155, // canvas高度
     PI = Math.PI
   const L = l + r * 2 // 滑块实际边长

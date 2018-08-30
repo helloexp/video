@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use app\common\model\Admin;
 use app\common\model\Statistics;
 use think\facade\Request;
 
@@ -151,5 +152,22 @@ class Index extends Validate
         ];
 
         return $result;
+    }
+
+    // 密码修改
+    public function passwordSave()
+    {
+        $post = Request::post();
+        $admin = Admin::get($this->id);
+
+        // 更改密码
+        $admin->password = md5($post['password'].$admin->create_time);
+         $info= $admin->save();
+
+        if (empty($info)) {
+            return json(['code' => -1, 'msg' => '密码修改失败']);
+        }
+
+        return json(['code' => 0, 'msg' => '密码修改成功']);
     }
 }
