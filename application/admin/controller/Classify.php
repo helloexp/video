@@ -60,6 +60,7 @@ class Classify extends Validate
         $map['id'] = $data['id'];
 
         $list = Type::where($map)
+            ->cache(CACHE_TYPE)
             ->update($data);
 
         $result = $list

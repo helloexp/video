@@ -16,5 +16,24 @@
 	/*.layui-layer-dialog { top: 180px !important; } */
 </style>
 
+<!-- 公共函数 -->
+<script>
+	var lu = {
+		// 更新缓存
+		clearCache: function(name) {
+			layer.load(2)
+			$.get('{:url("index/clearCache")}', { name: name }, function(res) {
+				layer.closeAll()
+				if (res) {
+					layer.msg('缓存更新成功', {icon: 6, time: 1500})
+					return false
+				}
+
+				layer.msg('缓存更新失败', {icon: 5, time: 1500})
+			})
+		}
+	}
+</script>
+
 
 

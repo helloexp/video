@@ -11,5 +11,9 @@ namespace think;
 // 加载基础文件
 require __DIR__ . './thinkphp/base.php';
 
+// 缓存常量设置
+define('CACHE_TYPE', 'type');
+define('CACHE_SLIDER', 'slider');
+
 // 执行应用并响应
 Container::get('app')->run()->send();

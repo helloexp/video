@@ -10,7 +10,10 @@ class Index extends Validate
     public function index()
     {
         // 获取轮播图
-        $slider = Slider::field('img, jump')->order('sort', 'asc')->select();
+        $slider = Slider::field('img, jump')
+            ->order('sort', 'asc')
+            ->cache(CACHE_SLIDER)
+            ->select();
 
         $this->assign('slider', $slider);
         return $this->fetch();

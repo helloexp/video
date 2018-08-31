@@ -13,6 +13,7 @@ class Home extends Validate
     {
         $result = Type::field('create_time, update_time, deleted_time', true)
             ->order('sort','asc')
+            ->cache(CACHE_TYPE)
             ->select();
 
         return json($result);

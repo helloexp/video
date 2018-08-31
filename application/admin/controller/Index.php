@@ -170,4 +170,11 @@ class Index extends Validate
 
         return json(['code' => 0, 'msg' => '密码修改成功']);
     }
+
+    // 清除缓存
+    public function clearCache()
+    {
+        $name = Request::get('name');
+        return json(cache($name, NULL));
+    }
 }
