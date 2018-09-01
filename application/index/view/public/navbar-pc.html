@@ -96,9 +96,8 @@
                     nav[i].setAttribute('class', 'has-submenu pc-nav')
 
                     // 再添加当前的active
-                    if (parseInt(id) === parseInt(nav[i].children[0].innerHTML)) {
+                    if (parseInt(id) == parseInt(nav[i].children[0].innerHTML)) {
                         nav[i].setAttribute('class', 'has-submenu pc-nav active')
-
                     } 
                 }
 
@@ -110,12 +109,22 @@
 
             // 获取url后参数
             getUrlParam: function(name) {
-                var reg = new RegExp("(^|&)" + name + "=([^&*])(&|$)", "i"),
-                    r = window.location.search.substr(1).match(reg)
+                var urlPar = window.location.search;
 
-                    if (r != null) return unescape(r[2])
+                if (urlPar.indexOf("?") != -1) {
+                    var str = urlPar.substr(1);
+                    strs = str.split("&");
 
-                    return null 
+                    for (var i=0; i<strs.length; i++) {
+                        pStrs = strs[i].split('=')
+
+                        if (pStrs[0] == name) {
+                            return pStrs[1]
+                        }
+                    }
+                }
+
+                return null
             },
 
             // 搜索

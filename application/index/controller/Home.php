@@ -4,9 +4,10 @@ namespace app\index\Controller;
 use app\common\model\Statistics;
 use app\common\model\Video;
 use app\common\model\Type;
+use think\Controller;
 use think\facade\Request;
 
-class Home extends Validate
+class Home extends Controller
 {
     // 首页分类
     public function classify()
@@ -117,10 +118,18 @@ class Home extends Validate
         $type = Video::taskout()->where($map)->value('type');
         $res = Video::taskout()->where('type',$type)->order('create_time', 'desc')->limit(12)->select();
 
+        // 排除自己
+        $i = 0;
+        foreach ($res as $k => $v) {
+            if ($v['id'] != $data['id']) {
+                $nres[$i++] = $v;
+            }
+        }
+
         $result = [
             'code' => 0,
             'msg' => '数据请求成功',
-            'data' => $res
+            'data' => $nres
         ];
         return json($result);
     }

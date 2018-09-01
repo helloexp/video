@@ -10,7 +10,7 @@ namespace app\index\controller;
 
 use think\Controller;
 
-class Validate extends Controller
+Class Validate extends Controller
 {
     public function __construct()
     {

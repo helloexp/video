@@ -16,6 +16,9 @@ namespace think;
 require __DIR__ . '/../thinkphp/base.php';
 
 // 支持事先使用静态方法设置Request对象和Config对象
+// 缓存常量设置
+define('CACHE_TYPE', 'type');
+define('CACHE_SLIDER', 'slider');
 
 // 执行应用并响应
 Container::get('app')->run()->send();

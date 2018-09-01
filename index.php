@@ -9,7 +9,7 @@
 namespace think;
 
 // 加载基础文件
-require __DIR__ . './thinkphp/base.php';
+require __DIR__ . '/thinkphp/base.php';
 
 // 缓存常量设置
 define('CACHE_TYPE', 'type');

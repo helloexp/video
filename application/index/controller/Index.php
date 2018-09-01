@@ -2,9 +2,10 @@
 namespace app\index\controller;
 
 use app\common\model\Slider;
+use think\Controller;
 use think\facade\Request;
 
-class Index extends Validate
+class Index extends Controller
 {
     // 首页
     public function index()

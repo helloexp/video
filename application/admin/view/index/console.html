@@ -8,15 +8,20 @@
 
 	{load href="/public/static/plug-in/chart/highcharts.js" /}
 	{load href="/public/static/plug-in/chart/exporting.js" /}
+	{load href="/public/static/js/vue.min.js" /}
 	
 	<style>
 		.layuiadmin-big-font { font-size: 2em; padding: 10px 0; }
 		.layui-card-header .layuiadmin-badge { position: absolute; top: 11px; right: 15px; }
-		.pred { background: red; }
+		.layui-card-body { padding: 0 15px 10px; }
+
+		/*// 进度条*/
+		.progress-bar { height: 100%; border-radius: 20px; color: white; text-align: right; }
+		.progress-bar>span { margin-right: 8px; }
 	</style>
 </head>
 <body>
-	<div class="layui-fluid">
+	<div class="layui-fluid"  id="controls">
 		<div class="layui-row layui-col-space15">
 			<!-- 服务器信息 -->
 			<div class="layui-col-sm12">
@@ -27,35 +32,35 @@
 							<table class="layui-table">
 								<tr>
 									<td>你的IP地址</td>
-									<td>{$c->S['YourIP']}</td>
+									<td>{$S['YourIP']}</td>
 								</tr>
 								<tr>
 									<td>服务器IP地址</td>
-									<td>{$c->S['DomainIP']}</td>
+									<td>{$S['DomainIP']}</td>
 								</tr>
 								<tr>
 									<td>服务器信息</td>
-									<td>{$c->S['Flag']}</td>
+									<td>{$S['Flag']}</td>
 								</tr>
 								<tr>
 									<td>服务器OS</td>
-									<td>{$c->S['OS']}</td>
+									<td>{$S['OS']}</td>
 								</tr>
 								<tr>
 									<td>服务器语言</td>
-									<td>{$c->S['Language']}</td>
+									<td>{$S['Language']}</td>
 								</tr>
 								<tr>
 									<td>主机名</td>
-									<td>{$c->S['Name']}</td>
+									<td>{$S['Name']}</td>
 								</tr>
 								<tr>
 									<td>WEB引擎</td>
-									<td>{$c->S['WebEngine']}</td>
+									<td>{$S['WebEngine']}</td>
 								</tr>
 								<tr>
 									<td>WEB端口</td>
-									<td>{$c->S['WebPort']}</td>
+									<td>{$S['WebPort']}</td>
 								</tr>
 							</table>
 						</div>
@@ -64,7 +69,7 @@
 			</div>
 
 			<!-- 服务器信息 -->
-			<div class="layui-col-sm12" style="margin-bottom: 100px">
+			<div class="layui-col-sm12">
 				<div class="layui-card">
 					<div class="layui-card-header">服务器实时信息</div>
 					<div class="layui-card-body">
@@ -72,16 +77,48 @@
 							<table class="layui-table">
 								<tr>
 									<td>服务器时间</td>
-									<td>{$c->S['sTime']}</td>
+									<td>{{c.S.sTime}}</td>
+								</tr>
+								<tr>
+									<td>服务器使用时间</td>
+									<td>{{c.sysInfo.uptime}}</td>
+								</tr>
+								<tr>
+									<td>CPU型号{{c.sysInfo.cpu.num}}核</td>
+									<td>{{c.sysInfo.cpu.model}}</td>
+								</tr>
+								<tr>
+									<td>CPU使用情况</td>
+									<td>{{c.CPU_Use}}</td>
 								</tr>
 								<tr>
 									<td>磁盘使用情况</td>
 									<td id="disk">
-										<p>总空间<span>{$c->hd['t']}</span>GB, 空闲<span>{$c->hd['f']}</span>GB, 已用<span>{$c->hd['u']}</span>GB, 使用率<span>{$c->hd['PCT']}</span>%</p>
+										<p>总空间{{c.hd.t}}GB, 空闲{{c.hd.f}}GB, 已用{{c.hd.t}}GB, 使用率{{c.hd.PCT}}%</p>
 										<div class="layui-progress layui-progress-big" lay-showPercent="yes">
-  											<div class="layui-progress-bar {$color}" lay-percent="{$c->hd['PCT']}%"></div>
+  											<div class="progress-bar"><span>{{c.hd.PCT}}%</span></div>
 										</div>
 									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 网络使用状况 -->
+			<div class="layui-col-sm12" style="margin-bottom: 100px" id="controls">
+				<div class="layui-card">
+					<div class="layui-card-header">网络使用状况</div>
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<table class="layui-table">
+								<tr v-for="(item, index) in c.NetWork.NetWorkName">
+									<td>{{item}}</td>
+									<td>入网：<span style="color: red">{{c.NetWork.NetInput[index]}}</span></td>
+									<td>实时：<span style="color: red">{{c.NetWork.InputSpeed[index]}} B/s</span></td>
+									<td>出网：<span style="color: red">{{c.NetWork.NetOut[index]}}</span></td>
+									<td>实时：<span style="color: red">{{c.NetWork.OutSpeed[index]}} B/s</span></td>
 								</tr>
 							</table>
 						</div>
@@ -93,44 +130,51 @@
 	
 	<!-- js -->
 	<script>
-		layui.use('element');
-		/*$(function() {
-			getRealTime()
-		})*/
-
-		// 暂不使用
-		var getRealTime = function() {
-			var progress = ['layui-bg-blue', 'layui-bg-red', 'pred']
-
-			$.get('{:url("index/getRealTime")}', function(res) {
-				console.log(res)
-				var pct = parseFloat(res.hd.PCT)
-				// 改变进度条颜色
-				if (pct < 55) {
-					var color = progress[0]
-				} else if (pct >= 55 || pct < 80) {
-					var color = progress[1]
-				} else {
-					var color = progress[2]
+		var controls = new Vue({
+			el: '#controls',
+			data: {
+				c: {
+					S:{},
+					sysInfo: {
+						cpu: {},
+					},
+					hd: {},
+					NetWork: {}
 				}
+			},
+			created: function() {
+				var _this = this
 
-				// 设置磁盘数据
-				$('#disk>p>span:nth-child(1)').text(res.hd.t)
-				$('#disk>p>span:nth-child(2)').text(res.hd.f)
-				$('#disk>p>span:nth-child(3)').text(res.hd.u)
-				$('#disk>p>span:nth-child(4)').text(pct)
-				$('#disk>p').append(progress(pct))
-			});
+				layui.use('element')
+				this.getRealTime()
 
-			// 进度条
-			var progress = function(data, color) {
-				var html  = '<div id="appendProgress" class="layui-progress layui-progress-big" lay-showPercent="yes">'
-					html += '<div class="layui-progress-bar" lay-percent="20%"></div></div>'
+				setInterval(_this.getRealTime, 800)
+			},
+			methods: {
+				getRealTime: function() {
+					var u = '{:url("index/getRealTime")}',
+						_this = this
 
-				$('#appendProgress').remove()
-				return html
+					$.get(u, function(res) {
+						Vue.set(controls, 'c', res)
+
+						// 设置进度条
+						var pct = parseFloat(res.hd.PCT)
+						var element = $('.layui-progress>.progress-bar')
+						var progress_bg = 'red'
+						if (pct < 20) {
+							progress_bg = '#1E9FFF'
+						} else if (pct >= 20 && pct < 60) {
+							progress_bg = '#5FB878'
+						} else if (pct >= 60 && pct < 80) {
+							progress_bg = '#FF5722'
+						}
+
+						element.css({ width: pct + '%', background: progress_bg })
+					})
+				}
 			}
-		}
+		})
 	</script>
 </body>
 </html>

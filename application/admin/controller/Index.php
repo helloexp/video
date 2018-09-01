@@ -25,20 +25,9 @@ class Index extends Validate
     public function console()
     {
         $controls = new Controls();
-        // 设置进度条颜色
-        if ((float)$controls->hd['PCT'] < 20) {
-            $color = 'layui-bg-blue';
-        } elseif ((float)$controls->hd['PCT'] >= 20 || (float)$controls->hd['PCT'] < 60) {
-            $color = '';
-        } elseif ((float)$controls->hd['PCT'] >= 60 || (float)$controls->hd['PCT'] < 80) {
-            $color = 'layui-bg-red';
-        } else {
-            $color = 'pred';
-        }
 
         $this->assign([
-            'c' => $controls,
-            'color' => $color
+            'S' => $controls->S,
         ]);
         return $this->fetch();
     }
@@ -113,17 +102,17 @@ class Index extends Validate
         $result = [
             'year' => date('Y'),
             'month' => [
-                Statistics::section(date('Y-1-1'), date('Y-1-31')),
-                Statistics::section(date('Y-2-1'), date('Y-2-31')),
-                Statistics::section(date('Y-3-1'), date('Y-3-31')),
-                Statistics::section(date('Y-4-1'), date('Y-4-31')),
-                Statistics::section(date('Y-5-1'), date('Y-5-31')),
-                Statistics::section(date('Y-6-1'), date('Y-6-31')),
-                Statistics::section(date('Y-7-1'), date('Y-7-31')),
-                Statistics::section(date('Y-8-1'), date('Y-8-31')),
-                Statistics::section(date('Y-9-1'), date('Y-9-31')),
-                Statistics::section(date('Y-10-1'), date('Y-10-31')),
-                Statistics::section(date('Y-11-1'), date('Y-11-31')),
+                Statistics::section(date('Y-1-1'), date('Y-2-1')),
+                Statistics::section(date('Y-2-1'), date('Y-3-1')),
+                Statistics::section(date('Y-3-1'), date('Y-4-1')),
+                Statistics::section(date('Y-4-1'), date('Y-5-1')),
+                Statistics::section(date('Y-5-1'), date('Y-6-1')),
+                Statistics::section(date('Y-6-1'), date('Y-7-1')),
+                Statistics::section(date('Y-7-1'), date('Y-8-1')),
+                Statistics::section(date('Y-8-1'), date('Y-9-1')),
+                Statistics::section(date('Y-9-1'), date('Y-10-1')),
+                Statistics::section(date('Y-10-1'), date('Y-11-1')),
+                Statistics::section(date('Y-11-1'), date('Y-12-1')),
                 Statistics::section(date('Y-12-1'), date('Y-12-31')),
             ]
         ];
