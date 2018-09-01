@@ -283,6 +283,11 @@
     </style>
 </head>
 <body>
+<script>
+    // 404 页面跳转
+    window.location.href = '/404'
+</script>
+
     <div class="echo">
         <?php echo $echo;?>
     </div>
@@ -409,11 +414,6 @@
     </div>
     <?php } ?>
 
-    <div class="copyright">
-        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
-        <span>V<?php echo \think\facade\App::version(); ?></span> 
-        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
-    </div>
     <?php if(\think\facade\App::isDebug()) { ?>
     <script>
         var LINE = <?php echo $line; ?>;
