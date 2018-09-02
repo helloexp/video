@@ -31,7 +31,7 @@
 				<div class="layui-form-item">
 				    <label class="layui-form-label">视频类型</label>
 				    <div class="layui-input-block">
-				    	<select name="type" lay-verify="required">
+				    	<select name="type" lay-verify="required" lay-filter="type">
 							{foreach $typelist as $k => $vo}
 								<option value="{$vo.id}">{$vo.type}</option>
 							{/foreach}

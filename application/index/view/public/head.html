@@ -18,6 +18,9 @@
 {load href="/public/static/js/vue.min.js" /}
 
 <style>
+.content .list-group .item {
+	height: 280px;
+}
 @media screen and (max-width: 1000px) {
 	.content .post:hover .video-stats {
 		transform: translateY(0); 
@@ -34,6 +37,9 @@
 	}
 	.content .list-group .item:nth-child(1) {
 		margin-top: -10px;
+	}
+	.content .list-group .item {
+		height: auto;
 	}
 }
 </style>
