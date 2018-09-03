@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50553
-Source Host           : localhost:3306
-Source Database       : video
+Source Server         : video
+Source Server Version : 50639
+Source Host           : 166.62.28.144:3306
+Source Database       : 1se0x
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50639
 File Encoding         : 65001
 
-Date: 2018-08-30 22:19:19
+Date: 2018-09-02 22:00:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `vd_admin` (
   `update_time` int(32) DEFAULT NULL COMMENT '更新时间',
   `deleted_time` int(32) DEFAULT NULL COMMENT '账号删除时间',
   PRIMARY KEY (`id`,`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台管理';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='后台管理';
 
 -- ----------------------------
 -- Table structure for vd_slider
@@ -43,7 +43,7 @@ CREATE TABLE `vd_slider` (
   `create_time` int(32) DEFAULT NULL,
   `deleted_time` int(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='轮播图管理';
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='轮播图管理';
 
 -- ----------------------------
 -- Table structure for vd_statistics
@@ -56,7 +56,7 @@ CREATE TABLE `vd_statistics` (
   `create_time` int(32) DEFAULT NULL,
   `deleted_time` int(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=120 DEFAULT CHARSET=utf8 COMMENT='数据统计表';
+) ENGINE=MyISAM AUTO_INCREMENT=329 DEFAULT CHARSET=utf8 COMMENT='数据统计表';
 
 -- ----------------------------
 -- Table structure for vd_type
@@ -70,7 +70,7 @@ CREATE TABLE `vd_type` (
   `update_time` int(32) DEFAULT NULL COMMENT '更新时间',
   `deleted_time` int(32) DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='类别表';
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='类别表';
 
 -- ----------------------------
 -- Table structure for vd_video
@@ -93,4 +93,4 @@ CREATE TABLE `vd_video` (
   `update_time` int(32) DEFAULT NULL COMMENT '更新时间',
   `deleted_time` int(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='视频表';
+) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='视频表';

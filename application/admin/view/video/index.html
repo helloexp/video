@@ -39,6 +39,7 @@
 				<div class="btn-container">
 					<button class="layui-btn layui-btn-normal" onclick="upload(null)">上传视频</button>
 					<button class="layui-btn layui-btn-danger layui-btn-normal" id="moreDeleted">批量删除</button>
+					<button class="layui-btn" id="recommendSelect">推荐查询</button>
 				</div>
 				<table id="table" lay-filter="table" lay-data="{id: table}"></table>
 			</div>
@@ -145,6 +146,17 @@
                         layer.msg("删除失败", {icon: 5, time: 1200});
                     }
 				})
+			})
+		})
+
+		// 推荐搜索
+		$('#recommendSelect').click(function() {
+			tableIns.reload({
+				url: '{:url("recommendSearch")}',
+				where: {},
+				page: { curr: 1 },
+				done: function(res) {
+				}
 			})
 		})
 	}); 

@@ -19,6 +19,11 @@ footer .footer-div { margin: 0 auto; max-width: 75rem; }
 <div id="footer-bottom">
     <div class="btm-footer-text text-center">
         <p>版权所有，未经授权禁止建立镜像。站点邮箱：1se0x.com@gmail.com</p>
+        <p style="margin-top: 10px">请使用Ctrl+D进行收藏本站， 喜欢本站的朋友请将 <span id="footer-url"></span> 转发给您的好友</p>
         <p style="margin-top: 10px">站点申明：我们立足于美利坚合众国，对全球华人服务，受北美法律保护。未满18岁或被误导来到这里，请立即离开！</p>
     </div>
 </div>
+
+<script>
+$("#footer-url").text(window.location.host)
+</script>

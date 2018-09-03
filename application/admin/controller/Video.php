@@ -135,6 +135,20 @@ class Video extends Validate
         }
     }
 
+    // 推荐搜索
+    public function recommendSearch()
+    {
+        $get = Request::get();
+
+        $map = ['recommend'=> 1];
+        return json([
+            'code' => 0,
+            'msg' => '',
+            'count' => \app\common\model\Video::where($map)->count(),
+            'data' => \app\common\model\Video::where($map)->page($get['page'], $get['limit'])->all()
+        ]);
+    }
+
     // 视频上传
     public function upload()
     {
