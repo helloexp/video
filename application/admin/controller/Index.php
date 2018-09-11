@@ -84,7 +84,7 @@ class Index extends Validate
 
         $data = $get['flow'] == 0
             ? Statistics::page($get['page'], $get['limit'])->order('create_time', 'desc')->all()
-            : Statistics::group('browse_ip')->order('create_time', 'desc')->all();
+            : Statistics::page($get['page'], $get['limit'])->group('browse_ip')->order('create_time', 'desc')->all();
 
         return json([
             'code' => 0,

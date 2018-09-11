@@ -139,13 +139,14 @@ class Video extends Validate
     public function recommendSearch()
     {
         $get = Request::get();
+        $type = new Type();
 
         $map = ['recommend'=> 1];
         return json([
             'code' => 0,
             'msg' => '',
             'count' => \app\common\model\Video::where($map)->count(),
-            'data' => \app\common\model\Video::where($map)->page($get['page'], $get['limit'])->all()
+            'data' => $type->videoType()->where(['v.recommend'=> 1])->page($get['page'], $get['limit'])->all()
         ]);
     }
 

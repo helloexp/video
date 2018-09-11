@@ -116,7 +116,7 @@ class Home extends Controller
         $map['id'] = $data['id'];
 
         $type = Video::taskout()->where($map)->value('type');
-        $res = Video::taskout()->where('type',$type)->order('create_time', 'desc')->limit(12)->select();
+        $res = Video::taskout()->where('type',$type)->order('create_time', 'desc')->limit(6)->select();
 
         // 排除自己
         $i = 0;

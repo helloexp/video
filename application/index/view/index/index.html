@@ -69,8 +69,8 @@
                             <div class="post thumb-border">
                                 <a :href="item.id">
                                     <div class="post-thumb">
-                                        <img v-bind:src="item.img" alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
-                                        <a v-bind:href="item.id" class="hover-posts">
+                                        <img class="lazy" :src="item.img" :alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
+                                        <a :href="item.id" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>
                                         <div class="video-stats clearfix">
@@ -136,6 +136,7 @@
             }],
         },
         created: function() {
+            // 图片懒加载
             this.slider()
             this.premiumfn()
             this.newvideosfn()

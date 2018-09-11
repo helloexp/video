@@ -18,6 +18,7 @@
         #playVideo { height: 230px; width: 100%; } 
         .content .list-group .item { margin-bottom: -10px; }
         .content .list-group .item:nth-child(1) { margin-top: -20px; }
+        h6 { font-size: 10px; }
     } 
 </style>
 
@@ -48,11 +49,7 @@
     <div class="row">
         <div class="large-12 columns">
             <div class="m">
-                <h6 style="color: red">【视频缓存一般5-10秒】</h6>
-                <video id="playVideo" controls poster="">
-                    <!-- <source src="http://1se01.com/videos/rihan/1.mp4" type="video/mp4" /> -->
-                    您的浏览器版本过低，请更新浏览器或者更换高版本的浏览器。
-                </video>
+                <div id="playVideo"></div>
             </div>
         </div>
     </div>
@@ -67,7 +64,7 @@
         <section class="singlePostDescription">
             <div class="row secBg">
                 <div class="large-12 columns">
-                    <p style="padding: 10px; color: red !important; margin: 0; font-size: 14px">提示：手机QQ浏览器暂时无法在线播放视频，请您更换浏览器播放。推荐使用：360，谷歌，火狐，UC浏览器</p>
+                    <p style="padding: 10px; color: red !important; margin: 0; font-size: 14px">提示：视频缓存一般5-10秒，第一次打开本网站视频缓存可能更长一点</p>
                 </div>
             </div>
         </section>
@@ -140,7 +137,7 @@
                             <div class="post thumb-border">
                                 <a :href="item.url">
                                     <div class="post-thumb">
-                                        <img :src="item.img" :alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
+                                        <img class="lazy" :src="item.img" :alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
                                         <a :href="item.url" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>
@@ -189,12 +186,15 @@
 </div>
 <!-- content-end -->
 
+{load href="/public/static/plug-in/ckplayer/ckplayer/ckplayer.min.js" /}
 <script>
     // 点赞标记
     var commentFlag = false;
 
     // 视频播放
     $(function() {
+        // 图片懒加载
+    
         var u = '{:url("home/detailVideo")}',
             d = { id: '{$data["playid"]}' }
 
@@ -209,11 +209,18 @@
             $('#breadcrumb .breadcrumbs>li:nth-child(3)').html(span)
 
             // 设置标题
-            $('title').text(res.data.title+'-')
+            $('title').text(res.data.title+'-黄色电影免费片日本大片,高清无码色情在线视频网站-一色网')
+            console.log(res)
 
             // 设置资源,视频播放
-            var videoH = '<source src="'+res.data.url+'" type="video/mp4" poster="'+res.data.img+'" />'
-            $('#playVideo').append(videoH)
+            var videoObject = {
+                container: '#playVideo', //容器的ID或className
+                variable: 'player',//播放函数名称
+                poster: res.data.img,//封面图片
+                video: res.data.url
+                   
+            };
+            var player = new ckplayer(videoObject);
 
             // 设置信息
             $('.post-title>h4').text(res.data.title)
