@@ -5,9 +5,9 @@
 <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 
 <!-- 加载css -->
+{load href="/public/static/index/css/font-awesome.min.css" /}
 {load href="/public/static/index/css/app.css" /}
 {load href="/public/static/index/css/theme.css" /}
-{load href="/public/static/index/css/font-awesome.min.css" /}
 {load href="/public/static/index/css/googleapis.css" /}
 {load href="/public/static/index/layerslider/css/layerslider.css" /}
 {load href="/public/static/index/css/owl.carousel.min.css" /}
@@ -18,9 +18,8 @@
 {load href="/public/static/js/vue.min.js" /}
 
 <style>
-.content .list-group .item {
-	height: 280px;
-}
+.content .list-group .item { height: 280px; }
+.sticky-container { height: 80px; }
 @media screen and (max-width: 1000px) {
 	.content .post:hover .video-stats {
 		transform: translateY(0); 
@@ -41,6 +40,7 @@
 	.content .list-group .item {
 		height: auto;
 	}
+	.sticky-container { height: 45px; }
 }
 </style>
 

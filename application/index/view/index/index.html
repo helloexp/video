@@ -11,13 +11,14 @@
     .column:last-child:not(:first-child), .columns:last-child:not(:first-child) { float: left; }
 
     /* 重写轮播图 */
-    #slider {}
+    .pcslider { display: none; }
     #full-feature { height: 350px; max-width: 75rem; margin: 0 auto; padding: 0 !important; }
     #full-feature ul { margin: 0; }
-    #full-feature img { width: 100%; height: 100%; }
+    #full-feature img { width: 100%; height: 350px; }
     #full-feature .sw-next, #full-feature .sw-prev { display: none; }
     @media screen and (max-width: 1000px) { 
         #full-feature { height: 200px; width: 100%; } 
+        #full-feature img { height: 200px; }
     }
 
     #premium { max-width: 75rem; margin: 14px auto; }
@@ -33,10 +34,11 @@
 <section id="slider">
     <div id="full-feature" class="swipslider">
         <ul class="sw-slides">
-            {foreach $slider as $k => $v }
+            {foreach $slider as $k => $v}
                 <li class="sw-slide">
                     <a href="{$v.jump}" target="_blank">
-                        <img src="{$v.img}" onerror='this.src="/images/errorimg.jpg"'>
+                        <img class="pcslider" src="{$v.img}" onerror='this.src="/images/errorimg.jpg"'>
+                        <img class="mslider" src="{$v.mimg}" onerror='this.src="/images/errorimg.jpg"'>
                     </a>
                 </li>
             {/foreach}
@@ -141,7 +143,6 @@
             this.premiumfn()
             this.newvideosfn()
             this.hotfn()
-
             this.statistics()
         },
         methods: {
@@ -153,18 +154,34 @@
             // 轮播插件
             slider: function() {
                 $('#full-feature').swipeslider();
+
+                // 判断是电脑还是手机端
+                if (!this.isMobile()) {
+                    $('.mslider').css('display', 'none')
+                    $('.pcslider').css('display', 'block')
+                }
             },
 
             // 特别推荐
             premiumfn: function() {
                 var u = '{:url("home/recommend")}',
+                    d = { page: 1, limit: 4 },
                     t = this
 
-                $.get(u, function(res) {
+                $.get(u, d, function(res) {
                     res = t.playurl(res)
 
                     Vue.set(homevm.hometype[0], 'data', res.data)
                 })
+            },
+
+            // 是移动端
+            isMobile: function() {
+                if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                    return true
+                }
+
+                return false
             },
 
             // 过滤html标签

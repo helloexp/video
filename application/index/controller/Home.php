@@ -40,9 +40,12 @@ class Home extends Controller
     // 特别推荐
     public function recommend()
     {
+        $get = Request::get();
+
         $result['data'] = Video::taskout()
             ->where('recommend=1')
             ->order('create_time', 'desc')
+            ->page($get['page'], $get['limit'])
             ->all();
         return json($result);
     }

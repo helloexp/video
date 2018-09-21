@@ -9,6 +9,13 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
+		<label class="layui-form-label">手机端地址</label>
+		<div class="layui-input-block">
+			<input type="text" name="mimg" required  lay-verify="required" placeholder="请输入轮播图地址或上传轮播图" class="layui-input" value="{$sliderinfo['mimg']}">
+			<button class="layui-btn" style="margin-top: 8px" id="upload-mbtn">上传图片</button>
+		</div>
+	</div>
+	<div class="layui-form-item">
 		<label class="layui-form-label">跳转地址</label>
 		<div class="layui-input-block">
 			<input type="text" name="jump" placeholder="请输入轮播图跳转地址" class="layui-input" value="{$sliderinfo['jump']}">
@@ -59,26 +66,32 @@
 		})
 
 		// 文件上传
-		upload.render({
-			elem: '#upload-btn',
-			url: '{:url("upload/index")}',
-			field: 'filename',
-			data: { type: 'images' },
-			before: function() {
-				layer.load(2)
-			},
-			done: function(res, index, upload) {
-				layer.closeAll('loading')
-				
-				if (res.code == 0) {
-					layer.msg('图片上传成功', { icon: 6, time: 1000 })
-					$('[name=img]').val(res.path)
-					return false
-				}
+		var uploadbtn = function(id, ele) {
+			upload.render({
+				elem: id,
+				url: '{:url("upload/index")}',
+				field: 'filename',
+				data: { type: 'images' },
+				before: function() {
+					layer.load(2)
+				},
+				done: function(res, index, upload) {
+					layer.closeAll('loading')
+					
+					if (res.code == 0) {
+						layer.msg('图片上传成功', { icon: 6, time: 1000 })
+						ele.val(res.path)
+						return false
+					}
 
-				layer.msg('图片上传失败', { icon: 5 })
-			}			
-		})
+					layer.msg('图片上传失败', { icon: 5 })
+				}			
+			})
+		}
+
+		// 文件上传
+		uploadbtn('#upload-btn', $('[name=img]'))
+		uploadbtn('#upload-mbtn', $('[name=mimg]'))
 	})
 </script>
 

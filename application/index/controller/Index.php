@@ -11,7 +11,7 @@ class Index extends Controller
     public function index()
     {
         // 获取轮播图
-        $slider = Slider::field('img, jump')
+        $slider = Slider::field('img, mimg, jump')
             ->order('sort', 'asc')
             ->cache(CACHE_SLIDER)
             ->select();

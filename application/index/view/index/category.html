@@ -257,7 +257,7 @@
             // 添加视频播放id
             playurl: function(res) {
                 for (var i=0; i<res.data.length; i++) {
-                    res.data[i].id = '/play?playid=' + res.data[i].id
+                    res.data[i].id = '/play?playid=' + res.data[i].id + '&id={$data["id"]}'
                 }
 
                 return res

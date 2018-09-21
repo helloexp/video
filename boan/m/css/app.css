@@ -1,0 +1,685 @@
+/* Write your styles */
+.am-list-news-default {
+    margin: 0;
+}
+.am-list-news-hd {
+    border-bottom:1px solid #15afef;
+	 padding-bottom: 0;
+}
+.am-list-news-ft{margin-top:15px;}
+.am-list-news-hd h2 {
+    margin-left:10px;
+	background-color:#15afef;
+	padding:0 8px;
+	height:36px;
+	line-height:36px;
+	color:#FFF;
+}
+.am-list,#match{padding:0 10px;}
+.layui-tab-title .layui-this,.lay203,.lay27,.lay28,.lay34,.lay53{
+    background-color: #15afef;
+    color: #FFF;
+}
+.am-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: .325em 1em;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    background-image: none;
+    border: 1px solid transparent;
+}
+thead th{padding:8px 0;}
+.layui-badge-rim, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-layedit, .layui-layedit-tool, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
+    border-color: #008040;
+}
+.lottery {
+    width: 100vw;
+    overflow: hidden;
+}
+.lottery ul {
+    padding: .5rem .5rem 8px .5rem;
+	margin:0;
+    background-color: #fff;
+    border-bottom: 1px #e5e5e5 solid;
+    overflow: hidden;
+}
+.lottery li {
+    width: 100%;
+	margin:10px 0;
+}
+.lottery .title {
+    height: 1.25rem;
+    line-height: 1.25rem;
+    color: #186ea7;
+}
+.lottery .date {
+    height: 1.25rem;
+    line-height: 1.25rem;
+    margin-left: 0.5rem;
+    font-size: 12px;
+    color: #666;
+}
+.lottery li a {
+    display: inline-block;
+    width: 100%;
+}
+.lottery li span{display: inline-block;}
+.lottery li span em{
+	display:block;
+	font-style:normal;
+	text-align:center;
+}
+.red, .high .ballbox .red {
+    background-color: #e84542;
+    color: #fff;
+}
+.lottery li i{font-style:normal;}
+.ball {
+    display: block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 16px;;
+    color: #fff;
+    border-radius: 50%;
+    margin: .25rem;
+}
+.blue, .high .ballbox .blue {
+    background-color: #52a8e1;
+    color: #fff;
+}
+.more {
+    display: inline-block;
+    width: .625rem;
+    height: 1.25rem;
+    background: url(../images/more.png) no-repeat center;
+    background-size: 100%;
+    float: right;
+    line-height: 1.75;
+    margin: .25rem;
+}
+.prog {
+    display: inline-block;
+    float: left;
+    font-size: 12px;
+    color: #999;
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+.lottery li .prog em {
+    font-family: Georgia;
+    font-size: 14px;
+    color: #ee542a;
+	display: inline-block;
+}
+.links {
+    display: inline-block;
+    float: right;
+    height: 1.25rem;
+    line-height: 1.25rem;
+}
+.lottery .links a {
+    display: inline-block;
+    margin: 0 .5rem;
+    font-size: 12px;
+    color: #999;
+    width: auto;
+}
+.baomagreen i{
+	background-color: #00CD66;
+}
+.baomablue i {
+	background-color: #52a8e1;
+}
+.baomared i {
+	background-color: #e84542;
+}
+#banner_company_lists{width:98%;padding:0 1%;margin:0 auto;}
+#banner_company_lists ul{padding:0;margin:0;}
+#banner_company_lists li {
+    display: block;
+    float: left;
+    width: 20%;
+    position: relative;
+    cursor: pointer;
+	margin:2px 0px;
+}
+#banner_company_lists li img{
+	width:94%;
+	height: 80px;
+	border: 1px solid #cccccc;
+	padding:0 1%;
+	    margin: 0 auto;
+    display: block;
+}
+
+.layui-tab-content .list li {
+    text-align: left;
+    float: left;
+    overflow: hidden;
+	line-height: 26px;
+    height: 26px;
+	width:48%;
+	margin-right:2%;
+	    position: relative;
+}
+.cl{clear:both;}
+.margin10{margin:10px 0;}
+.huodong li{position: relative;padding-left:24px;display:block;line-height:22px;min-height:45px;}
+.huodong li .yhdiv{display:block;padding: 0.8rem 0;min-height:30px;}
+.huodong li img{position: absolute;left:0;top:10px;}
+#match td{padding:8px;}
+/* 彩票 */
+.main_head{margin:8px 0;}
+.t_line1{background:url("../images/betboy-line_03.png"); height:2px; font-size:0px; }
+.t_line2 { background:url("../images/betboy-line_05.png"); height:2px; font-size:0px; }
+
+.f_h {font-size:13px; color:#008040333; font-weight:bold;}
+
+.t_head { background: url("../images/betboy-logo_03.png") no-repeat 0 0; height:22px; padding-left:30px; line-height:25px; margin-bottom:5px;}
+.t_head_1 { background:url("../images/betboy-logo_05.png") no-repeat 0 0; height:22px; padding-left:30px; line-height:25px;  margin-bottom:5px;}
+
+.b_cai{ margin-right:20px;height: 70px;}
+
+.b_cai span{background:url("../images/betboy-bocai.png") no-repeat 0 0; height:20px;}
+
+.b_head{color:#666666; font-size:12px; padding:8px 0 8px 3px;}
+.b_head font{color:#999999; font-size:12px; padding-left:10px;}
+
+.b_head a{color:#666666;}
+
+.b_main{ font-size:10px; font-weight:400;}
+.b_main li{background-color: #52a8e1;width: 30px;
+    height: 30px;
+    line-height: 30px; float:left; list-style:none; text-align:center; margin:0 5px; color:#ffffff;border-radius:50%;}
+
+.b_main .o{ background-color: #e84542;color:#ffffff;}
+#dfsj_wp {
+width: 960px;
+margin: 0 auto 30px;
+background: #FFF;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+padding: 5px;
+}
+#dfsj_wp h1,#dfsj_wp h2{
+font-size:14px;
+}
+.main {
+width: 960px;
+margin: 10px auto;
+}
+.main .leftnav {
+float: left;
+width: 195px;
+}
+.main .topnav {
+float: left;
+width: 960px;
+}
+
+
+.leftnav .changebox {
+background: url(../images/detail_bg.gif) -190px -64px no-repeat;
+width: 189px;
+height: 31px;
+padding-left: 13px;
+}
+.leftnav .cznav {
+background: #EDEDED;
+width: 183px;
+padding: 10px 0 10px 13px;
+}
+
+.main .right_box {
+width: 956px;
+float: right;
+}
+.main .right_boxcai {
+width: 956px;
+float: right;
+}
+.cznav .tit {
+background: url(../images/detail_bg.gif) 0 -64px no-repeat;
+width: 173px;
+height: 30px;
+line-height: 30px;
+margin-bottom: 5px;
+}
+.cznav .tit a {
+padding-left: 50px;
+text-decoration: none;
+display: block;
+font-weight: normal;
+color: #515151;
+}
+.cznav .tit a.fucai {
+background: url(../images/lottery_logo_bg.gif) 10px 4px no-repeat;
+}
+.cznav .item li {
+background: url(../images/cznav_li_bg.gif) center bottom no-repeat;
+}
+.cznav .item li h1 {
+height: 35px;
+line-height: 33px;
+background: url(../images/cznav_bg.gif) 15px -22px no-repeat;
+padding-left: 45px;
+font-weight: normal;
+}
+.right_box .right_top {
+width: 960px;
+height: 7px;
+overflow: hidden;
+}
+.right_box .right_main {
+border: 1px #FF9D08 solid;
+padding: 15px;
+}
+
+.cznav .item li a {
+color: #008040;
+}
+.cznav .tit a.ticai {
+background: url(../images/lottery_logo_bg.gif) 10px -97px no-repeat;
+}
+.right_main .cpinfo {
+background: url(../images/detail_bg.gif) 0 -21px no-repeat;
+width: 690px;
+height: 38px;
+line-height: 38px;
+padding: 0 20px;
+}
+.bet {
+width: 10px;
+float: left;
+}
+.search {
+float: right;
+height: 100%;
+}
+h1.center {
+float: none;
+margin-left: 150px;
+}
+.red {
+color: red;
+border:none;
+background-color:transparent;
+}
+.search input {
+margin: 0;
+padding: 0;
+height: 25px;
+line-height: 25px;
+border: 1px solid #CCC;
+}
+.search input.btn {
+padding: 0 5px;
+width: 40px;
+}
+.clear,cl {
+clear: both;
+}
+table#draw_list {
+width: 95%;
+margin: 10px auto;
+color: #008040;
+}
+.title {
+    padding: 1rem;
+    line-height: 2rem;
+}
+.font32 {
+    font-size: 16px;
+}
+.fontw {
+    font-weight: bold;
+}
+.gray3 {
+    color: #008040;
+}
+.padding10{padding:10px;}
+.htop{height:49px;}
+#draw_list, thead {
+background:#FFF;
+height: 32px;
+line-height: 32px;
+text-align:center;
+}
+table#draw_list .bgcolor1 {
+background: none repeat scroll 0 0 whiteSmoke;
+}
+span.ball_1 {
+background: url("../images/openprize_ball_bg.gif") no-repeat scroll 0 0 transparent;
+}
+span.ball_1, span.ball_2, span.ball_3 {
+color: white;
+display: inline-block;
+font-weight: bold;
+height: 21px;
+line-height: 21px;
+text-align: center;
+width: 20px;
+}
+span.ball_2 {
+background: url("../images/openprize_ball_bg.gif") no-repeat scroll -21px 0 transparent;
+}
+.right_box .right_bottom {
+width: 784px;
+height: 7px;
+overflow: hidden;
+}
+.dede_pages{
+}
+.dede_pages ul{
+	float:left;
+	padding:12px 0px 12px 3px;
+}
+.dede_pages ul li{
+	float:left;
+	font-family:Tahoma;
+	line-height:17px;
+	margin-right:5px;
+	border:1px solid #E9E9E9;
+}
+.dede_pages ul li a{
+	float:left;
+	padding:2px;
+	color:#555;
+	display:block;
+}
+.dede_pages ul li a:hover{
+	color:red;
+	text-decoration:none;
+	padding:2px;
+}
+.dede_pages ul li.thisclass,
+.dede_pages ul li.thisclass a,.pagebox ul li.thisclass a:hover{
+	background-color:#F8F8F8;
+	font-weight:bold;
+	color:red;
+}
+.dede_pages .pageinfo{
+	
+	padding:2px;
+	color:#999;
+}
+.dede_pages .pageinfo strong{
+	color:#555;
+	font-weight:normal;
+	
+}
+.draw_main {
+padding-top: 15px;
+}
+.draw_main .draw_left .draw_content {
+border: 2px #DEDEDE solid;
+}
+.draw_main .draw_left .draw_content .draw_tab {
+width: 100%;
+margin-top: 10px;
+background: whiteSmoke;
+color: #434343;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg1 {
+background: url(../images/detail_bg.gif) -406px -64px no-repeat;
+height: 32px;
+line-height: 32px;
+padding: 0 10px 0 25px;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg2 {
+background: #E9E9E9;
+margin-top: 15px;
+}
+.draw_main .draw_left .draw_content .draw_ul li {
+line-height: 30px;
+padding-left: 25px;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg3 {
+background: gainsboro;
+border-top: 2px white solid;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg1 .left {
+float: left;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg1 .right {
+float: right;
+}
+.nospace {
+font-size: 0;
+height: 0;
+line-height: 0;
+}
+.draw_main .draw_left .draw_content .draw_tab .title {
+background: url(../images/detail_bg.gif) -406px -64px no-repeat;
+height: 22px;
+line-height: 22px;
+font-weight: bold;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg3 .money {
+float: left;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg3 .more_data {
+float: right;
+}
+.draw_main .draw_left .draw_content .draw_ul li.bg3 .more_data .draw_data {
+background: url(../images/history_01.gif) 0 7px no-repeat;
+padding-left: 20px;
+margin-right: 10px;
+color: blue;
+display: inline-block;
+}
+.draw_main .draw_left .draw_content .draw_tab .tit {
+background: #E8E8E8;
+font-weight: bold;
+}
+.draw_main .draw_tab .bgcolor2 {
+background: none repeat scroll 0 0 whiteSmoke;
+border-bottom: 1px solid whiteSmoke;
+}
+.draw_main .draw_left .draw_content .draw_tab .bgcolor {
+background: #EDECEC;
+border-bottom: 1px white solid;
+}
+.draw_main .draw_left .draw_content .draw_tab td {
+text-align: center;
+padding: 5px 0;
+border-left: 1px white solid;
+}
+.main .cz_nav li.on {
+background: url(../images/lhc_allbg.gif) -408px -248px no-repeat;
+}
+.main .cz_nav li {
+float: left;
+width: 162px;
+height: 30px;
+line-height: 30px;
+text-align: center;
+margin-right: 1px;
+}
+.main .cz_nav li.on a {
+color: #7F2D00;
+}
+.main .cz_nav li a {
+font-weight: bold;
+font-size: 14px;
+color: white;
+display: block;
+text-decoration: none;
+}
+.main .cz_menu_top {
+background: url(../images/lhc_allbg.gif) 0 -379px no-repeat;
+height: 8px;
+overflow: hidden;
+}
+.main .cz_menu {
+background: #F8DDA4;
+padding: 0 0 10px;
+}
+.cz_menu .menu_left {
+float: left;
+margin: 2px 0 0 15px;
+color: #7F2D00;
+}
+.cz_menu .menu_left a {
+margin: 0 6px;
+color: #7F2D00;
+}
+.cz_menu .menu_right {
+float: right;
+line-height: 25px;
+width: 380px;
+margin-top: 7px;
+}
+.am-offcanvas-bar{width:50%;}
+#search_result_phase {
+width: 90px;
+}
+.search input.btn {
+width: 40px;
+}
+.search input {
+margin: 0;
+padding: 0;
+height: 25px;
+line-height: 25px;
+border: 1px solid #CCC;
+}
+.main .kj_box {
+border-left: 1px #FF9D08 solid;
+border-right: 1px #FF9D08 solid;
+border-top: 1px #7F0D16 solid;
+padding: 20px;
+}
+.kj_box .kj_tab {
+width: 100%;
+background: #F7F7F7;
+}
+.kj_box .kj_tab .czbgcolor .fc {
+background: url(../images/lottery_logo_bg.gif) 0 0 no-repeat;
+height: 22px;
+padding-left: 32px;
+color: #E20A16;
+font-size:14px;
+}
+.kj_box .kj_tab .atitle {
+background: #FFF2C9;
+text-align: center;
+font-weight: bold;
+color: #7F2D00;
+}
+.kj_box .kj_tab .czbgcolor .tc {
+background: url(../images/lottery_logo_bg.gif) 0 -100px no-repeat;
+height: 23px;
+padding-left: 32px;
+color: #E20A16;
+font-size:14px;
+}
+.kj_box .kj_tab .czbgcolor {
+background: white;
+}
+.kj_box .kj_tab td {
+border-left: 1px white solid;
+text-align: center;
+padding: 8px 0;
+}
+.kj_box .kj_tab .bgcolor {
+background: #EBEBEB;
+}
+.kj_box .kj_tab .ballbg {
+text-align: left;
+margin: 0 8px;
+}
+.kj_box .kj_tab .czbgcolor td {
+text-align: left;
+}
+.main .kj_box_bottom {
+background: url(../images/lhc_allbg.gif) 0 -389px no-repeat;
+height: 6px;
+overflow: hidden;
+}
+#cyrj_bcjq li{padding-left:8px;line-height:30px;height:30px;overflow:hidden;}
+.picbox{width:100%;padding-top:5px;}
+.picbox li{width:47%;float:left;height:120px;overflow:hidden;margin: 5px 1% 5px 2%; }
+.picbox li:nth-child(even){margin-left:1%;margin-right:2%;}
+.foot {
+    background: #292a32;
+    padding: .4rem 0 .5rem 0;
+    color: #999;
+	padding:20px 5px 10px 5px;
+	text-align:center;
+}
+.foot a ,.foot font{
+    color: #999;
+    padding: .9rem 0;
+}
+.lh20 {
+    line-height: 22px;
+}
+.font12 {
+    font-size: .75rem;
+}
+.dlpannel{
+	padding: 1%;
+}
+.dlpannel br{
+   display:none;
+}
+.dlpannel img {
+    width: 24%;
+}
+.pc a {
+    color: #fff;
+    width: 100%;
+    padding: .9rem 0;
+    display: block;
+}
+.center {
+    text-align: center;
+}
+.td3{padding-left:5px;padding-top:5px;}
+.td3 span{display:block;float:left;width:25px;margin:0 2px;}
+.td3 span i{width:24px;height:24px;line-height:25px;display:inline-block;border-radius:50%;color:#FFF;font-style:normal;}
+.td3 em{font-style:normal;}
+.footballteam ul li{float: left;
+    padding-left: 5px;text-align: center;height:63px;width:80px;overflow:hidden;margin-bottom:8px;}
+	.footballteam li img {
+    padding: 5px 15px;
+    text-align: center;
+	
+}
+.madtop{padding-top:5px;}
+.madtop img{width: 32%;
+    margin: 0 0 0 1%;} 
+.madtop img:nth-child(1) {
+   
+}
+.mad1{padding: 0 10px;}
+#returnTop {
+    position: fixed;
+    z-index: 999;
+    right: 3%;
+    bottom: 20px;
+    width: 40px;
+    height: 100px;
+    cursor: pointer;
+    overflow: hidden;
+    background-image: url(../images/top.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    transition: bottom 0.9s;
+    -webkit-transition: bottom 0.9s;
+    -moz-transition: bottom 0.9s;
+    -o-transition: bottom 0.9s;
+}
+#returnTop:hover {
+    background-position: -56px 0px;
+}
+.customer {position:fixed;left:8px;bottom:15px;z-index:10;display:block;}
+.customer img {width:85px;display:block;}

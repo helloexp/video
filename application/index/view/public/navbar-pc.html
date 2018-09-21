@@ -75,17 +75,14 @@
 
             $.get(u, function(res) {
                 var newres = [];
-
                 for (var i in res) {
                     var temp = {
                         url: "/category?id="+ res[i].id +"&type="+ res[i].type,
                         type: res[i].type,
                         id: res[i].id
                     };
-
                     newres.push(temp)
                 }
-
                 // 设置导航
                 Vue.set(pcvm, 'nav', newres)
             })
@@ -109,7 +106,6 @@
                         nav[i].setAttribute('class', 'has-submenu pc-nav active')
                     } 
                 }
-
                 // 如果id为空的话表示是主页
                 if (id == null) {
                     nav[0].setAttribute('class', 'has-submenu pc-nav active')
@@ -119,27 +115,23 @@
             // 获取url后参数
             getUrlParam: function(name) {
                 var urlPar = window.location.search;
-
                 if (urlPar.indexOf("?") != -1) {
                     var str = urlPar.substr(1);
                     strs = str.split("&");
 
                     for (var i=0; i<strs.length; i++) {
                         pStrs = strs[i].split('=')
-
                         if (pStrs[0] == name) {
                             return pStrs[1]
                         }
                     }
                 }
-
                 return null
             },
 
             // 搜索
             search: function() {
                 var u = '/search?keyword=' + $('[name=search]').val()
-
                 window.location.href = u
             }
         }
