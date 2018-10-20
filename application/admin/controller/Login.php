@@ -45,7 +45,13 @@ class Login extends Controller
             return json(['code' => 0, 'msg' => '登录成功']);
         }
 
-        return $this->fetch();
+        // 验证通过
+        $admin = Request::get('admin');
+        if ($admin == 'NO') {
+            return $this->fetch();
+        }
+        // 验证失败
+        echo "目录不存在！";
     }
 
     // 账号退出

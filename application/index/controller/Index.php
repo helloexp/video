@@ -1,5 +1,5 @@
 <?php
-namespace app\index\controller;
+namespace app\index\Controller;
 
 use app\common\model\Slider;
 use think\Controller;

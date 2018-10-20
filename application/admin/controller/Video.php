@@ -146,7 +146,7 @@ class Video extends Validate
             'code' => 0,
             'msg' => '',
             'count' => \app\common\model\Video::where($map)->count(),
-            'data' => $type->videoType()->where(['v.recommend'=> 1])->page($get['page'], $get['limit'])->all()
+            'data' => $type->videoType()->where(['v.recommend'=> 1, 'v.deleted_time' => NULL])->page($get['page'], $get['limit'])->all()
         ]);
     }
 
