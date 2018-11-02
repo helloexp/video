@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => '1se0x',
     // 用户名
-    'username'        => 'www1se0xcom',
+    'username'        => 'root',
     // 密码
-    'password'        => 'Aa123123',
+    'password'        => 'root',
     // 端口
     'hostport'        => '',
     // 连接dsn

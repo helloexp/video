@@ -28,5 +28,8 @@ Route::rule('category', 'index/index/category');
 // 搜索
 Route::rule('search', 'index/index/search');
 
+// 更多
+Route::rule('more', 'index/index/more');
+
 return [
 ];

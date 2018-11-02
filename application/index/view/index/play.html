@@ -118,7 +118,7 @@
         <!-- End single post description -->
 
         <!-- 相关视频 -->
-        <section class="content content-with-sidebar related" id="relevant">
+        <section class="content content-with-sidebar related" id="relevant" v-cloak>
             <div class="row secBg">
                 <div class="large-12 columns">
                     <div class="main-heading borderBottom">
@@ -190,11 +190,9 @@
 <script>
     // 点赞标记
     var commentFlag = false;
-
     // 视频播放
     $(function() {
         // 图片懒加载
-    
         var u = '{:url("home/detailVideo")}',
             d = { id: '{$data["playid"]}' }
 
@@ -207,10 +205,8 @@
             // 设置导航
             var span = '<span class="show-for-sr">当前: </span> '+ res.data.title
             $('#breadcrumb .breadcrumbs>li:nth-child(3)').html(span)
-
             // 设置标题
-            $('title').text(res.data.title+'-黄色电影免费片日本大片,高清无码色情在线视频网站-一色网')
-            console.log(res)
+            $('title').text('一色网-'+res.data.title)
 
             // 设置资源,视频播放
             var videoObject = {
@@ -218,7 +214,6 @@
                 variable: 'player',//播放函数名称
                 poster: res.data.img,//封面图片
                 video: res.data.url
-                   
             };
             var player = new ckplayer(videoObject);
 
@@ -242,8 +237,7 @@
     // 点赞和踩
     var comment = function(mode) {
         // mode为1是点赞，mode为2是踩
-        if (commentFlag) return ;
-
+        if (commentFlag) return;
         var u = '{:url("home/comment")}',
             d = { id: '{$data["playid"]}' }
 
@@ -279,12 +273,10 @@
             // 获取相关视频
             var u = '{:url("home/relevant")}'
             d= { id: '{$data["playid"]}' }
-
             $.get(u, d,function(res) {
                 for (var i=0; i<res.data.length; i++) {
                     res.data[i].url = '/play?playid=' + res.data[i].id
                 }
-
                 Vue.set(relevantvm, 'relevant', res)
             })
         }

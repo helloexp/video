@@ -24,7 +24,6 @@ class Home extends Controller
     public function search()
     {
         $data = Request::get();
-
         $result['code'] = 0;
         $result['msg'] = '成功获取数据';
         $result['count'] = Video::where('title|desc','like','%'.$data['title'].'%')->count();
@@ -45,6 +44,28 @@ class Home extends Controller
         $result['data'] = Video::taskout()
             ->where('recommend=1')
             ->order('create_time', 'desc')
+            ->page($get['page'], $get['limit'])
+            ->all();
+        return json($result);
+    }
+
+    // 更多
+    public function more()
+    {
+        $get = Request::get();
+        $where = [];
+
+        if ($get['more'] == 1) {
+            $where['recommend'] = 1;
+            $order['create_time'] = 'desc';
+        }
+        if ($get['more'] == 2) $order['create_time'] = 'desc';
+        if ($get['more'] == 3) $order['watch_count'] = 'desc';
+
+        $result['count'] = Video::where($where)->count();
+        $result['data'] = Video::taskout()
+            ->where($where)
+            ->order($order)
             ->page($get['page'], $get['limit'])
             ->all();
         return json($result);
@@ -190,7 +211,6 @@ class Home extends Controller
     public function getComment()
     {
         $get = Request::get();
-
         $map['id'] = $get['id'];
         $data = Video::where($map)->field('fabulous, step_on')->find();
 

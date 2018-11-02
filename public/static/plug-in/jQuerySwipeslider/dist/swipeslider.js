@@ -103,6 +103,11 @@
         $('html').on('mousemove touchmove', swiping);
       }
 
+      // 添加鼠标移动进去停止
+      slider.mousemove(disableAutoPlay)
+      // 鼠标移出重新启动
+      slider.mouseout(enableAutoPlay)
+
       // Jump to slide 1 (since another slide was added to the beginning of row);
       jumpToSlide(1);
 

@@ -24,9 +24,7 @@ class Index extends Controller
     public function category()
     {
         $data = Request::get();
-
         $this->assign('data', $data);
-
         return $this->fetch();
     }
 
@@ -35,7 +33,6 @@ class Index extends Controller
     {
         $data = Request::get();
         $this->assign('data', $data);
-
         return $this->fetch();
     }
 
@@ -44,7 +41,19 @@ class Index extends Controller
     {
         $data = Request::get();
         $this->assign('data', $data);
+        return $this->fetch();
+    }
 
+    // 更多
+    public function more()
+    {
+        $data  = Request::get();
+        if ($data['more'] == 1) $data['title'] = '特别推荐';
+        elseif ($data['more'] == 2) $data['title'] = '最新视频';
+        elseif ($data['more'] == 3) $data['title'] = '热门影视';
+        else return redirect('/404');
+        
+        $this->assign('data', $data);
         return $this->fetch();
     }
 

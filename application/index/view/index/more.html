@@ -1,6 +1,6 @@
 {extend name="public:base" /}
 
-{block name="title"}-{$data['type']}{/block}
+{block name="title"}{$data['more']}{/block}
 
 {block name="content"}
 
@@ -23,7 +23,7 @@
                     	<a href="{:url('index')}">主页</a>
                     </li>
                     <li>
-                        <span class="show-for-sr">当前: </span> {$data['type']}
+                        <span class="show-for-sr">当前: </span> {$data['title']}
                     </li>
                 </ul>
             </nav>
@@ -32,14 +32,14 @@
 </section>
 <!--end breadcrumbs-->
 
-<section class="content" style="margin: 10px 0" id="category" v-cloak>
+<section class="content" style="margin: 10px 0" id="search" v-cloak>
     <!-- newest video -->
     <div class="main-heading">
         <div class="row secBg padding-14">
             <div class="medium-8 small-8 columns">
                 <div class="head-title">
                     <i class="fa fa-film"></i>
-                    <h4>{$data['type']}</h4>
+                    <h4>{$data['title']}</h4>
                 </div>
             </div>
             <div class="medium-4 small-4 columns">
@@ -53,7 +53,7 @@
     <div class="row secBg">
         <div class="large-12 columns">
             <div class="row column head-text clearfix">
-                <p class="pull-left">全部视频 : <span>{{ total }}</span></p>
+                <p class="pull-left">搜索到的视频 : <span>{{ total }}</span></p>
             </div>
             <div class="tabs-content" data-tabs-content="newVideos">
                 <!-- 全部 -->
@@ -112,7 +112,7 @@
                             <div class="post thumb-border">
                                 <a :href="item.id">
                                     <div class="post-thumb">
-                                        <img v-bind:src="item.img" v-bind:alt="item.title">
+                                        <img v-bind:src="item.img" v-bind:alt="item.title" onerror='this.src="/images/loaderr.jpg"'>
                                         <a v-bind:href="item.id" class="hover-posts">
                                             <span><i class="fa fa-play"></i>播放视频</span>
                                         </a>
@@ -156,7 +156,7 @@
             </div>
 
             <div id="nodata" style="padding-bottom: 30px; font-size: 25px; text-align: center; display: none;">
-                暂无视频~~~
+                没有任何视频~~~
             </div>
 
             <!-- 分页 -->
@@ -167,8 +167,8 @@
 </section>
 
 <script>
-    var categoryvm = new Vue({
-        el: '#category',
+    var searchvm = new Vue({
+        el: '#search',
         data: {
             renderdata: [],
 
@@ -179,9 +179,9 @@
             total: 0,
         },
         created: function() {
-            var u = '{:url("home/type")}',
+            var u = '{:url("home/more")}',
                 d = {
-                    id: '{$data["id"]}',
+                    more: '{$data["more"]}',
                     page: 1,
                     limit: this.limit
                 },
@@ -189,7 +189,7 @@
 
             $.get(u, d, function(res) {
                 res = _this.playurl(res)
-
+                
                 _this.renderdatafn(res)
                 _this.pagecategory(res)
             })
@@ -210,16 +210,15 @@
                         theme: '#e96969',
                         layout: ['prev', 'page', 'next', 'skip'],
                         jump: function(obj, first) {
-                            var u = '{:url("home/type")}',
+                            var u = '{:url("home/more")}',
                                 d = {
-                                    id: '{$data["id"]}',
                                     page: obj.curr,
-                                    limit: this.limit
+                                    limit: this.limit,
+                                    more: '{$data["more"]}'
                                 }
 
                             $.get(u, d, function(res) {
                                 res = _this.playurl(res)
-
                                 _this.renderdatafn(res)
                             })
                         }
@@ -227,25 +226,13 @@
                 })
             },
 
-            // 过滤html标签
-            filterHTML: function(msg) {
-                var msg = msg.replace(/<\/?[^>]*>/g, ''); //去除HTML Tag
-                msg = msg.replace(/[|]*\n/, '') //去除行尾空格
-                msg = msg.replace(/&nbsp;/ig, ''); //去掉npsp
-                return msg;
-            },
-
             // 数据渲染
             renderdatafn: function(res) {
                 var nodata = document.getElementById('nodata'),
                     opage  = document.getElementById('page-category')
 
-                for (var i=0; i<res.data.length; i++) {
-                    res.data[i].desc = this.filterHTML(res.data[i].desc)
-                }
-
-                Vue.set(categoryvm, 'renderdata', res.data)
-                Vue.set(categoryvm, 'total', res.count)
+                Vue.set(searchvm, 'renderdata', res.data)
+                Vue.set(searchvm, 'total', res.count)
                 
                 // 暂无数据
                 if (res.data.length === 0) {
@@ -257,7 +244,7 @@
             // 添加视频播放id
             playurl: function(res) {
                 for (var i=0; i<res.data.length; i++) {
-                    res.data[i].id = '/play?playid=' + res.data[i].id + '&id={$data["id"]}'
+                    res.data[i].id = '/play?playid=' + res.data[i].id
                 }
 
                 return res
